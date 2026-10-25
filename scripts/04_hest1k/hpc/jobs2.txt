@@ -1,0 +1,30 @@
+--target ulm --seed 0
+--target ulm --seed 1
+--target ulm --seed 2
+--target ulm --seed 0 --target_norm slide
+--target ulm --seed 1 --target_norm slide
+--target ulm --seed 2 --target_norm slide
+--target ulm --seed 0 --tech
+--target ulm --seed 1 --tech
+--target ulm --seed 2 --tech
+--target ulm --seed 0 --progw
+--target ulm --seed 1 --progw
+--target ulm --seed 2 --progw
+--target ulm --seed 0 --target_norm slide --tech --progw
+--target ulm --seed 1 --target_norm slide --tech --progw
+--target ulm --seed 2 --target_norm slide --tech --progw
+--target ulm --seed 0 --gene_aux
+--target ulm --seed 1 --gene_aux
+--target ulm --seed 2 --gene_aux
+--target ulm --seed 0 --genes --folds 0
+--target ulm --seed 0 --genes --folds 1
+--target ulm --seed 0 --genes --folds 2
+--target ulm --seed 0 --genes --folds 3
+--target ulm --seed 0 --genes --folds 4
+--target ulm --seed 0 --genes --folds 5
+--target ulm --seed 1 --genes --folds 0
+--target ulm --seed 1 --genes --folds 1
+--target ulm --seed 1 --genes --folds 2
+--target ulm --seed 1 --genes --folds 3
+--target ulm --seed 1 --genes --folds 4
+--target ulm --seed 1 --genes --folds 5

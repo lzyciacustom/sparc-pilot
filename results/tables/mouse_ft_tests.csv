@@ -1,0 +1,12 @@
+comparison,diff,sections_pos,p_wilcoxon
+human-only: real vs mouse random null,0.07095033105558936,21/22,9.5367431640625e-07
+slide: mouse-only vs human-only,0.15703215762873016,20/22,3.337860107421875e-06
+slide: human->mouse fine-tune vs human-only,0.14345016459229978,21/22,2.384185791015625e-06
+slide: fine-tune vs mouse-only,-0.01358199303643032,2/22,0.004151344299316406
+slide: mouse_only real vs random null,0.1716544053917482,22/22,4.76837158203125e-07
+slide: human_ft real vs random null,0.16565388940765155,22/22,4.76837158203125e-07
+dataset: mouse-only vs human-only,0.00018283279510950936,9/22,0.8485937118530273
+dataset: human->mouse fine-tune vs human-only,0.00766754457519151,10/22,0.6101517677307129
+dataset: fine-tune vs mouse-only,0.007484711780082003,10/22,0.4434065818786621
+dataset: mouse_only real vs random null,0.07951476140082346,21/22,9.5367431640625e-07
+dataset: human_ft real vs random null,0.07565856089454738,22/22,4.76837158203125e-07

@@ -1,0 +1,67 @@
+Cell_type,Cell_subtype,Class,mapped,n_cells
+B cells,CD19+CD20+ B,Normal,B,1684
+B cells,CD19+CD20+ B,Tumor,B,2049
+B cells,IgA+ Plasma,Normal,Plasma,3366
+B cells,IgA+ Plasma,Tumor,Plasma,180
+B cells,IgG+ Plasma,Normal,Plasma,94
+B cells,IgG+ Plasma,Tumor,Plasma,1661
+B cells,Unknown,Normal,B,64
+B cells,Unknown,Tumor,B,48
+Epithelial cells,CMS1,Tumor,Epi_tumor,1201
+Epithelial cells,CMS2,Tumor,Epi_tumor,10771
+Epithelial cells,CMS3,Tumor,Epi_tumor,5486
+Epithelial cells,CMS4,Tumor,Epi_tumor,11
+Epithelial cells,Goblet cells,Normal,Epi_normal,139
+Epithelial cells,Intermediate,Normal,Epi_normal,181
+Epithelial cells,Mature Enterocytes type 1,Normal,Epi_normal,213
+Epithelial cells,Mature Enterocytes type 2,Normal,Epi_normal,131
+Epithelial cells,Stem-like/TA,Normal,Epi_normal,406
+Mast cells,Mast cells,Normal,Mast,184
+Mast cells,Mast cells,Tumor,Mast,3
+Myeloids,Pro-inflammatory,Normal,Mono_Mac,74
+Myeloids,Pro-inflammatory,Tumor,Mono_Mac,2325
+Myeloids,Proliferating,Normal,Mono_Mac,6
+Myeloids,Proliferating,Tumor,Mono_Mac,165
+Myeloids,SPP1+,Normal,Mono_Mac,156
+Myeloids,SPP1+,Tumor,Mono_Mac,3096
+Myeloids,Unknown,Normal,Mono_Mac,4
+Myeloids,Unknown,Tumor,Mono_Mac,461
+Myeloids,cDC,Normal,DC,129
+Myeloids,cDC,Tumor,DC,353
+Stromal cells,Enteric glial cells,Normal,Glial,282
+Stromal cells,Enteric glial cells,Tumor,Glial,23
+Stromal cells,Lymphatic ECs,Normal,Endothelial,80
+Stromal cells,Lymphatic ECs,Tumor,Endothelial,28
+Stromal cells,Myofibroblasts,Normal,Fibroblast,9
+Stromal cells,Myofibroblasts,Tumor,Fibroblast,1146
+Stromal cells,Pericytes,Normal,Pericyte_SMC,92
+Stromal cells,Pericytes,Tumor,Pericyte_SMC,353
+Stromal cells,Proliferative ECs,Tumor,Endothelial,44
+Stromal cells,Smooth muscle cells,Normal,Pericyte_SMC,123
+Stromal cells,Smooth muscle cells,Tumor,Pericyte_SMC,91
+Stromal cells,Stalk-like ECs,Normal,Endothelial,96
+Stromal cells,Stalk-like ECs,Tumor,Endothelial,342
+Stromal cells,Stromal 1,Normal,Fibroblast,972
+Stromal cells,Stromal 1,Tumor,Fibroblast,73
+Stromal cells,Stromal 2,Normal,Fibroblast,236
+Stromal cells,Stromal 2,Tumor,Fibroblast,158
+Stromal cells,Stromal 3,Normal,Fibroblast,744
+Stromal cells,Stromal 3,Tumor,Fibroblast,124
+Stromal cells,Tip-like ECs,Normal,Endothelial,563
+Stromal cells,Tip-like ECs,Tumor,Endothelial,354
+T cells,CD4+ T cells,Normal,T_NK,3325
+T cells,CD4+ T cells,Tumor,T_NK,3980
+T cells,CD8+ T cells,Normal,T_NK,1757
+T cells,CD8+ T cells,Tumor,T_NK,4647
+T cells,NK cells,Normal,T_NK,163
+T cells,NK cells,Tumor,T_NK,948
+T cells,Regulatory T cells,Normal,T_NK,154
+T cells,Regulatory T cells,Tumor,T_NK,2943
+T cells,T follicular helper cells,Normal,T_NK,72
+T cells,T follicular helper cells,Tumor,T_NK,548
+T cells,T helper 17 cells,Normal,T_NK,17
+T cells,T helper 17 cells,Tumor,T_NK,1961
+T cells,Unknown,Normal,T_NK,111
+T cells,Unknown,Tumor,T_NK,1493
+T cells,gamma delta T cells,Normal,T_NK,777
+T cells,gamma delta T cells,Tumor,T_NK,219

@@ -1,0 +1,1 @@
+fig_mouse.png: human-trained model on mouse sections compared against the HUMAN random-gene-set level (0.09). Superseded by stage2_hest1k/fig_mouse_ft.png, which uses a mouse random-gene-set null (0.03) and adds the retraining conditions.

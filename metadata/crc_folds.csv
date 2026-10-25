@@ -1,0 +1,59 @@
+id,group,dataset_title,st_technology,oncotree_code,preservation_method,spots_under_tissue,nb_genes,disease_comment,in_bench,cv_fold
+TENX156,TENX_immune_P1,Characterization of immune cell populations in the tumor microenvironment of colorectal cancer using high definition spatial profiling,Visium HD,COAD,FFPE,2179,18085,Stage II-A ,False,5
+TENX155,TENX_immune_P1,Characterization of immune cell populations in the tumor microenvironment of colorectal cancer using high definition spatial profiling,Visium HD,COAD,FFPE,2281,18085,,False,5
+TENX154,TENX_immune_P1,Characterization of immune cell populations in the tumor microenvironment of colorectal cancer using high definition spatial profiling,Visium HD,COAD,FFPE,2220,18085,,False,5
+TENX152,TENX_immune_P1,Characterization of immune cell populations in the tumor microenvironment of colorectal cancer using high definition spatial profiling,Visium,COAD,FFPE,4269,18085,,False,5
+MISC73,COLONMAP_6723_KL,COLON MAP: Colon Molecular Atlas Project,Visium,COAD,FFPE,3901,19074,Not otherwise specified,False,4
+MISC72,COLONMAP_6723_KL,COLON MAP: Colon Molecular Atlas Project,Visium,COAD,FFPE,4369,19310,Not otherwise specified,False,4
+MISC71,COLONMAP_6723_KL,COLON MAP: Colon Molecular Atlas Project,Visium,COAD,FFPE,2997,19251,Not otherwise specified,False,4
+MISC70,COLONMAP_6723_KL,COLON MAP: Colon Molecular Atlas Project,Visium,COAD,FFPE,3934,19116,Not otherwise specified,False,4
+MISC69,COLONMAP_7003_AS,COLON MAP: Colon Molecular Atlas Project,Visium,COAD,FFPE,3634,19263,Primary,False,2
+MISC68,COLONMAP_7003_AS,COLON MAP: Colon Molecular Atlas Project,Visium,COAD,FFPE,2708,19359,Not otherwise specified,False,2
+MISC67,COLONMAP_7003_AS,COLON MAP: Colon Molecular Atlas Project,Visium,COAD,FFPE,2551,19384,Primary,False,2
+MISC66,COLONMAP_7003_AS,COLON MAP: Colon Molecular Atlas Project,Visium,COAD,FFPE,3970,19347,Not otherwise specified,False,2
+MISC65,COLONMAP_7003_AS,COLON MAP: Colon Molecular Atlas Project,Visium,COAD,FFPE,3261,19402,Primary,False,2
+MISC64,COLONMAP_7003_AS,COLON MAP: Colon Molecular Atlas Project,Visium,COAD,FFPE,2533,19411,Not otherwise specified,False,2
+MISC63,COLONMAP_7003_AS,COLON MAP: Colon Molecular Atlas Project,Visium,COAD,FFPE,3467,19346,Primary,False,2
+MISC62,COLONMAP_7003_AS,COLON MAP: Colon Molecular Atlas Project,Visium,COAD,FFPE,4132,19391,Not otherwise specified,False,2
+MISC58,COLONMAP_7794_AS,COLON MAP: Colon Molecular Atlas Project,Visium,COAD,FFPE,1165,19259,Not otherwise specified,False,5
+MISC57,COLONMAP_7794_AS,COLON MAP: Colon Molecular Atlas Project,Visium,COAD,FFPE,989,19165,Not otherwise specified,False,5
+MISC56,COLONMAP_7794_AS,COLON MAP: Colon Molecular Atlas Project,Visium,COAD,FFPE,3395,19338,Not otherwise specified,False,5
+MISC51,COLONMAP_8270_AS,COLON MAP: Colon Molecular Atlas Project,Visium,COAD,FFPE,3076,19174,Primary,False,0
+MISC50,COLONMAP_8270_AS,COLON MAP: Colon Molecular Atlas Project,Visium,COAD,FFPE,4297,18776,Not otherwise specified,False,0
+MISC49,COLONMAP_8270_AS,COLON MAP: Colon Molecular Atlas Project,Visium,COAD,FFPE,4624,19330,Primary,False,0
+MISC48,COLONMAP_8270_AS,COLON MAP: Colon Molecular Atlas Project,Visium,COAD,FFPE,3577,19111,Primary,False,0
+MISC47,COLONMAP_8270_AS,COLON MAP: Colon Molecular Atlas Project,Visium,COAD,FFPE,4818,19327,Primary,False,0
+MISC46,COLONMAP_8270_AS,COLON MAP: Colon Molecular Atlas Project,Visium,COAD,FFPE,4511,19337,Primary,False,0
+MISC45,COLONMAP_8270_AS,COLON MAP: Colon Molecular Atlas Project,Visium,COAD,FFPE,4118,19270,Not otherwise specified,False,0
+MISC44,COLONMAP_8578_AS,COLON MAP: Colon Molecular Atlas Project,Visium,COAD,FFPE,932,18518,Not otherwise specified,False,4
+MISC43,COLONMAP_8578_AS,COLON MAP: Colon Molecular Atlas Project,Visium,COAD,FFPE,1186,19121,Not otherwise specified,False,4
+MISC42,COLONMAP_8578_AS,COLON MAP: Colon Molecular Atlas Project,Visium,COAD,FFPE,659,19304,Primary,False,4
+MISC41,COLONMAP_8578_AS,COLON MAP: Colon Molecular Atlas Project,Visium,COAD,FFPE,3708,19255,Not otherwise specified,False,4
+MISC40,COLONMAP_8899_AS,COLON MAP: Colon Molecular Atlas Project,Visium,COAD,FFPE,4116,19352,Not otherwise specified,False,1
+MISC39,COLONMAP_8899_AS,COLON MAP: Colon Molecular Atlas Project,Visium,COAD,FFPE,4078,19234,Not otherwise specified,False,1
+MISC38,COLONMAP_8899_AS,COLON MAP: Colon Molecular Atlas Project,Visium,COAD,FFPE,1727,19366,Not otherwise specified,False,1
+MISC37,COLONMAP_8899_AS,COLON MAP: Colon Molecular Atlas Project,Visium,COAD,FFPE,3636,19396,Not otherwise specified,False,1
+MISC36,COLONMAP_8899_AS,COLON MAP: Colon Molecular Atlas Project,Visium,COAD,FFPE,3502,19119,Not otherwise specified,False,1
+MISC35,COLONMAP_8899_AS,COLON MAP: Colon Molecular Atlas Project,Visium,COAD,FFPE,3578,19061,Not otherwise specified,False,1
+MISC34,COLONMAP_8899_AS,COLON MAP: Colon Molecular Atlas Project,Visium,COAD,FFPE,3731,19276,Not otherwise specified,False,1
+MISC33,COLONMAP_8899_AS,COLON MAP: Colon Molecular Atlas Project,Visium,COAD,FFPE,3385,18729,Not otherwise specified,False,1
+TENX128,TENX_TENX128,"Visium HD Spatial Gene Expression Library, Human Colorectal Cancer (FFPE)",Visium HD,COAD,FFPE,2279,18085,,False,1
+TENX92,TENX_cytassist_CRC,Visium CytAssist Gene Expression Libraries of Post-Xenium Human Colon Cancer (FFPE),Visium,COAD,FFPE,6518,18085,,False,3
+TENX91,TENX_cytassist_CRC,Visium CytAssist Gene Expression Libraries of Post-Xenium Human Colon Cancer (FFPE),Visium,COAD,FFPE,6352,18085,,False,3
+TENX90,TENX_cytassist_CRC,Visium CytAssist Gene Expression Libraries of Post-Xenium Human Colon Cancer (FFPE),Visium,COAD,FFPE,6487,18085,,False,3
+TENX89,TENX_cytassist_CRC,Visium CytAssist Gene Expression Libraries of Post-Xenium Human Colon Cancer (FFPE),Visium,COAD,FFPE,6414,18085,,False,3
+TENX70,TENX_TENX70,"Human Colorectal Cancer, 11 mm Capture Area (FFPE)",Visium,COADREAD,FFPE,9080,18085,Colon carcinoma,False,5
+TENX49,TENX_TENX49,Human Intestine Cancer (FPPE),Visium,COAD,FFPE,2660,17943,Large Intestine Colorectal cancer,False,4
+TENX29,TENX_TENX29,Human Colorectal Cancer: Whole Transcriptome Analysis,Visium,COAD,Fresh Frozen,3138,36601,Invasive Adenocarcinoma of the large intestine Stage Group IIB,False,2
+ZEN49,ZEN_Patient1,Charting the Heterogeneity of Colorectal Cancer Consensus Molecular Subtypes using Spatial Transcriptomics: datasets,Visium,READ,Fresh Frozen,2203,36601,,True,4
+ZEN48,ZEN_Patient1,Charting the Heterogeneity of Colorectal Cancer Consensus Molecular Subtypes using Spatial Transcriptomics: datasets,Visium,READ,Fresh Frozen,2385,36601,,True,4
+ZEN47,ZEN_Patient2,Charting the Heterogeneity of Colorectal Cancer Consensus Molecular Subtypes using Spatial Transcriptomics: datasets,Visium,COAD,Fresh Frozen,2317,36601,,False,5
+ZEN46,ZEN_Patient2,Charting the Heterogeneity of Colorectal Cancer Consensus Molecular Subtypes using Spatial Transcriptomics: datasets,Visium,COAD,Fresh Frozen,1803,36601,,False,5
+ZEN45,ZEN_Patient3,Charting the Heterogeneity of Colorectal Cancer Consensus Molecular Subtypes using Spatial Transcriptomics: datasets,Visium,COAD,Fresh Frozen,328,36601,,False,2
+ZEN44,ZEN_Patient3,Charting the Heterogeneity of Colorectal Cancer Consensus Molecular Subtypes using Spatial Transcriptomics: datasets,Visium,COAD,Fresh Frozen,1048,36601,,False,2
+ZEN43,ZEN_Patient4,Charting the Heterogeneity of Colorectal Cancer Consensus Molecular Subtypes using Spatial Transcriptomics: datasets,Visium,COAD,Fresh Frozen,691,36601,"Adenocarcinoma, mucinous, moderately differentiated",False,4
+ZEN42,ZEN_Patient5,Charting the Heterogeneity of Colorectal Cancer Consensus Molecular Subtypes using Spatial Transcriptomics: datasets,Visium,COAD,Fresh Frozen,1192,36601,,False,0
+ZEN40,ZEN_Patient7,Charting the Heterogeneity of Colorectal Cancer Consensus Molecular Subtypes using Spatial Transcriptomics: datasets,Visium,READ,Fresh Frozen,2128,36601,,True,3
+ZEN39,ZEN_Patient4,Charting the Heterogeneity of Colorectal Cancer Consensus Molecular Subtypes using Spatial Transcriptomics: datasets,Visium,COAD,Fresh Frozen,1219,36601,"Adenocarcinoma, mucinous, moderately differentiated",False,4
+ZEN38,ZEN_Patient5,Charting the Heterogeneity of Colorectal Cancer Consensus Molecular Subtypes using Spatial Transcriptomics: datasets,Visium,COAD,Fresh Frozen,387,36601,,False,0
+ZEN36,ZEN_Patient7,Charting the Heterogeneity of Colorectal Cancer Consensus Molecular Subtypes using Spatial Transcriptomics: datasets,Visium,READ,Fresh Frozen,1691,36601,,True,3

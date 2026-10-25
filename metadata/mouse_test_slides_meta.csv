@@ -1,0 +1,23 @@
+id,organ,disease_state,dataset_title,st_technology,spots_under_tissue,nb_genes,preservation_method,pdx
+TENX129,Bowel,Healthy,"Visium HD Spatial Gene Expression Library, Mouse Small Intestine (FFPE)",Visium HD,1748,19059,FFPE,False
+MEND32,Bowel,Healthy,spatialRNAseq_ileum_raw_suppdata,Visium,1970,54848,Fresh Frozen,False
+MEND31,Bowel,Healthy,spatialRNAseq_ileum_raw_suppdata,Visium,2152,54848,Fresh Frozen,False
+MEND30,Bowel,Diseased,spatialRNAseq_ileum_raw_suppdata,Visium,1744,54848,Fresh Frozen,False
+MEND29,Bowel,Diseased,spatialRNAseq_ileum_raw_suppdata,Visium,2161,54848,Fresh Frozen,False
+NCBI729,Bowel,Healthy,10X Visium Spatial transcriptomics of murine colon in steady state and during recovery after DSS colitis,Visium,2604,31053,,False
+NCBI728,Bowel,Treated,10X Visium Spatial transcriptomics of murine colon in steady state and during recovery after DSS colitis,Visium,3630,31053,,False
+NCBI689,Skin,Cancer,A cellular hierarchy in melanoma uncouples growth and metastasis,Visium,4992,31053,,False
+NCBI688,Skin,Cancer,A cellular hierarchy in melanoma uncouples growth and metastasis,Visium,4992,31053,,False
+NCBI687,Skin,Cancer,A cellular hierarchy in melanoma uncouples growth and metastasis,Visium,4992,31053,,False
+NCBI686,Bowel,Treated,10X Visium Spatial transcriptomics of murine colon at d14 (mucosa healing) in B cell sufficient-deficient mice,Visium,3934,31053,,False
+NCBI685,Bowel,Treated,10X Visium Spatial transcriptomics of murine colon at d14 (mucosa healing) in B cell sufficient-deficient mice,Visium,3547,31053,,False
+NCBI627,Liver,Cancer,mousemodel_Heptablastoma spatial transcriptomics,Visium,4992,31053,,False
+NCBI626,Liver,Cancer,mousemodel_Heptablastoma spatial transcriptomics,Visium,4992,31053,,False
+NCBI625,Liver,Cancer,mousemodel_Heptablastoma spatial transcriptomics,Visium,4992,31053,,False
+NCBI624,Liver,Cancer,mousemodel_Heptablastoma spatial transcriptomics,Visium,4992,31053,,False
+NCBI623,Liver,Cancer,mousemodel_Heptablastoma spatial transcriptomics,Visium,4992,31053,,False
+NCBI622,Liver,Cancer,mousemodel_Heptablastoma spatial transcriptomics,Visium,4992,31053,,False
+NCBI621,Liver,Cancer,mousemodel_Heptablastoma spatial transcriptomics,Visium,4989,31053,,False
+NCBI620,Liver,Cancer,mousemodel_Heptablastoma spatial transcriptomics,Visium,4992,31053,,False
+NCBI619,Liver,Cancer,mousemodel_Heptablastoma spatial transcriptomics,Visium,4991,31053,,False
+NCBI618,Liver,Cancer,mousemodel_Heptablastoma spatial transcriptomics,Visium,4992,31053,,False

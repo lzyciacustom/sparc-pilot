@@ -1,0 +1,54 @@
+ssgsea base det 0
+ssgsea base det 1
+ssgsea base det 2
+ulm base det 0
+ulm base det 1
+ulm base det 2
+mlm base det 0
+ssgsea_depthres base det 0
+rand0ssgsea base det 0
+rand1ssgsea base det 0
+rand2ssgsea base det 0
+rand0ulm base det 0
+ssgsea mlp det 0
+ssgsea mlp det 1
+ssgsea mlp det 2
+ssgsea concert det 0
+ssgsea concert det 1
+ssgsea concert det 2
+ssgsea gpk16 det 0
+ssgsea gpk16 det 1
+ssgsea gpk16 det 2
+ssgsea gpk48 det 0
+ssgsea gpk48 det 1
+ssgsea gpk48 det 2
+ulm mlp det 0
+ulm mlp det 1
+ulm mlp det 2
+ulm concert det 0
+ulm concert det 1
+ulm concert det 2
+ulm gpk16 det 0
+ulm gpk16 det 1
+ulm gpk16 det 2
+ulm gpk48 det 0
+ulm gpk48 det 1
+ulm gpk48 det 2
+ssgsea base gauss 0
+ssgsea base gauss 1
+ssgsea gpk16 gauss 0
+ssgsea gpk16 gauss 1
+ulm base gauss 0
+ulm base gauss 1
+ulm gpk16 gauss 0
+ulm gpk16 gauss 1
+ssgsea base det 0 --crc_only
+ssgsea base det 1 --crc_only
+ulm base det 0 --crc_only
+ulm base det 1 --crc_only
+mlm base det 0 --crc_only
+ssgsea_depthres base det 0 --crc_only
+rand0ssgsea base det 0 --crc_only
+rand1ssgsea base det 0 --crc_only
+rand2ssgsea base det 0 --crc_only
+rand0ulm base det 0 --crc_only

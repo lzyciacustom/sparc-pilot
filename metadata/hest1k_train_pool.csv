@@ -1,0 +1,385 @@
+id,dataset_title,organ,disease_state,oncotree_code,st_technology,patient,subseries,preservation_method,spots_under_tissue,nb_genes
+TENX185,"Cross-Platform Comparison: Visium HD Spatial Gene Expression Library, Human Ovarian Cancer (Fresh Frozen)",Ovary,Cancer,SOC,Visium HD,,Minimum Sequencing Depth,Fresh Frozen,2068,18132
+TENX184,"Cross-Platform Comparison: Visium HD Spatial Gene Expression Library, Human Ovarian Cancer (Fresh Frozen)",Ovary,Cancer,SOC,Visium HD,,Deep sequencing,Fresh Frozen,2068,18132
+TENX183,"Cross-Platform Comparison: Visium HD 3' Gene Expression Library, Human Ovarian Cancer (Fresh Frozen)",Ovary,Cancer,SOC,Visium HD 3',,Minimum Sequencing Depth,Fresh Frozen,2113,38606
+TENX182,"Cross-Platform Comparison: Visium HD 3' Gene Expression Library, Human Ovarian Cancer (Fresh Frozen)",Ovary,Cancer,SOC,Visium HD 3',,Deep sequencing,Fresh Frozen,2113,38606
+TENX180,"Visium HD Spatial Gene Expression Library, Human Breast Cancer (Fresh Frozen), Ultima Sequencing",Breast,Cancer,IDC,Visium HD,,,Fresh Frozen,2377,18085
+TENX179,"Visium HD 3' Gene Expression Library, Human Pancreatic Cancer (Fresh Frozen)",Pancreas,Cancer,PDAC,Visium HD 3',,,Fresh Frozen,2164,38606
+TENX178,"Visium HD Spatial Gene Expression Library, Human Lymph Node (FFPE)",Lymphoid,Healthy,,Visium HD,,,FFPE,1829,18132
+TENX177,"Visium HD 3' Gene Expression Library, Human Ovarian Cancer (Fresh Frozen)",Ovary,Cancer,CCOV,Visium HD 3',,,Fresh Frozen,1963,38606
+TENX174,"Visium HD Spatial Gene Expression Library, Human Prostate Cancer (FFPE)",Prostate,Cancer,PRAD,Visium HD,,,FFPE,2385,18132
+TENX173,"Visium HD Spatial Gene Expression Library, Human Kidney (FFPE)",Kidney,Healthy,,Visium HD,,,FFPE,2684,18085
+TENX172,"Visium HD Spatial Gene Expression Library, Human Tonsil (Fresh Frozen), Ultima Sequencing",Lymphoid,Healthy,,Visium HD,,,Fresh Frozen,2352,18085
+TENX171,"Visium HD Spatial Gene Expression Libraries, Post-Xenium, Human Lung Cancer (FFPE)",Lung,Cancer,LUAD,Visium HD,,"Experiment 2, post-Xenium Prime 5K",FFPE,1774,18085
+TENX170,"Visium HD Spatial Gene Expression Libraries, Post-Xenium, Human Lung Cancer (FFPE)",Lung,Cancer,LUAD,Visium HD,,"Experiment 2, HD only (control)",FFPE,1877,18085
+TENX169,"Visium HD Spatial Gene Expression Libraries, Post-Xenium, Human Lung Cancer (FFPE)",Lung,Cancer,LUAD,Visium HD,,"Experiment 1, post-Xenium v1",FFPE,1897,18085
+TENX168,"Visium HD Spatial Gene Expression Libraries, Post-Xenium, Human Lung Cancer (FFPE)",Lung,Cancer,LUAD,Visium HD,,"Experiment 1, HD only (control)",FFPE,1952,18085
+TENX164,"Visium HD Spatial Gene Expression Library, Human Tonsil (Fresh Frozen)",Lymphoid,Diseased,,Visium HD,,,Fresh Frozen,2809,18085
+TENX163,"Visium HD Spatial Gene Expression Library, Human Lung Cancer (Fixed Frozen)",Lung,Cancer,LUAD,Visium HD,,,Fixed Frozen,2487,18085
+TENX162,"Visium HD Spatial Gene Expression Library, Human Breast Cancer (Fresh Frozen)",Breast,Cancer,IDC,Visium HD,,,Fresh Frozen,2021,18085
+TENX161,"Visium HD Spatial Gene Expression Library, Human Breast Cancer (Fixed Frozen)",Breast,Cancer,IDC,Visium HD,,,Fixed Frozen,2809,18085
+TENX156,Characterization of immune cell populations in the tumor microenvironment of colorectal cancer using high definition spatial profiling,Bowel,Cancer,COAD,Visium HD,Patient 1,"Visium HD, Sample P1 CRC",FFPE,2179,18085
+TENX155,Characterization of immune cell populations in the tumor microenvironment of colorectal cancer using high definition spatial profiling,Bowel,Cancer,COAD,Visium HD,Patient 1,"Visium HD, Sample P2 CRC",FFPE,2281,18085
+TENX154,Characterization of immune cell populations in the tumor microenvironment of colorectal cancer using high definition spatial profiling,Bowel,Cancer,COAD,Visium HD,Patient 1,"Visium HD, Sample P5 CRC",FFPE,2220,18085
+TENX153,Characterization of immune cell populations in the tumor microenvironment of colorectal cancer using high definition spatial profiling,Bowel,Healthy,,Visium HD,Patient 1,"Visium HD, Sample P3 NAT",FFPE,2018,18085
+TENX152,Characterization of immune cell populations in the tumor microenvironment of colorectal cancer using high definition spatial profiling,Bowel,Cancer,COAD,Visium,Patient 1,"Visium CytAssist v2, Sample P2 CRC",FFPE,4269,18085
+TENX144,"Visium HD Spatial Gene Expression Library, Human Pancreas (FFPE)",Pancreas,Healthy,,Visium HD,,,FFPE,1848,18085
+MISC142,Spatially resolved multiomics of human cardiac niches,Heart,Healthy,,Visium,   ,HCAHeartST10238251,Fresh Frozen,1302,33538
+MISC141,Spatially resolved multiomics of human cardiac niches,Heart,Healthy,,Visium,   ,HCAHeartST10238252,Fresh Frozen,1702,33538
+MISC140,Spatially resolved multiomics of human cardiac niches,Heart,Healthy,,Visium,   ,HCAHeartST10238253,Fresh Frozen,2168,33538
+MISC139,Spatially resolved multiomics of human cardiac niches,Heart,Healthy,,Visium,   ,HCAHeartST10550730,Fresh Frozen,2562,33538
+MISC138,Spatially resolved multiomics of human cardiac niches,Heart,Healthy,,Visium,   ,HCAHeartST10550732,Fresh Frozen,2199,33538
+MISC136,Spatially resolved multiomics of human cardiac niches,Heart,Healthy,,Visium,   ,HCAHeartST11290657,Fresh Frozen,2090,33538
+MISC135,Spatially resolved multiomics of human cardiac niches,Heart,Healthy,,Visium,   ,HCAHeartST11290658,Fresh Frozen,2697,33538
+MISC134,Spatially resolved multiomics of human cardiac niches,Heart,Healthy,,Visium,   ,HCAHeartST11290659,Fresh Frozen,2338,33538
+MISC133,Spatially resolved multiomics of human cardiac niches,Heart,Healthy,,Visium,   ,HCAHeartST11290662,Fresh Frozen,3153,33538
+MISC132,Spatially resolved multiomics of human cardiac niches,Heart,Healthy,,Visium,   ,HCAHeartST11350375,Fresh Frozen,2843,33538
+MISC131,Spatially resolved multiomics of human cardiac niches,Heart,Healthy,,Visium,   ,HCAHeartST11350377,Fresh Frozen,2807,33538
+MISC130,Spatially resolved multiomics of human cardiac niches,Heart,Healthy,,Visium,   ,HCAHeartST11702008,FFPE,3533,17922
+MISC129,Spatially resolved multiomics of human cardiac niches,Heart,Healthy,,Visium,   ,HCAHeartST11702009,FFPE,3533,17922
+MISC128,Spatially resolved multiomics of human cardiac niches,Heart,Healthy,,Visium,   ,HCAHeartST11702010,FFPE,3982,17922
+MISC127,Spatially resolved multiomics of human cardiac niches,Heart,Healthy,,Visium,   ,HCAHeartST12992072,Fresh Frozen,3802,33538
+MISC126,Spatially resolved multiomics of human cardiac niches,Heart,Healthy,,Visium,   ,HCAHeartST12992074,Fresh Frozen,4521,33538
+MISC125,Spatially resolved multiomics of human cardiac niches,Heart,Healthy,,Visium,   ,HCAHeartST12992075,Fresh Frozen,3478,33538
+MISC124,Spatially resolved multiomics of human cardiac niches,Heart,Healthy,,Visium,   ,HCAHeartST13228103,Fresh Frozen,2942,33538
+MISC123,Spatially resolved multiomics of human cardiac niches,Heart,Healthy,,Visium,   ,HCAHeartST13228105,Fresh Frozen,2852,33538
+MISC122,Spatially resolved multiomics of human cardiac niches,Heart,Healthy,,Visium,   ,HCAHeartST13228106,Fresh Frozen,3430,33538
+MISC121,Spatially resolved multiomics of human cardiac niches,Heart,Healthy,,Visium,   ,HCAHeartST13233996,Fresh Frozen,3052,33538
+MISC120,Spatially resolved multiomics of human cardiac niches,Heart,Healthy,,Visium,   ,HCAHeartST13233997,Fresh Frozen,3400,33538
+MISC119,Spatially resolved multiomics of human cardiac niches,Heart,Healthy,,Visium,   ,HCAHeartST13233998,Fresh Frozen,3448,33538
+MISC118,Spatially resolved multiomics of human cardiac niches,Heart,Healthy,,Visium,   ,HCAHeartST13233999,Fresh Frozen,2881,33538
+MISC117,Spatially resolved multiomics of human cardiac niches,Heart,Healthy,,Visium,   ,HCAHeartST8795933,Fresh Frozen,2891,33538
+MISC116,Spatially resolved multiomics of human cardiac niches,Heart,Healthy,,Visium,   ,HCAHeartST8795934,Fresh Frozen,1831,33538
+MISC115,Spatially resolved multiomics of human cardiac niches,Heart,Healthy,,Visium,   ,HCAHeartST8795935,Fresh Frozen,1040,33538
+MISC114,Spatially resolved multiomics of human cardiac niches,Heart,Healthy,,Visium,   ,HCAHeartST8795936,Fresh Frozen,2177,33538
+MISC113,Spatially resolved multiomics of human cardiac niches,Heart,Healthy,,Visium,   ,HCAHeartST8795937,Fresh Frozen,2955,33538
+MISC112,Spatially resolved multiomics of human cardiac niches,Heart,Healthy,,Visium,   ,HCAHeartST8795938,Fresh Frozen,1564,33538
+MISC111,Spatially resolved multiomics of human cardiac niches,Heart,Healthy,,Visium,   ,HCAHeartST8795939,Fresh Frozen,2037,33538
+MISC110,Spatially resolved multiomics of human cardiac niches,Heart,Healthy,,Visium,   ,HCAHeartST8795940,Fresh Frozen,1225,33538
+MISC109,Spatially resolved multiomics of human cardiac niches,Heart,Healthy,,Visium,   ,HCAHeartST9341982,Fresh Frozen,1252,33538
+MISC108,Spatially resolved multiomics of human cardiac niches,Heart,Healthy,,Visium,   ,HCAHeartST9341983,Fresh Frozen,1249,33538
+MISC107,Spatially resolved multiomics of human cardiac niches,Heart,Healthy,,Visium,   ,HCAHeartST9341984,Fresh Frozen,2152,33538
+MISC106,Spatially resolved multiomics of human cardiac niches,Heart,Healthy,,Visium,   ,HCAHeartST9383352,Fresh Frozen,2260,33538
+MISC105,Spatially resolved multiomics of human cardiac niches,Heart,Healthy,,Visium,   ,HCAHeartST9383353,Fresh Frozen,1035,33538
+MISC104,Spatially resolved multiomics of human cardiac niches,Heart,Healthy,,Visium,   ,HCAHeartST9383354,Fresh Frozen,2073,33538
+MISC103,Spatially resolved multiomics of human cardiac niches,Heart,Healthy,,Visium,   ,HCAHeartST9383355,Fresh Frozen,1735,33538
+MISC102,Spatially resolved multiomics of human cardiac niches,Heart,Healthy,,Visium,   ,HCAHeartST9383356,Fresh Frozen,1166,33538
+MISC101,Spatially resolved multiomics of human cardiac niches,Heart,Healthy,,Visium,   ,HCAHeartST9383358,Fresh Frozen,1236,33538
+MISC73,COLON MAP: Colon Molecular Atlas Project,Bowel,Cancer,COAD,Visium,   ,6723_KL_1,FFPE,3901,19074
+MISC72,COLON MAP: Colon Molecular Atlas Project,Bowel,Cancer,COAD,Visium,   ,6723_KL_2,FFPE,4369,19310
+MISC71,COLON MAP: Colon Molecular Atlas Project,Bowel,Cancer,COAD,Visium,   ,6723_KL_3,FFPE,2997,19251
+MISC70,COLON MAP: Colon Molecular Atlas Project,Bowel,Cancer,COAD,Visium,   ,6723_KL_4,FFPE,3934,19116
+MISC69,COLON MAP: Colon Molecular Atlas Project,Bowel,Cancer,COAD,Visium,   ,7003_AS_1,FFPE,3634,19263
+MISC68,COLON MAP: Colon Molecular Atlas Project,Bowel,Cancer,COAD,Visium,   ,7003_AS_2,FFPE,2708,19359
+MISC67,COLON MAP: Colon Molecular Atlas Project,Bowel,Cancer,COAD,Visium,   ,7003_AS_3,FFPE,2551,19384
+MISC66,COLON MAP: Colon Molecular Atlas Project,Bowel,Cancer,COAD,Visium,   ,7003_AS_4,FFPE,3970,19347
+MISC65,COLON MAP: Colon Molecular Atlas Project,Bowel,Cancer,COAD,Visium,   ,7003_AS_5,FFPE,3261,19402
+MISC64,COLON MAP: Colon Molecular Atlas Project,Bowel,Cancer,COAD,Visium,   ,7003_AS_6,FFPE,2533,19411
+MISC63,COLON MAP: Colon Molecular Atlas Project,Bowel,Cancer,COAD,Visium,   ,7003_AS_7,FFPE,3467,19346
+MISC62,COLON MAP: Colon Molecular Atlas Project,Bowel,Cancer,COAD,Visium,   ,7003_AS_8,FFPE,4132,19391
+MISC61,COLON MAP: Colon Molecular Atlas Project,Bowel,Tumor,,Visium,   ,7319_AS_2,FFPE,2047,19343
+MISC60,COLON MAP: Colon Molecular Atlas Project,Bowel,Tumor,,Visium,   ,7319_AS_3,FFPE,1014,19255
+MISC59,COLON MAP: Colon Molecular Atlas Project,Bowel,Tumor,,Visium,   ,7319_AS_4,FFPE,1312,19305
+MISC58,COLON MAP: Colon Molecular Atlas Project,Bowel,Cancer,COAD,Visium,   ,7794_AS_1,FFPE,1165,19259
+MISC57,COLON MAP: Colon Molecular Atlas Project,Bowel,Cancer,COAD,Visium,   ,7794_AS_2,FFPE,989,19165
+MISC56,COLON MAP: Colon Molecular Atlas Project,Bowel,Cancer,COAD,Visium,   ,7794_AS_3,FFPE,3395,19338
+MISC55,COLON MAP: Colon Molecular Atlas Project,Bowel,Tumor,,Visium,   ,8270_AS_1,FFPE,863,19175
+MISC54,COLON MAP: Colon Molecular Atlas Project,Bowel,Tumor,,Visium,   ,8270_AS_2,FFPE,668,19266
+MISC53,COLON MAP: Colon Molecular Atlas Project,Bowel,Tumor,,Visium,   ,8270_AS_3,FFPE,818,19315
+MISC52,COLON MAP: Colon Molecular Atlas Project,Bowel,Tumor,,Visium,   ,8270_AS_5,FFPE,229,19284
+MISC51,COLON MAP: Colon Molecular Atlas Project,Bowel,Cancer,COAD,Visium,   ,8270_AS_6,FFPE,3076,19174
+MISC50,COLON MAP: Colon Molecular Atlas Project,Bowel,Cancer,COAD,Visium,   ,8270_AS_7,FFPE,4297,18776
+MISC49,COLON MAP: Colon Molecular Atlas Project,Bowel,Cancer,COAD,Visium,   ,8270_AS_8,FFPE,4624,19330
+MISC48,COLON MAP: Colon Molecular Atlas Project,Bowel,Cancer,COAD,Visium,   ,8270_AS_9,FFPE,3577,19111
+MISC47,COLON MAP: Colon Molecular Atlas Project,Bowel,Cancer,COAD,Visium,   ,8270_AS_10,FFPE,4818,19327
+MISC46,COLON MAP: Colon Molecular Atlas Project,Bowel,Cancer,COAD,Visium,   ,8270_AS_11,FFPE,4511,19337
+MISC45,COLON MAP: Colon Molecular Atlas Project,Bowel,Cancer,COAD,Visium,   ,8270_AS_12,FFPE,4118,19270
+MISC44,COLON MAP: Colon Molecular Atlas Project,Bowel,Cancer,COAD,Visium,   ,8578_AS_1,FFPE,932,18518
+MISC43,COLON MAP: Colon Molecular Atlas Project,Bowel,Cancer,COAD,Visium,   ,8578_AS_2,FFPE,1186,19121
+MISC42,COLON MAP: Colon Molecular Atlas Project,Bowel,Cancer,COAD,Visium,   ,8578_AS_3,FFPE,659,19304
+MISC41,COLON MAP: Colon Molecular Atlas Project,Bowel,Cancer,COAD,Visium,   ,8578_AS_4,FFPE,3708,19255
+MISC40,COLON MAP: Colon Molecular Atlas Project,Bowel,Cancer,COAD,Visium,   ,8899_AS_1,FFPE,4116,19352
+MISC39,COLON MAP: Colon Molecular Atlas Project,Bowel,Cancer,COAD,Visium,   ,8899_AS_2,FFPE,4078,19234
+MISC38,COLON MAP: Colon Molecular Atlas Project,Bowel,Cancer,COAD,Visium,   ,8899_AS_3,FFPE,1727,19366
+MISC37,COLON MAP: Colon Molecular Atlas Project,Bowel,Cancer,COAD,Visium,   ,8899_AS_4,FFPE,3636,19396
+MISC36,COLON MAP: Colon Molecular Atlas Project,Bowel,Cancer,COAD,Visium,   ,8899_AS_5,FFPE,3502,19119
+MISC35,COLON MAP: Colon Molecular Atlas Project,Bowel,Cancer,COAD,Visium,   ,8899_AS_6,FFPE,3578,19061
+MISC34,COLON MAP: Colon Molecular Atlas Project,Bowel,Cancer,COAD,Visium,   ,8899_AS_7,FFPE,3731,19276
+MISC33,COLON MAP: Colon Molecular Atlas Project,Bowel,Cancer,COAD,Visium,   ,8899_AS_8,FFPE,3385,18729
+TENX128,"Visium HD Spatial Gene Expression Library, Human Colorectal Cancer (FFPE)",Bowel,Cancer,COAD,Visium HD,,,FFPE,2279,18085
+TENX92,Visium CytAssist Gene Expression Libraries of Post-Xenium Human Colon Cancer (FFPE),Bowel,Cancer,COAD,Visium,,"Post-Xenium, Replicate 1",FFPE,6518,18085
+TENX91,Visium CytAssist Gene Expression Libraries of Post-Xenium Human Colon Cancer (FFPE),Bowel,Cancer,COAD,Visium,,"Post-Xenium, Replicate 2",FFPE,6352,18085
+TENX90,Visium CytAssist Gene Expression Libraries of Post-Xenium Human Colon Cancer (FFPE),Bowel,Cancer,COAD,Visium,,"Control, Replicate 1",FFPE,6487,18085
+TENX89,Visium CytAssist Gene Expression Libraries of Post-Xenium Human Colon Cancer (FFPE),Bowel,Cancer,COAD,Visium,,"Control, Replicate 2",FFPE,6414,18085
+TENX73,"Human Brain Cancer, 11 mm Capture Area (FFPE)",Brain,Cancer,GBM,Visium,,,FFPE,10878,18085
+TENX72,"Human Lung Cancer, 11 mm Capture Area (FFPE)",Lung,Cancer,LNET,Visium,,,FFPE,6195,18085
+TENX71,"Human Kidney, 11 mm Capture Area (FFPE)",Kidney,Healthy,,Visium,,,FFPE,5936,18085
+TENX70,"Human Colorectal Cancer, 11 mm Capture Area (FFPE)",Bowel,Cancer,COADREAD,Visium,,,FFPE,9080,18085
+TENX68,"Fresh Frozen Visium on CytAssist: Human Breast Cancer, Probe-Based Whole Transcriptome Profiling",Breast,Cancer,IDC,Visium,,,Fresh Frozen,1657,18085
+TENX65,"Human Ovarian Cancer, 11 mm Capture Area (FFPE)",Ovary,Cancer,HGSOC,Visium,,,FFPE,4674,18085
+TENX62,Human Lung Cancer (FFPE),Lung,Cancer,LUSC,Visium,,,FFPE,3858,18085
+TENX53,"Human Breast Cancer: Visium Fresh Frozen, Whole Transcriptome",Breast,Cancer,IDC,Visium,,,Fresh Frozen,4898,36601
+TENX51,Human Ovarian Cancer (FFPE),Ovary,Cancer,SOC,Visium,,,FFPE,3455,17943
+TENX50,Human Cervical Cancer (FFPE),Cervix,Cancer,CESC,Visium,,,FFPE,2781,17943
+TENX49,Human Intestine Cancer (FPPE),Bowel,Cancer,COAD,Visium,,,FFPE,2660,17943
+TENX46,"Human Prostate Cancer, Acinar Cell Carcinoma (FFPE)",Prostate,Cancer,PRAD,Visium,,,FFPE,3043,17943
+TENX41,Normal Human Prostate (FFPE),Prostate,Healthy,,Visium,,,FFPE,2543,17943
+TENX40,"Human Prostate Cancer, Adenocarcinoma with Invasive Carcinoma (FFPE)",Prostate,Cancer,PRAD,Visium,,,FFPE,4371,17943
+TENX39,"Human Breast Cancer: Ductal Carcinoma In Situ, Invasive Carcinoma (FFPE)",Breast,Cancer,IDC,Visium,,,FFPE,2518,17943
+TENX31,Human Glioblastoma: Whole Transcriptome Analysis,Brain,Cancer,GBM,Visium,,,Fresh Frozen,3468,36601
+TENX29,Human Colorectal Cancer: Whole Transcriptome Analysis,Bowel,Cancer,COAD,Visium,,,Fresh Frozen,3138,36601
+TENX24,Human Breast Cancer: Whole Transcriptome Analysis,Breast,Cancer,ILC,Visium,,,Fresh Frozen,4325,32285
+TENX16,Human Lymph Node,Lymph node,Healthy,,Visium,,,Fresh Frozen,4035,36601
+TENX15,Human Heart,Heart,Healthy,,Visium,,,Fresh Frozen,4247,36601
+TENX14,Human Breast Cancer (Block A Section 2),Breast,Cancer,IDC,Visium,,,Fresh Frozen,4015,33538
+TENX13,Human Breast Cancer (Block A Section 1),Breast,Cancer,IDC,Visium,,,Fresh Frozen,3813,33538
+ZEN47,Charting the Heterogeneity of Colorectal Cancer Consensus Molecular Subtypes using Spatial Transcriptomics: datasets,Bowel,Cancer,COAD,Visium,Patient 2,A416371_Rep1,Fresh Frozen,2317,36601
+ZEN46,Charting the Heterogeneity of Colorectal Cancer Consensus Molecular Subtypes using Spatial Transcriptomics: datasets,Bowel,Cancer,COAD,Visium,Patient 2,A416371_Rep2,Fresh Frozen,1803,36601
+ZEN45,Charting the Heterogeneity of Colorectal Cancer Consensus Molecular Subtypes using Spatial Transcriptomics: datasets,Bowel,Cancer,COAD,Visium,Patient 3,A120838_Rep1,Fresh Frozen,328,36601
+ZEN44,Charting the Heterogeneity of Colorectal Cancer Consensus Molecular Subtypes using Spatial Transcriptomics: datasets,Bowel,Cancer,COAD,Visium,Patient 3,A120838_Rep2,Fresh Frozen,1048,36601
+ZEN43,Charting the Heterogeneity of Colorectal Cancer Consensus Molecular Subtypes using Spatial Transcriptomics: datasets,Bowel,Cancer,COAD,Visium,Patient 4,A551763_Rep1,Fresh Frozen,691,36601
+ZEN42,Charting the Heterogeneity of Colorectal Cancer Consensus Molecular Subtypes using Spatial Transcriptomics: datasets,Bowel,Cancer,COAD,Visium,Patient 5,A595688_Rep1,Fresh Frozen,1192,36601
+ZEN41,Charting the Heterogeneity of Colorectal Cancer Consensus Molecular Subtypes using Spatial Transcriptomics: datasets,Bowel,Healthy,,Visium,Patient 6,A798015_Rep1,Fresh Frozen,1685,36601
+ZEN39,Charting the Heterogeneity of Colorectal Cancer Consensus Molecular Subtypes using Spatial Transcriptomics: datasets,Bowel,Cancer,COAD,Visium,Patient 4,A551763_Rep2,Fresh Frozen,1219,36601
+ZEN38,Charting the Heterogeneity of Colorectal Cancer Consensus Molecular Subtypes using Spatial Transcriptomics: datasets,Bowel,Cancer,COAD,Visium,Patient 5,A595688_Rep2,Fresh Frozen,387,36601
+ZEN37,Charting the Heterogeneity of Colorectal Cancer Consensus Molecular Subtypes using Spatial Transcriptomics: datasets,Bowel,Healthy,,Visium,Patient 6,A798015_Rep2,Fresh Frozen,1656,36601
+INT35,Prostate ST Internal,Prostate,Cancer,PRAD,Visium,,Sample_6884-AS-S1-B,,3998,17943
+INT28,Prostate ST Internal,Prostate,Cancer,PRAD,Visium,,Sample_6884-AS-S3-A,,3990,17943
+INT27,Prostate ST Internal,Prostate,Cancer,PRAD,Visium,,Sample_6884-AS-S3-B,,4176,17943
+INT26,Prostate ST Internal,Prostate,Cancer,PRAD,Visium,,Sample_6884-AS-S3-C,,3894,17943
+INT25,Prostate ST Internal,Prostate,Cancer,PRAD,Visium,,Sample_6884-AS-S3-D,,3808,17943
+MEND96,Spatially resolved transcriptomic profiling of degraded,Bowel,Healthy,,Visium,,V10S29-108_B1,Fresh Frozen,3360,17943
+MEND95,Spatially resolved transcriptomic profiling of degraded,Bowel,Healthy,,Visium,,V11A20-396_A1,Fresh Frozen,1738,36601
+MEND93,Spatially resolved transcriptomic profiling of degraded,Bowel,Healthy,,Visium,,V11B18-363_C1,Fresh Frozen,3742,17943
+MEND92,Spatially resolved transcriptomic profiling of degraded,Bowel,Healthy,,Visium,,V11M22-349_A1,Fresh Frozen,1071,17943
+MEND91,Spatially resolved transcriptomic profiling of degraded,Bowel,Healthy,,Visium,,V11M22-349_B1,Fresh Frozen,1154,17943
+MEND90,Spatially resolved transcriptomic profiling of degraded,Lung,Healthy,,Visium,,V10B01-037_A1,Fresh Frozen,2726,17943
+MEND89,Spatially resolved transcriptomic profiling of degraded,Lung,Healthy,,Visium,,V10B01-037_B1,Fresh Frozen,3712,17943
+MEND88,Spatially resolved transcriptomic profiling of degraded,Lung,Healthy,,Visium,,V10T03-286_B1,Fresh Frozen,986,36601
+MEND87,Spatially resolved transcriptomic profiling of degraded,Lung,Healthy,,Visium,,V10T03-286_D1,Fresh Frozen,1508,36601
+MEND86,Spatially resolved transcriptomic profiling of degraded,Lung,Healthy,,Visium,,V11A20-384_C1,Fresh Frozen,3236,36601
+MEND85,Spatially resolved transcriptomic profiling of degraded,Lung,Healthy,,Visium,,V11A20-384_D1,Fresh Frozen,2462,36601
+MEND68,Spatially resolved transcriptomic profiling of degraded,Brain,Cancer,,Visium,,V10T03-322_C1,Fresh Frozen,1490,36601
+MEND67,Spatially resolved transcriptomic profiling of degraded,Brain,Cancer,,Visium,,V10T03-322_D1,Fresh Frozen,1702,36601
+MEND66,Spatially resolved transcriptomic profiling of degraded,Brain,Cancer,,Visium,,V11Y03-081_A1,Fresh Frozen,1238,17943
+MEND65,Spatially resolved transcriptomic profiling of degraded,Brain,Cancer,,Visium,,V11Y03-081_B1,Fresh Frozen,1323,17943
+MEND64,Spatially resolved transcriptomic profiling of degraded,Brain,Cancer,,Visium,,V11Y03-081_C1,Fresh Frozen,1943,17943
+MEND63,Spatially resolved transcriptomic profiling of degraded,Brain,Cancer,,Visium,,V11Y03-081_D1,Fresh Frozen,1433,17943
+MEND62,Spatially resolved transcriptomic profiling of degraded,Prostate,Cancer,,Visium,,V11A20-405_C1,Fresh Frozen,3650,36601
+MEND61,Spatially resolved transcriptomic profiling of degraded,Prostate,Cancer,,Visium,,V11A20-405_D1,Fresh Frozen,4248,36601
+MEND60,Spatially resolved transcriptomic profiling of degraded,Prostate,Cancer,,Visium,,V11M22-349_C1,Fresh Frozen,3954,17943
+MEND59,Spatially resolved transcriptomic profiling of degraded,Prostate,Cancer,,Visium,,V11M22-349_D1,Fresh Frozen,3832,17943
+MEND54,Genome-wide Spatial Expression Profiling in Formalin-fixed Tissues: Supplementary Data,Kidney,Healthy,,Visium,,V19D02-085_D1,PFA fixed,469,33538
+MEND52,Genome-wide Spatial Expression Profiling in Formalin-fixed Tissues: Supplementary Data,Lung,Diseased,,Visium,,V10F24-110_D1,FFPE,758,33550
+MEND51,Genome-wide Spatial Expression Profiling in Formalin-fixed Tissues: Supplementary Data,Lung,Healthy,,Visium,,V19D02-088_A1,PFA fixed,416,33538
+MEND49,Genome-wide Spatial Expression Profiling in Formalin-fixed Tissues: Supplementary Data,Kidney,Healthy,,Visium,,V19D02-085_B1,PFA fixed,413,33538
+MEND48,Genome-wide Spatial Expression Profiling in Formalin-fixed Tissues: Supplementary Data,Kidney,Healthy,,Visium,,V19D02-085_C1,PFA fixed,475,33538
+MEND47,Genome-wide Spatial Expression Profiling in Formalin-fixed Tissues: Supplementary Data,Lung,Healthy,,Visium,,V19D02-088_D1,PFA fixed,533,33538
+MEND45,Genome-wide Spatial Expression Profiling in Formalin-fixed Tissues: Supplementary Data,Lung,Healthy,,Visium,,V19D02-088_B1,PFA fixed,444,33538
+MEND41,Genome-wide Spatial Expression Profiling in Formalin-fixed Tissues: Supplementary Data,Lung,Healthy,,Visium,,V19D02-088_C1,PFA fixed,439,33538
+MEND40,Human squamous cell carcinoma,Skin,Cancer,,Visium,Patient 1,V10F24-015_A1,FFPE,2793,33538
+MEND39,Human squamous cell carcinoma,Skin,Cancer,,Visium,Patient 1,V10F24-015_B1,FFPE,2496,33538
+MEND38,Human squamous cell carcinoma,Skin,Cancer,,Visium,Patient 1,V10F24-015_C1,FFPE,2752,33538
+MEND37,Human squamous cell carcinoma,Skin,Cancer,,Visium,Patient 1,V10F24-015_D1,FFPE,2363,33538
+MEND36,"Human ileum, Visium",Bowel,Healthy,,Visium,Patient 1,V19T26-028_A1,,3214,33538
+MEND35,"Human ileum, Visium",Bowel,Healthy,,Visium,Patient 1,V19T26-028_B1,,3320,33538
+MEND34,"Human ileum, Visium",Bowel,Healthy,,Visium,Patient 1,V19T26-028_C1,,3294,33538
+MEND33,"Human ileum, Visium",Bowel,Healthy,,Visium,Patient 1,V19T26-028_D1,,3291,33538
+NCBI855,Batf3-dendritic cells and 4-1BB-4-1BB ligand axis are required at the effector phase within the tumor microenvironment for PD-1-PD-L1 blockade efficacy,Bladder,Cancer,BLCA,Visium,Patient 10,GSM7659430,FFPE,1432,17943
+NCBI854,Batf3-dendritic cells and 4-1BB-4-1BB ligand axis are required at the effector phase within the tumor microenvironment for PD-1-PD-L1 blockade efficacy,Bladder,Cancer,BLCA,Visium,Patient 1,GSM7659431,FFPE,699,17943
+NCBI833,Multimodal decoding of human liver regeneration [st_human],Liver,Diseased,,Visium,,APAP_liver_spatial_01_A,Fresh Frozen,4992,33538
+NCBI832,Multimodal decoding of human liver regeneration [st_human],Liver,Diseased,,Visium,,APAP_liver_spatial_01_B,Fresh Frozen,4992,33538
+NCBI831,Multimodal decoding of human liver regeneration [st_human],Liver,Diseased,,Visium,,APAP_liver_spatial_03,Fresh Frozen,4992,33538
+NCBI830,Multimodal decoding of human liver regeneration [st_human],Liver,Healthy,,Visium,,Healthy_liver_spatial_01,Fresh Frozen,4992,33538
+NCBI829,Multimodal decoding of human liver regeneration [st_human],Liver,Healthy,,Visium,,Healthy_liver_spatial_02,Fresh Frozen,4992,33538
+NCBI828,Multimodal decoding of human liver regeneration [st_human],Liver,Healthy,,Visium,,Healthy_liver_spatial_10,Fresh Frozen,4992,33538
+NCBI827,Multimodal decoding of human liver regeneration [st_human],Liver,Diseased,,Visium,,NonAE_liver_spatial_03,Fresh Frozen,4992,33538
+NCBI826,Multimodal decoding of human liver regeneration [st_human],Liver,Diseased,,Visium,,NonAE_liver_spatial_05,Fresh Frozen,4992,33538
+NCBI776,"High resolution mapping of the tumor microenvironment using integrated single-cell, spatial and in situ analysis [scRNA-seq and Visium]",Breast,Cancer,IDC,Visium,,"Breast Cancer, Visium CytAssist Spatial Gene Expression",Fresh Frozen,4992,18085
+NCBI771,Spatial transcriptomics of adenoid cystic carcinoma of the lacrimal gland,Eye,Cancer,ACYC,Visium,,"LGACC, sample A, spatial",FFPE,3584,17943
+NCBI714,Spatial localization with Spatial Transcriptomics for an atlas of healthy and injured cell states and niches in the human kidney [Visium ST],Kidney,Healthy,,Visium,Patient 1,IU-F59,Fresh Frozen,3007,33538
+NCBI713,Spatial localization with Spatial Transcriptomics for an atlas of healthy and injured cell states and niches in the human kidney [Visium ST],Kidney,Healthy,,Visium,Patient 2,IU-F52,Fresh Frozen,3627,36601
+NCBI712,Spatial localization with Spatial Transcriptomics for an atlas of healthy and injured cell states and niches in the human kidney [Visium ST],Kidney,Healthy,,Visium,Patient 3,IU-M61,Fresh Frozen,4166,36601
+NCBI711,Spatial localization with Spatial Transcriptomics for an atlas of healthy and injured cell states and niches in the human kidney [Visium ST],Kidney,Healthy,,Visium,Patient 4,IU-M32,Fresh Frozen,2627,36601
+NCBI710,Spatial localization with Spatial Transcriptomics for an atlas of healthy and injured cell states and niches in the human kidney [Visium ST],Kidney,Healthy,,Visium,Patient 5,21-015,Fresh Frozen,956,36601
+NCBI709,Spatial localization with Spatial Transcriptomics for an atlas of healthy and injured cell states and niches in the human kidney [Visium ST],Kidney,Healthy,,Visium,Patient 6,21-019,Fresh Frozen,1034,36601
+NCBI708,Spatial localization with Spatial Transcriptomics for an atlas of healthy and injured cell states and niches in the human kidney [Visium ST],Kidney,Diseased,,Visium,Patient 7,IU-13437,Fresh Frozen,1322,36601
+NCBI707,Spatial localization with Spatial Transcriptomics for an atlas of healthy and injured cell states and niches in the human kidney [Visium ST],Kidney,Diseased,,Visium,Patient 8,29-10013,Fresh Frozen,673,36601
+NCBI706,Spatial localization with Spatial Transcriptomics for an atlas of healthy and injured cell states and niches in the human kidney [Visium ST],Kidney,Diseased,,Visium,Patient 9,29-10012,Fresh Frozen,673,36601
+NCBI705,Spatial localization with Spatial Transcriptomics for an atlas of healthy and injured cell states and niches in the human kidney [Visium ST],Kidney,Diseased,,Visium,Patient 10,29-10280,Fresh Frozen,560,36601
+NCBI704,Spatial localization with Spatial Transcriptomics for an atlas of healthy and injured cell states and niches in the human kidney [Visium ST],Kidney,Diseased,,Visium,Patient 11,31-10221,Fresh Frozen,534,36601
+NCBI703,Spatial localization with Spatial Transcriptomics for an atlas of healthy and injured cell states and niches in the human kidney [Visium ST],Kidney,Diseased,,Visium,Patient 12,29-10404,Fresh Frozen,453,36601
+NCBI702,Spatial localization with Spatial Transcriptomics for an atlas of healthy and injured cell states and niches in the human kidney [Visium ST],Kidney,Diseased,,Visium,Patient 13,28-12265-Cortex,Fresh Frozen,461,36601
+NCBI701,Spatial localization with Spatial Transcriptomics for an atlas of healthy and injured cell states and niches in the human kidney [Visium ST],Kidney,Diseased,,Visium,Patient 13,28-12265-Medulla,Fresh Frozen,904,36601
+NCBI700,Spatial localization with Spatial Transcriptomics for an atlas of healthy and injured cell states and niches in the human kidney [Visium ST],Kidney,Diseased,,Visium,Patient 14,31-10042,Fresh Frozen,601,36601
+NCBI699,Spatial localization with Spatial Transcriptomics for an atlas of healthy and injured cell states and niches in the human kidney [Visium ST],Kidney,Diseased,,Visium,Patient 15,29-10282,Fresh Frozen,787,36601
+NCBI698,Spatial localization with Spatial Transcriptomics for an atlas of healthy and injured cell states and niches in the human kidney [Visium ST],Kidney,Diseased,,Visium,Patient 16,27-10066,Fresh Frozen,407,36601
+NCBI697,Spatial localization with Spatial Transcriptomics for an atlas of healthy and injured cell states and niches in the human kidney [Visium ST],Kidney,Diseased,,Visium,Patient 17,32-10074,Fresh Frozen,317,36601
+NCBI696,Spatial localization with Spatial Transcriptomics for an atlas of healthy and injured cell states and niches in the human kidney [Visium ST],Kidney,Diseased,,Visium,Patient 18,30-10125,Fresh Frozen,645,36601
+NCBI695,Spatial localization with Spatial Transcriptomics for an atlas of healthy and injured cell states and niches in the human kidney [Visium ST],Kidney,Diseased,,Visium,Patient 19,33-10331,Fresh Frozen,673,36601
+NCBI694,Spatial localization with Spatial Transcriptomics for an atlas of healthy and injured cell states and niches in the human kidney [Visium ST],Kidney,Diseased,,Visium,Patient 20,30-10631,Fresh Frozen,640,36601
+NCBI693,Spatial localization with Spatial Transcriptomics for an atlas of healthy and injured cell states and niches in the human kidney [Visium ST],Kidney,Diseased,,Visium,Patient 21,30-10929,Fresh Frozen,507,36601
+NCBI692,Spatial localization with Spatial Transcriptomics for an atlas of healthy and injured cell states and niches in the human kidney [Visium ST],Kidney,Diseased,,Visium,Patient 22,32-10003,Fresh Frozen,370,36601
+NCBI691,A single-cell transcriptomic analysis of endometriosis,Uterus,Diseased,,Visium,,"BEME_346, Endometriosis",,1388,36601
+NCBI690,A single-cell transcriptomic analysis of endometriosis,Uterus,Diseased,,Visium,,"BEME_355G, Endometriosis",,1960,36601
+NCBI675,Single-cell and spatial transcriptomics characterisation of the immunological landscape in the healthy and PSC human liver,Liver,Diseased,,Visium,,C73_A1_VISIUM,,4992,36601
+NCBI674,Single-cell and spatial transcriptomics characterisation of the immunological landscape in the healthy and PSC human liver,Liver,Diseased,,Visium,,C73_B1_VISIUM,,4992,36601
+NCBI673,Single-cell and spatial transcriptomics characterisation of the immunological landscape in the healthy and PSC human liver,Liver,Diseased,,Visium,,C73_C1_VISIUM,,4992,36601
+NCBI672,Single-cell and spatial transcriptomics characterisation of the immunological landscape in the healthy and PSC human liver,Liver,Diseased,,Visium,,C73_D1_VISIUM,,4992,36601
+NCBI657,Spatial Multimodal Analysis: MALDI-MSI and Spatial Transcriptomics within the same tissue section,Brain,Diseased,,Visium,,"human post-mortem brain, Striatum, PD, Visium (V11T17-101_D1)",Fresh Frozen,3900,36601
+NCBI656,Spatial Multimodal Analysis: MALDI-MSI and Spatial Transcriptomics within the same tissue section,Brain,Diseased,,Visium,,"human post-mortem brain, Striatum, PD, FMP-10 (V11T17-102_A1)",Fresh Frozen,4968,17943
+NCBI655,Spatial Multimodal Analysis: MALDI-MSI and Spatial Transcriptomics within the same tissue section,Brain,Diseased,,Visium,,"human post-mortem brain, Striatum, PD, FMP-10 (V11T17-102_B1)",Fresh Frozen,4984,17943
+NCBI654,Spatial Multimodal Analysis: MALDI-MSI and Spatial Transcriptomics within the same tissue section,Brain,Diseased,,Visium,,"human post-mortem brain, Striatum, PD, FMP-10 (V11T17-102_C1)",Fresh Frozen,4868,17943
+NCBI653,Spatial Multimodal Analysis: MALDI-MSI and Spatial Transcriptomics within the same tissue section,Brain,Diseased,,Visium,,"human post-mortem brain, Striatum, PD, FMP-10 (V11T17-102_D1)",Fresh Frozen,4633,17943
+NCBI641,Spatial transcriptomics reveal unnresolved wound repair as potential driver of PFA Ependymoma progression,Brain,Cancer,EPM,Visium,Patient 459,surgically resected tumor 459,,2236,36601
+NCBI640,Spatial transcriptomics reveal unnresolved wound repair as potential driver of PFA Ependymoma progression,Brain,Cancer,EPM,Visium,Patient 723,surgically resected tumor 723,,1959,36601
+NCBI639,Spatial transcriptomics reveal unnresolved wound repair as potential driver of PFA Ependymoma progression,Brain,Cancer,EPM,Visium,Patient 727,surgically resected tumor 727,,979,36601
+NCBI638,Spatial transcriptomics reveal unnresolved wound repair as potential driver of PFA Ependymoma progression,Brain,Cancer,EPM,Visium,Patient 812,surgically resected tumor 812,,3060,36601
+NCBI637,Spatial transcriptomics reveal unnresolved wound repair as potential driver of PFA Ependymoma progression,Brain,Cancer,EPM,Visium,Patient 459,surgically resected tumor 459_2,,2705,36601
+NCBI636,Spatial transcriptomics reveal unnresolved wound repair as potential driver of PFA Ependymoma progression,Brain,Cancer,EPM,Visium,Patient 723,surgically resected tumor 723_2,,1616,36601
+NCBI635,Spatial transcriptomics reveal unnresolved wound repair as potential driver of PFA Ependymoma progression,Brain,Cancer,EPM,Visium,Patient 821,surgically resected tumor 821,,3027,36601
+NCBI634,Spatial transcriptomics reveal unnresolved wound repair as potential driver of PFA Ependymoma progression,Brain,Cancer,EPM,Visium,Patient 848,surgically resected tumor 848,,1842,36601
+NCBI633,Spatial transcriptomics reveal unnresolved wound repair as potential driver of PFA Ependymoma progression,Brain,Cancer,EPM,Visium,Patient 1101,surgically resected tumor 1101,,3153,36601
+NCBI632,Spatial transcriptomics reveal unnresolved wound repair as potential driver of PFA Ependymoma progression,Brain,Cancer,EPM,Visium,Patient 1269,surgically resected tumor 1269,,2743,36601
+NCBI631,Spatial transcriptomics reveal unnresolved wound repair as potential driver of PFA Ependymoma progression,Brain,Cancer,EPM,Visium,Patient 928,surgically resected tumor 928,,2051,36601
+NCBI630,Spatial transcriptomics reveal unnresolved wound repair as potential driver of PFA Ependymoma progression,Brain,Cancer,EPM,Visium,Patient 1239,surgically resected tumor 1239,,2961,36601
+NCBI629,Spatial transcriptomics reveal unnresolved wound repair as potential driver of PFA Ependymoma progression,Brain,Cancer,EPM,Visium,Patient 1513,surgically resected tumor 1513,,3620,36601
+NCBI628,Spatial transcriptomics reveal unnresolved wound repair as potential driver of PFA Ependymoma progression,Brain,Cancer,EPM,Visium,Patient 928,surgically resected tumor 928_2,,1262,36601
+NCBI603,"A new epithelial cell subpopulation predicts response to surgery, chemotherapy, and immunotherapy in bladder cancer",Bladder,Cancer,BLCA,Visium,Patient 1,MIBC_B1204,,768,33538
+NCBI602,"A new epithelial cell subpopulation predicts response to surgery, chemotherapy, and immunotherapy in bladder cancer",Bladder,Cancer,BLCA,Visium,Patient 2,MIBC_B8,,1017,33538
+NCBI601,"A new epithelial cell subpopulation predicts response to surgery, chemotherapy, and immunotherapy in bladder cancer",Bladder,Cancer,BLCA,Visium,Patient 3,MIBC_B72,,1469,33538
+NCBI600,"A new epithelial cell subpopulation predicts response to surgery, chemotherapy, and immunotherapy in bladder cancer",Bladder,Cancer,BLCA,Visium,Patient 4,MIBC_B371,,832,33538
+NCBI599,Integration of spatial and single cell transcriptomics localizes epithelial-immune cross-talk in kidney injury,Kidney,Healthy,,Visium,,Human Nephrectomy,,3007,33538
+NCBI595,GENE EXPRESSION WITHIN A HUMAN CHOROIDAL NEOVASCULAR MEMBRANE USING SPATIAL TRANSCRIPTOMICS,Eye,Healthy,,Visium,,Control_A1,Fresh Frozen,1303,36601
+NCBI594,GENE EXPRESSION WITHIN A HUMAN CHOROIDAL NEOVASCULAR MEMBRANE USING SPATIAL TRANSCRIPTOMICS,Eye,Healthy,,Visium,,Control_D1,Fresh Frozen,1307,36601
+NCBI593,GENE EXPRESSION WITHIN A HUMAN CHOROIDAL NEOVASCULAR MEMBRANE USING SPATIAL TRANSCRIPTOMICS,Eye,Diseased,,Visium,,CNV_A1,Fresh Frozen,724,36601
+NCBI592,GENE EXPRESSION WITHIN A HUMAN CHOROIDAL NEOVASCULAR MEMBRANE USING SPATIAL TRANSCRIPTOMICS,Eye,Diseased,,Visium,,CNV_B1,Fresh Frozen,721,36601
+NCBI591,GENE EXPRESSION WITHIN A HUMAN CHOROIDAL NEOVASCULAR MEMBRANE USING SPATIAL TRANSCRIPTOMICS,Eye,Diseased,,Visium,,CNV_C1,Fresh Frozen,663,36601
+NCBI576,SARS-CoV-2 Niches in Human Placenta Revealed by Spatial Transcriptomics,Uterus,Healthy,,Visium,,NC1b,Fresh Frozen,470,36612
+NCBI575,SARS-CoV-2 Niches in Human Placenta Revealed by Spatial Transcriptomics,Uterus,Healthy,,Visium,,NC1c,Fresh Frozen,967,36612
+NCBI574,SARS-CoV-2 Niches in Human Placenta Revealed by Spatial Transcriptomics,Uterus,Diseased,,Visium,,ND1,Fresh Frozen,1505,36612
+NCBI573,SARS-CoV-2 Niches in Human Placenta Revealed by Spatial Transcriptomics,Uterus,Diseased,,Visium,,SP1,Fresh Frozen,1547,36612
+NCBI821,SARS-CoV-2 Niches in Human Placenta Revealed by Spatial Transcriptomics,Uterus,Diseased,,Visium,,SP2,Fresh Frozen,1375,36612
+NCBI820,SARS-CoV-2 Niches in Human Placenta Revealed by Spatial Transcriptomics,Uterus,Diseased,,Visium,,SP3,Fresh Frozen,1561,36612
+NCBI819,SARS-CoV-2 Niches in Human Placenta Revealed by Spatial Transcriptomics,Uterus,Diseased,,Visium,,SP4,Fresh Frozen,918,36612
+NCBI818,SARS-CoV-2 Niches in Human Placenta Revealed by Spatial Transcriptomics,Uterus,Diseased,,Visium,,ND2,Fresh Frozen,515,36612
+NCBI817,SARS-CoV-2 Niches in Human Placenta Revealed by Spatial Transcriptomics,Uterus,Diseased,,Visium,,ND3,Fresh Frozen,341,36612
+NCBI816,SARS-CoV-2 Niches in Human Placenta Revealed by Spatial Transcriptomics,Uterus,Diseased,,Visium,,SP5,Fresh Frozen,669,36612
+NCBI815,SARS-CoV-2 Niches in Human Placenta Revealed by Spatial Transcriptomics,Uterus,Diseased,,Visium,,HP1a,Fresh Frozen,369,36612
+NCBI814,SARS-CoV-2 Niches in Human Placenta Revealed by Spatial Transcriptomics,Uterus,Diseased,,Visium,,HP1b,Fresh Frozen,1323,36612
+NCBI813,SARS-CoV-2 Niches in Human Placenta Revealed by Spatial Transcriptomics,Uterus,Healthy,,Visium,,NC2,Fresh Frozen,2027,36612
+NCBI812,SARS-CoV-2 Niches in Human Placenta Revealed by Spatial Transcriptomics,Uterus,Healthy,,Visium,,NC3,Fresh Frozen,2605,36612
+NCBI811,SARS-CoV-2 Niches in Human Placenta Revealed by Spatial Transcriptomics,Uterus,Healthy,,Visium,,NC4,Fresh Frozen,1894,36612
+NCBI572,Schwann Cells Shape Tumor Cells and Cancer-Associated Fibroblasts in the Pancreatic Ductal Adenocarcinoma Microenvironment [ST],Pancreas,Cancer,PAAD,Visium,,ST_PDAC-1,Fresh Frozen,3794,20615
+NCBI571,Schwann Cells Shape Tumor Cells and Cancer-Associated Fibroblasts in the Pancreatic Ductal Adenocarcinoma Microenvironment [ST],Pancreas,Cancer,PAAD,Visium,,ST_PDAC-2,Fresh Frozen,2498,20615
+NCBI570,Schwann Cells Shape Tumor Cells and Cancer-Associated Fibroblasts in the Pancreatic Ductal Adenocarcinoma Microenvironment [ST],Pancreas,Cancer,PAAD,Visium,,ST_PDAC-3,Fresh Frozen,3216,20615
+NCBI569,Schwann Cells Shape Tumor Cells and Cancer-Associated Fibroblasts in the Pancreatic Ductal Adenocarcinoma Microenvironment [ST],Pancreas,Cancer,PAAD,Visium,,ST_PDAC-4,Fresh Frozen,3493,20615
+NCBI568,A Spatial Transcriptomic atlas of the human kidney papilla identifies significant immune injury in patients with stone disease,Kidney,Healthy,,Visium,,20-0034,Fresh Frozen,2438,36601
+NCBI567,A Spatial Transcriptomic atlas of the human kidney papilla identifies significant immune injury in patients with stone disease,Kidney,Diseased,,Visium,,KRP428,Fresh Frozen,817,36601
+NCBI566,A Spatial Transcriptomic atlas of the human kidney papilla identifies significant immune injury in patients with stone disease,Kidney,Diseased,,Visium,,KRP449,Fresh Frozen,939,36601
+NCBI565,A Spatial Transcriptomic atlas of the human kidney papilla identifies significant immune injury in patients with stone disease,Kidney,Diseased,,Visium,,KRP429,Fresh Frozen,1085,36601
+NCBI564,A Spatial Transcriptomic atlas of the human kidney papilla identifies significant immune injury in patients with stone disease,Kidney,Diseased,,Visium,,KRP446 (M) - KRP462 (F) - KRP475 (F),Fresh Frozen,262,36601
+NCBI563,A Spatial Transcriptomic atlas of the human kidney papilla identifies significant immune injury in patients with stone disease,Kidney,Diseased,,Visium,,F59 - F63,Fresh Frozen,1376,36601
+NCBI562,A Spatial Transcriptomic atlas of the human kidney papilla identifies significant immune injury in patients with stone disease,Kidney,Diseased,,Visium,,M50,Fresh Frozen,2468,36601
+NCBI540,Genome-wide Spatial Expression Profiling in Formalin-fixed Tissues,Kidney,Treated,,Visium,,PFA fixed kidney_organoid_1,PFA,413,33538
+NCBI539,Genome-wide Spatial Expression Profiling in Formalin-fixed Tissues,Kidney,Treated,,Visium,,PFA fixed kidney_organoid_2,PFA,475,33538
+NCBI538,Genome-wide Spatial Expression Profiling in Formalin-fixed Tissues,Kidney,Treated,,Visium,,PFA fixed kidney_organoid_3,PFA,469,33538
+NCBI537,Genome-wide Spatial Expression Profiling in Formalin-fixed Tissues,Lung,Treated,,Visium,,PFA fixed lung_organoid_1,PFA,416,33538
+NCBI536,Genome-wide Spatial Expression Profiling in Formalin-fixed Tissues,Lung,Treated,,Visium,,PFA fixed lung_organoid_2,PFA,444,33538
+NCBI535,Genome-wide Spatial Expression Profiling in Formalin-fixed Tissues,Lung,Treated,,Visium,,PFA fixed lung_organoid_3,PFA,439,33538
+NCBI534,Genome-wide Spatial Expression Profiling in Formalin-fixed Tissues,Lung,Healthy,,Visium,,PFA fixed lung_organoid_4,PFA,533,33538
+NCBI526,Spatial transcriptomics landscape of non-communicable inflammatory skin diseases,Skin,Diseased,,Visium,,"Patient 1 non lesional psoriasis, rep 1 [P15509_1001]",Fresh Frozen,818,20613
+NCBI525,Spatial transcriptomics landscape of non-communicable inflammatory skin diseases,Skin,Diseased,,Visium,,"Patient 1 non lesional psoriasis, rep 2 [P15509_1002]",Fresh Frozen,777,20613
+NCBI524,Spatial transcriptomics landscape of non-communicable inflammatory skin diseases,Skin,Diseased,,Visium,,"Patient 1 lesional psoriasis, rep 1 [P15509_1003]",Fresh Frozen,909,20613
+NCBI523,Spatial transcriptomics landscape of non-communicable inflammatory skin diseases,Skin,Diseased,,Visium,,"Patient 1 lesional psoriasis, rep 2 [P15509_1004]",Fresh Frozen,752,20613
+NCBI522,Spatial transcriptomics landscape of non-communicable inflammatory skin diseases,Skin,Diseased,,Visium,,"Patient 2 non lesional atopic dermatitis, rep 1 [P16357_1001]",Fresh Frozen,587,20613
+NCBI521,Spatial transcriptomics landscape of non-communicable inflammatory skin diseases,Skin,Diseased,,Visium,,"Patient 2 non lesional atopic dermatitis, rep 2 [P16357_1002]",Fresh Frozen,464,20613
+NCBI520,Spatial transcriptomics landscape of non-communicable inflammatory skin diseases,Skin,Diseased,,Visium,,"Patient 2 lesional atopic dermatitis, rep 1 [P16357_1003]",Fresh Frozen,527,20613
+NCBI519,Spatial transcriptomics landscape of non-communicable inflammatory skin diseases,Skin,Diseased,,Visium,,"Patient 2 lesional atopic dermatitis, rep 2 [P16357_1004]",Fresh Frozen,524,20613
+NCBI518,Spatial transcriptomics landscape of non-communicable inflammatory skin diseases,Skin,Diseased,,Visium,,"Patient 3 non lesional lichen planus, rep 1 [P16357_1005]",Fresh Frozen,546,20613
+NCBI517,Spatial transcriptomics landscape of non-communicable inflammatory skin diseases,Skin,Diseased,,Visium,,"Patient 3 non lesional lichen planus, rep 2 [P16357_1006]",Fresh Frozen,549,20613
+NCBI516,Spatial transcriptomics landscape of non-communicable inflammatory skin diseases,Skin,Diseased,,Visium,,"Patient 3 lesional lichen planus, rep 1 [P16357_1007]",Fresh Frozen,450,20613
+NCBI515,Spatial transcriptomics landscape of non-communicable inflammatory skin diseases,Skin,Diseased,,Visium,,"Patient 3 lesional lichen planus, rep 2 [P16357_1008]",Fresh Frozen,825,20613
+NCBI510,Spatial transcriptomics landscape of non-communicable inflammatory skin diseases,Skin,Diseased,,Visium,,"Patient 5 non lesional atopic dermatitis, rep 1 [P16357_1013]",Fresh Frozen,525,20613
+NCBI509,Spatial transcriptomics landscape of non-communicable inflammatory skin diseases,Skin,Diseased,,Visium,,"Patient 5 non lesional atopic dermatitis, rep 2 [P16357_1014]",Fresh Frozen,768,20613
+NCBI508,Spatial transcriptomics landscape of non-communicable inflammatory skin diseases,Skin,Diseased,,Visium,,"Patient 5 lesional atopic dermatitis, rep 1 [P16357_1015]",Fresh Frozen,442,20613
+NCBI507,Spatial transcriptomics landscape of non-communicable inflammatory skin diseases,Skin,Diseased,,Visium,,"Patient 5 lesional atopic dermatitis, rep 2 [P16357_1016]",Fresh Frozen,469,20613
+NCBI506,Spatial transcriptomics landscape of non-communicable inflammatory skin diseases,Skin,Diseased,,Visium,,"Patient 6 non lesional lichen planus, rep 1 [P16357_1017]",Fresh Frozen,666,20613
+NCBI505,Spatial transcriptomics landscape of non-communicable inflammatory skin diseases,Skin,Diseased,,Visium,,"Patient 6 non lesional lichen planus, rep 2 [P16357_1018]",Fresh Frozen,706,20613
+NCBI504,Spatial transcriptomics landscape of non-communicable inflammatory skin diseases,Skin,Diseased,,Visium,,"Patient 6 lesional lichen planus, rep 1 [P16357_1019]",Fresh Frozen,1000,20613
+NCBI503,Spatial transcriptomics landscape of non-communicable inflammatory skin diseases,Skin,Diseased,,Visium,,"Patient 6 lesional lichen planus, rep 2 [P16357_1020]",Fresh Frozen,985,20613
+NCBI498,Spatial transcriptomics landscape of non-communicable inflammatory skin diseases,Skin,Diseased,,Visium,,"Patient 8 non lesional atopic dermatitis, rep 1 [P16357_1025]",Fresh Frozen,698,20613
+NCBI497,Spatial transcriptomics landscape of non-communicable inflammatory skin diseases,Skin,Diseased,,Visium,,"Patient 8 non lesional atopic dermatitis, rep 2 [P16357_1026]",Fresh Frozen,765,20613
+NCBI496,Spatial transcriptomics landscape of non-communicable inflammatory skin diseases,Skin,Diseased,,Visium,,"Patient 8 lesional atopic dermatitis, rep 1 [P16357_1027]",Fresh Frozen,697,20613
+NCBI495,Spatial transcriptomics landscape of non-communicable inflammatory skin diseases,Skin,Diseased,,Visium,,"Patient 8 lesional atopic dermatitis, rep 2 [P16357_1028]",Fresh Frozen,706,20613
+NCBI494,Spatial transcriptomics landscape of non-communicable inflammatory skin diseases,Skin,Diseased,,Visium,,"Patient 9 non lesional lichen planus, rep 1 [P16357_1029]",Fresh Frozen,508,20613
+NCBI493,Spatial transcriptomics landscape of non-communicable inflammatory skin diseases,Skin,Diseased,,Visium,,"Patient 9 non lesional lichen planus, rep 2 [P16357_1030]",Fresh Frozen,566,20613
+NCBI492,Spatial transcriptomics landscape of non-communicable inflammatory skin diseases,Skin,Diseased,,Visium,,"Patient 9 lesional lichen planus, rep 1 [P16357_1031]",Fresh Frozen,814,20613
+NCBI491,Spatial transcriptomics landscape of non-communicable inflammatory skin diseases,Skin,Diseased,,Visium,,"Patient 9 lesional lichen planus, rep 2 [P16357_1032]",Fresh Frozen,913,20613
+NCBI490,Spatial transcriptomics landscape of non-communicable inflammatory skin diseases,Skin,Diseased,,Visium,,"Patient 10 non lesional psoriasis, rep 1 [P16357_1033]",Fresh Frozen,617,20613
+NCBI489,Spatial transcriptomics landscape of non-communicable inflammatory skin diseases,Skin,Diseased,,Visium,,"Patient 10 non lesional psoriasis, rep 2 [P16357_1034]",Fresh Frozen,585,20613
+NCBI488,Spatial transcriptomics landscape of non-communicable inflammatory skin diseases,Skin,Diseased,,Visium,,"Patient 10 lesional psoriasis, rep 1 [P16357_1035]",Fresh Frozen,1021,20613
+NCBI487,Spatial transcriptomics landscape of non-communicable inflammatory skin diseases,Skin,Diseased,,Visium,,"Patient 10 lesional psoriasis, rep 2 [P16357_1036]",Fresh Frozen,1014,20613
+NCBI486,Spatial transcriptomics landscape of non-communicable inflammatory skin diseases,Skin,Diseased,,Visium,,"Patient 11 non lesional atopic dermatitis, rep 1 [P16357_1037]",Fresh Frozen,305,20613
+NCBI485,Spatial transcriptomics landscape of non-communicable inflammatory skin diseases,Skin,Diseased,,Visium,,"Patient 11 non lesional atopic dermatitis, rep 2 [P16357_1038]",Fresh Frozen,545,20613
+NCBI484,Spatial transcriptomics landscape of non-communicable inflammatory skin diseases,Skin,Diseased,,Visium,,"Patient 11 lesional atopic dermatitis, rep 1 [P16357_1039]",Fresh Frozen,713,20613
+NCBI483,Spatial transcriptomics landscape of non-communicable inflammatory skin diseases,Skin,Diseased,,Visium,,"Patient 11 lesional atopic dermatitis, rep 2 [P16357_1040]",Fresh Frozen,923,20613
+NCBI482,Spatial transcriptomics landscape of non-communicable inflammatory skin diseases,Skin,Diseased,,Visium,,"Patient 12 non lesional lichen planus, rep 1 [P16357_1041]",Fresh Frozen,625,20613
+NCBI481,Spatial transcriptomics landscape of non-communicable inflammatory skin diseases,Skin,Diseased,,Visium,,"Patient 12 non lesional lichen planus, rep 2 [P16357_1042]",Fresh Frozen,651,20613
+NCBI480,Spatial transcriptomics landscape of non-communicable inflammatory skin diseases,Skin,Diseased,,Visium,,"Patient 12 lesional lichen planus, rep 1 [P16357_1043]",Fresh Frozen,695,20613
+NCBI479,Spatial transcriptomics landscape of non-communicable inflammatory skin diseases,Skin,Diseased,,Visium,,"Patient 12 lesional lichen planus, rep 2 [P16357_1044]",Fresh Frozen,1040,20613
+NCBI478,Spatial transcriptomics landscape of non-communicable inflammatory skin diseases,Skin,Diseased,,Visium,,"Patient 13 non lesional psoriasis, rep 1 [P16357_1045]",Fresh Frozen,790,20613
+NCBI477,Spatial transcriptomics landscape of non-communicable inflammatory skin diseases,Skin,Diseased,,Visium,,"Patient 13 non lesional psoriasis, rep 2 [P16357_1046]",Fresh Frozen,791,20613
+NCBI476,Spatial transcriptomics landscape of non-communicable inflammatory skin diseases,Skin,Diseased,,Visium,,"Patient 13 lesional psoriasis, rep 1 [P16357_1047]",Fresh Frozen,1144,20613
+NCBI475,Spatial transcriptomics landscape of non-communicable inflammatory skin diseases,Skin,Diseased,,Visium,,"Patient 13 lesional psoriasis, rep 2 [P16357_1048]",Fresh Frozen,1414,20613
+NCBI474,Spatial transcriptomics landscape of non-communicable inflammatory skin diseases,Skin,Diseased,,Visium,,"Patient 14 non lesional lichen planus, rep 1 [P16357_1049]",Fresh Frozen,598,20613
+NCBI473,Spatial transcriptomics landscape of non-communicable inflammatory skin diseases,Skin,Diseased,,Visium,,"Patient 14 non lesional lichen planus, rep 2 [P16357_1050]",Fresh Frozen,744,20613
+NCBI472,Spatial transcriptomics landscape of non-communicable inflammatory skin diseases,Skin,Diseased,,Visium,,"Patient 14 lesional lichen planus, rep 1 [P16357_1051]",Fresh Frozen,1122,20613
+NCBI471,Spatial transcriptomics landscape of non-communicable inflammatory skin diseases,Skin,Diseased,,Visium,,"Patient 14 lesional lichen planus, rep 2 [P16357_1052]",Fresh Frozen,1117,20613
+NCBI470,Spatial transcriptomics landscape of non-communicable inflammatory skin diseases,Skin,Diseased,,Visium,,"Patient 15 lesional atopic dermatitis, rep 1 [P16357_1053]",Fresh Frozen,1350,20613
+NCBI469,Spatial transcriptomics landscape of non-communicable inflammatory skin diseases,Skin,Diseased,,Visium,,"Patient 15 lesional atopic dermatitis, rep 2 [P16357_1054]",Fresh Frozen,1504,20613
+NCBI468,Spatial transcriptomics landscape of non-communicable inflammatory skin diseases,Skin,Diseased,,Visium,,"Patient 22, 19 lesional psoriasis, rep 1 [21L008958]",Fresh Frozen,1964,20613
+NCBI467,Spatial transcriptomics landscape of non-communicable inflammatory skin diseases,Skin,Diseased,,Visium,,"Patient 22, 19 lesional psoriasis, rep 2 [21L008959]",Fresh Frozen,1906,20613
+NCBI466,Spatial transcriptomics landscape of non-communicable inflammatory skin diseases,Skin,Diseased,,Visium,,"Patient 29 lesional pityriasis rubra pilaris - psoriasis, rep 1 [21L008960]",Fresh Frozen,691,20613
+NCBI465,Spatial transcriptomics landscape of non-communicable inflammatory skin diseases,Skin,Diseased,,Visium,,"Patient 29 lesional pityriasis rubra pilaris - psoriasis, rep 2 [21L008961]",Fresh Frozen,736,20613
+NCBI464,Spatial transcriptomics landscape of non-communicable inflammatory skin diseases,Skin,Diseased,,Visium,,"Patient 31, 32 lesional psoriasis, rep 1 [21L008962]",Fresh Frozen,1979,20613
+NCBI463,Spatial transcriptomics landscape of non-communicable inflammatory skin diseases,Skin,Diseased,,Visium,,"Patient 31, 32 lesional psoriasis, rep 2 [21L008963]",Fresh Frozen,1253,20613
+NCBI462,Spatial transcriptomics landscape of non-communicable inflammatory skin diseases,Skin,Diseased,,Visium,,"Patient 28, 33 lesional psoriasis, lichen planus, rep 1 [21L008964]",Fresh Frozen,2043,20613
+NCBI461,Spatial transcriptomics landscape of non-communicable inflammatory skin diseases,Skin,Diseased,,Visium,,"Patient 28, 33 lesional psoriasis, lichen planus, rep 2 [21L008965]",Fresh Frozen,1987,20613
+NCBI460,Spatial transcriptomics landscape of non-communicable inflammatory skin diseases,Skin,Diseased,,Visium,,"Patient 26, 30 lesional lichen planus, rep 1 [21L008966]",Fresh Frozen,1951,20613
+NCBI4,Spatiotemporally Deciphering the Unknown Role of Persistent HPV Infection in Precancer to Cervical Cancer Progression: Integrating Single-Cell RNA-Sequencing Landscape and Spatial Transcriptomics Atlas [Spatial Transcriptomics],Cervix,Diseased,,Visium,,"N_HPV, replicate 1, Spatial Transcriptomics",,1054,20615
+NCBI3,Spatiotemporally Deciphering the Unknown Role of Persistent HPV Infection in Precancer to Cervical Cancer Progression: Integrating Single-Cell RNA-Sequencing Landscape and Spatial Transcriptomics Atlas [Spatial Transcriptomics],Cervix,Diseased,,Visium,,"HSIL_HPV, replicate 1, Spatial Transcriptomics",,579,20615
+NCBI2,Spatiotemporally Deciphering the Unknown Role of Persistent HPV Infection in Precancer to Cervical Cancer Progression: Integrating Single-Cell RNA-Sequencing Landscape and Spatial Transcriptomics Atlas [Spatial Transcriptomics],Cervix,Cancer,UNKNOWN,Visium,,"CA_HPV, replicate 1, Spatial Transcriptomics",,1757,20615
+NCBI1,Spatiotemporally Deciphering the Unknown Role of Persistent HPV Infection in Precancer to Cervical Cancer Progression: Integrating Single-Cell RNA-Sequencing Landscape and Spatial Transcriptomics Atlas [Spatial Transcriptomics],Cervix,Cancer,UNKNOWN,Visium,,"CA_HPV, replicate 2, Spatial Transcriptomics",,1593,20615
+MISC32,A spatially resolved atlas of the human lung characterizes a gland-associated immune niche,Lung,Treated,,Visium,   ,WSA_LngSP8759310,Fresh Frozen,1928,33538
+MISC31,A spatially resolved atlas of the human lung characterizes a gland-associated immune niche,Lung,Treated,,Visium,   ,WSA_LngSP8759311,Fresh Frozen,2524,33538
+MISC30,A spatially resolved atlas of the human lung characterizes a gland-associated immune niche,Lung,Treated,,Visium,   ,WSA_LngSP8759312,Fresh Frozen,2729,33538
+MISC29,A spatially resolved atlas of the human lung characterizes a gland-associated immune niche,Lung,Treated,,Visium,   ,WSA_LngSP8759313,Fresh Frozen,2283,33538
+MISC28,A spatially resolved atlas of the human lung characterizes a gland-associated immune niche,Lung,Treated,,Visium,   ,WSA_LngSP9258462,Fresh Frozen,863,33538
+MISC27,A spatially resolved atlas of the human lung characterizes a gland-associated immune niche,Lung,Treated,,Visium,   ,WSA_LngSP9258463,Fresh Frozen,408,33538
+MISC26,A spatially resolved atlas of the human lung characterizes a gland-associated immune niche,Lung,Treated,,Visium,   ,WSA_LngSP9258464,Fresh Frozen,2524,33538
+MISC25,A spatially resolved atlas of the human lung characterizes a gland-associated immune niche,Lung,Treated,,Visium,   ,WSA_LngSP9258465,Fresh Frozen,2249,33538
+MISC24,A spatially resolved atlas of the human lung characterizes a gland-associated immune niche,Lung,Treated,,Visium,   ,WSA_LngSP9258466,Fresh Frozen,875,33538
+MISC23,A spatially resolved atlas of the human lung characterizes a gland-associated immune niche,Lung,Treated,,Visium,   ,WSA_LngSP9258467,Fresh Frozen,436,33538
+MISC22,A spatially resolved atlas of the human lung characterizes a gland-associated immune niche,Lung,Treated,,Visium,   ,WSA_LngSP9258468,Fresh Frozen,2704,33538
+MISC21,A spatially resolved atlas of the human lung characterizes a gland-associated immune niche,Lung,Treated,,Visium,   ,WSA_LngSP9258469,Fresh Frozen,2987,33538
+MISC20,A spatially resolved atlas of the human lung characterizes a gland-associated immune niche,Lung,Treated,,Visium,   ,WSA_LngSP10193345,Fresh Frozen,3316,33538
+MISC19,A spatially resolved atlas of the human lung characterizes a gland-associated immune niche,Lung,Treated,,Visium,   ,WSA_LngSP10193346,Fresh Frozen,2454,33538
+MISC18,A spatially resolved atlas of the human lung characterizes a gland-associated immune niche,Lung,Treated,,Visium,   ,WSA_LngSP10193347,Fresh Frozen,2081,33538
+MISC17,A spatially resolved atlas of the human lung characterizes a gland-associated immune niche,Lung,Treated,,Visium,   ,WSA_LngSP10193348,Fresh Frozen,1084,33538
+MISC16,A spatially resolved atlas of the human lung characterizes a gland-associated immune niche,Lung,Treated,,Visium,   ,WSA_LngSP10972072,FFPE,3154,17922
+MISC15,A spatially resolved atlas of the human lung characterizes a gland-associated immune niche,Lung,Treated,,Visium,   ,WSA_LngSP10972073,FFPE,2501,17922
+MISC14,A spatially resolved atlas of the human lung characterizes a gland-associated immune niche,Lung,Treated,,Visium,   ,WSA_LngSP10972074,FFPE,1670,17922
+MISC13,A spatially resolved atlas of the human lung characterizes a gland-associated immune niche,Lung,Treated,,Visium,   ,WSA_LngSP10972075,FFPE,1768,17922
+MISC12,spatialLIBD,Brain,Healthy,,Visium,   ,151507,Fresh Frozen,4226,33538
+MISC11,spatialLIBD,Brain,Healthy,,Visium,   ,151508,Fresh Frozen,4384,33538
+MISC10,spatialLIBD,Brain,Healthy,,Visium,   ,151509,Fresh Frozen,4789,33538
+MISC9,spatialLIBD,Brain,Healthy,,Visium,   ,151510,Fresh Frozen,4634,33538
+MISC8,spatialLIBD,Brain,Healthy,,Visium,   ,151669,Fresh Frozen,3661,33538
+MISC7,spatialLIBD,Brain,Healthy,,Visium,   ,151670,Fresh Frozen,3498,33538
+MISC6,spatialLIBD,Brain,Healthy,,Visium,   ,151671,Fresh Frozen,4110,33538
+MISC5,spatialLIBD,Brain,Healthy,,Visium,   ,151672,Fresh Frozen,4015,33538
+MISC4,spatialLIBD,Brain,Healthy,,Visium,   ,151673,Fresh Frozen,3639,33538
+MISC3,spatialLIBD,Brain,Healthy,,Visium,   ,151674,Fresh Frozen,3673,33538
+MISC2,spatialLIBD,Brain,Healthy,,Visium,   ,151675,Fresh Frozen,3592,33538
+MISC1,spatialLIBD,Brain,Healthy,,Visium,   ,151676,Fresh Frozen,3460,33538

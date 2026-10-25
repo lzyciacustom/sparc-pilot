@@ -1,0 +1,21 @@
+--target ulm --seed 0 --crc_only
+--target ulm --seed 1 --crc_only
+--target ulm --seed 2 --crc_only
+--target ulm --seed 0 --crc_only --ctx
+--target ulm --seed 1 --crc_only --ctx
+--target ulm --seed 2 --crc_only --ctx
+--target ulm --seed 0 --decoup comp
+--target ulm --seed 1 --decoup comp
+--target ulm --seed 2 --decoup comp
+--target ulm --seed 0 --decoup res
+--target ulm --seed 1 --decoup res
+--target ulm --seed 2 --decoup res
+--target ulm --seed 0 --decoup randres
+--target ulm --seed 1 --decoup randres
+--target ulm --seed 2 --decoup randres
+--target ulm --seed 0 --external mouse
+--target ulm --seed 1 --external mouse
+--target ulm --seed 2 --external mouse
+--target ssgsea --seed 0 --external mouse
+--target ssgsea --seed 1 --external mouse
+--target ssgsea --seed 2 --external mouse

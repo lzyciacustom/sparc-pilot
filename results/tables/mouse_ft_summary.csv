@@ -1,0 +1,11 @@
+target,scheme,condition,pearson,pearson_centered,pearson_depthres
+rand0ulm,dataset,human_ft,0.0506,0.0473,0.0338
+rand0ulm,dataset,mouse_only,0.0365,0.0353,0.0224
+rand0ulm,none,human_only,0.037,0.0313,0.0308
+rand0ulm,slide,human_ft,0.1272,0.1045,0.0795
+rand0ulm,slide,mouse_only,0.1357,0.1088,0.0871
+ulm,dataset,human_ft,0.1459,0.1477,0.1094
+ulm,dataset,mouse_only,0.1182,0.1248,0.1019
+ulm,none,human_only,0.1268,0.13,0.1017
+ulm,slide,human_ft,0.337,0.3078,0.2452
+ulm,slide,mouse_only,0.3507,0.3269,0.2588
