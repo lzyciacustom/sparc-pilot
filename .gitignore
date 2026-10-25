@@ -1,18 +1,18 @@
-# large inputs / intermediates (regenerate with scripts/00_data, 01_features, 02_targets)
-data/
-models/
-features/
-targets*/
-preds_crc/
-nuclei/
-hf_probe/
-sparc_repo/
-results/figures/regenerated/
+# large inputs / intermediates at the run-directory root (regenerate with scripts/00_data, 01_features, 02_targets)
+/data/
+/models/
+/features/
+/targets*/
+/preds_crc/
+/nuclei/
+/hf_probe/
+/sparc_repo/
+/results/figures/regenerated/
 # runtime
 __pycache__/
 *.pyc
 *.tmp
 .ipynb_checkpoints/
-logs/
+/logs/
 *.out
 .env
