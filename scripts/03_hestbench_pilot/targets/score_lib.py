@@ -59,7 +59,6 @@ def ulm_mlm(C, M, which=('ulm', 'mlm'), bs=512, Xn=None):
         Yb = torch.tensor(np.log1p(Xn[s:s + bs].toarray()).T, device=dev, dtype=torch.float64)
         if 'mlm' in which: out['mlm'].append(_ols_t(Yb, torch.cat([one, Mt], 1)).cpu().numpy())
         if 'ulm' in which:
-            # univariate per source, closed form
             ym = Yb.mean(0, keepdim=True); yc = Yb - ym
             xm = Mt.mean(0, keepdim=True); xc = Mt - xm
             sxx = (xc ** 2).sum(0)[:, None]; sxy = xc.T @ yc

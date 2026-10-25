@@ -1,4 +1,4 @@
-import os, sys, time, json, numpy as np, pandas as pd, torch
+import os, sys, time, numpy as np, pandas as pd, torch
 sys.path.append(os.getcwd())
 import al_core as A, sparcmap_lib as L
 
@@ -68,7 +68,6 @@ for seed in seeds:
                                          epig_rank=1 + sorted(cand, key=lambda x: -sc[x]['epig']).index(c),
                                          maxunc_rank=1 + sorted(cand, key=lambda x: -sc[x]['maxunc']).index(c),
                                          n_cand=len(cand)))
-                # store all candidate scores (diagnostics: does the score predict realised gain?)
                 pd.DataFrame([dict(fold=k, seed=seed, strategy=st, round=rd, slide=c, group=grp[c], epig=v['epig'],
                                    epig_meanr2=v['epig_meanr2'], maxunc=v['maxunc'], featsim=v.get('featsim', np.nan)) for c, v in sc.items()]
                              ).to_csv(f'{OUT}/scores_fold{k}_seed{seed}_{st}_r{rd}.csv', index=False)

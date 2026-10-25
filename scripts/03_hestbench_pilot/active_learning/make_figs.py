@@ -1,5 +1,8 @@
-# called from python kernel after apply_figure_style(); defines make_fig(method)
+"""Active-learning figure. Usage: python make_figs.py <method> <out.png>  (reads al_results/<method>/)."""
+import sys
 import numpy as np, pandas as pd, matplotlib.pyplot as plt
+plt.rcParams.update({'font.size': 7, 'axes.titlesize': 8, 'axes.labelsize': 7, 'xtick.labelsize': 6, 'ytick.labelsize': 6,
+                     'legend.fontsize': 6, 'axes.spines.top': False, 'axes.spines.right': False})
 COL = {'epig': '#D55E00', 'maxunc': '#0072B2', 'random': '#7F7F7F', 'featmatch': '#009E73'}
 LAB = {'epig': 'EPIG (batch, redundancy-penalised)', 'maxunc': 'Max. ensemble variance', 'random': 'Random',
        'featmatch': 'H&E-embedding match (no model)'}
@@ -27,7 +30,6 @@ def make_fig(method, fn):
             axs[0, 2].plot(g['round'] * 2 + 2, g['mean'], ls, color=COL[st], lw=1.6 if st == 'epig' else 1.0, marker='o', ms=2.5)
     axs[0, 2].set_title('READ test slides (n=4)', loc='left'); axs[0, 2].set_xlabel('Labelled slides'); axs[0, 2].set_ylabel('Pearson r')
     axs[0, 2].plot([], [], 'k-', lw=1, label='raw'); axs[0, 2].plot([], [], 'k--', lw=1, label='depth-res.'); axs[0, 2].legend(frameon=False, loc='lower right')
-    # paired AUC differences per run
     W = runs.pivot_table(index=['fold', 'seed'], columns='strategy', values=['auc_pearson', 'auc_pearson_depthres'])
     comps = [c for c in ['random', 'maxunc', 'featmatch'] if c in strats]
     ax = axs[1, 2]; rng = np.random.default_rng(0)
@@ -43,3 +45,7 @@ def make_fig(method, fn):
     for ax in axs.flat: ax.margins(0.05)
     for ax in [axs[0,0],axs[0,1],axs[0,2]]: ax.set_xticks([2,4,6,8,10,12,14])
     fig.tight_layout(rect=(0, 0.05, 1, 1)); fig.savefig(fn, dpi=300, bbox_inches='tight'); return fig, n_units
+
+
+if __name__ == '__main__':
+    make_fig(sys.argv[1], sys.argv[2])

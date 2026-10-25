@@ -116,7 +116,7 @@ Source: `mouse_external_by_organ.csv`, `mouse_ft_summary.csv`, `mouse_ft_tests.c
 - **Mouse retraining** helps, but only under the slide scheme: mouse-only vs human-only +0.157 (20/22, p = 3e-6). The gain over the null is +0.172. Fine-tuning from human is slightly worse than mouse-only (−0.014, 2/22, p = 0.004).
 - **Under leave-dataset-out**, there is no gain: +0.000 (p = 0.85). The slide-scheme gain is therefore within-dataset. Without animal IDs, serial-section sharing cannot be excluded.
 
-## Implications carried into the proposal
+## Implications for model development
 
 1. Use ULM targets, and always report against size-matched random gene sets and after depth, composition and nuclear adjustment.
 2. Keep SPARC-Map's spatial encoder. The CONCERT GP prior moves to the perturbation module, not the H&E encoder.

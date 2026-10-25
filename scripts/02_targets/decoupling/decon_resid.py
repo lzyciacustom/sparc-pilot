@@ -4,14 +4,13 @@ Deconvolution: per-slide NNLS of CPM-normalised spot counts on reference cell-ty
 profiles over the union of top-50 marker genes per type (genes restricted to slide ∩ reference).
 Residualisation: per slide, OLS of each ulm__<program> on proportions (intercept, drop one type).
 """
-import os, json, warnings, numpy as np, pandas as pd, scipy.sparse as sp, anndata as ad
+import warnings, numpy as np, pandas as pd, scipy.sparse as sp
 from scipy.optimize import nnls
-from joblib import Parallel, delayed
 warnings.filterwarnings('ignore')
 
 TYPES = ['Epi_tumor', 'Epi_normal', 'Fibroblast', 'Endothelial', 'Pericyte_SMC', 'Glial',
          'T_NK', 'B', 'Plasma', 'Mono_Mac', 'DC', 'Mast']
-DROP_TYPE = 'Epi_tumor'   # reference level dropped in the regression (sum-to-one collinearity)
+DROP_TYPE = 'Epi_tumor'  # reference level dropped (sum-to-one collinearity)
 
 def map_type(ct, sub, cls):
     if ct == 'Epithelial cells':
@@ -32,7 +31,7 @@ def type_profiles(G, labels, genes):
     """G: cells x genes raw counts (csr). Returns DataFrame types x genes of mean per-cell fractions,
     plus mean of log1p(CPM) for marker ranking."""
     lib = np.asarray(G.sum(1)).ravel()
-    Gn = sp.diags(1.0 / lib) @ G                      # per-cell fractions
+    Gn = sp.diags(1.0 / lib) @ G
     prof, nc = {}, {}
     for t in TYPES:
         idx = np.where(labels == t)[0]
@@ -55,8 +54,8 @@ def select_markers(P, genes_avail, n=50, min_frac=2e-5):
 def nnls_deconv(Y, M):
     """Y: spots x genes (CPM over slide∩ref genes), M: types x genes (CPM). Genes scaled by
     sqrt(mean over types) (Poisson-type variance weighting)."""
-    s = np.sqrt(M.mean(0)); s[s == 0] = 1             # sqrt scaling (Poisson-type weights); chosen over mean/none on 8-slide sanity check
-    A = (M / s).T                                    # genes x types
+    s = np.sqrt(M.mean(0)); s[s == 0] = 1  # sqrt (Poisson-type) weights
+    A = (M / s).T
     Ys = Y / s
     W = np.zeros((Y.shape[0], M.shape[0]))
     for i in range(Y.shape[0]):

@@ -1,24 +1,10 @@
-# Mouse program targets for 27 HEST-1k slides; mirrors compute_targets_crc.py (ssGSEA GPU closed form, decoupler ULM/MLM, tmin=5)
-import os, json, warnings, numpy as np, pandas as pd, anndata as ad, scipy.sparse as sp, torch, decoupler as dc, scanpy as sc
-warnings.filterwarnings('ignore'); dev='cuda'; R='data/hest1k_mouse'; OUT='targets_mouse'; os.makedirs(OUT,exist_ok=True)  # as-run sub-agent workdir named R data/hest_mouse (same 27 slides)
+import sys, os, json, warnings, numpy as np, pandas as pd, anndata as ad, scipy.sparse as sp, torch, decoupler as dc, scanpy as sc
+warnings.filterwarnings('ignore'); R='data/hest1k_mouse'; OUT='targets_mouse'; os.makedirs(OUT,exist_ok=True)
 P=json.load(open('sparc_programs_msigdb.json'))['sets']
 h2m=pd.read_csv('mgi_one2one_human_mouse.csv'); h2m=dict(zip(h2m.human_symbol,h2m.mouse_symbol))
-PM={p:sorted({h2m[g] for g in set(v) if g in h2m}) for p,v in P.items()}   # keyed by HUMAN program name
+PM={p:sorted({h2m[g] for g in set(v) if g in h2m}) for p,v in P.items()}
 json.dump(PM,open(f'{OUT}/programs_mouse_orthologs.json','w'))
-def ssgsea_gpu(X, genes, sets, w=0.25, min_size=5, bs=1024):
-    gidx={g:i for i,g in enumerate(genes)}; names=[];cols=[]
-    for p,g in sets.items():
-        ii=[gidx[x] for x in set(g) if x in gidx]
-        if len(ii)>=min_size: names.append(p); cols.append(ii)
-    N=len(genes); M=torch.zeros(N,len(names),device=dev)
-    for j,ii in enumerate(cols): M[ii,j]=1
-    nS=M.sum(0); out=[]
-    for s in range(0,X.shape[0],bs):
-        xb=X[s:s+bs]; xb=xb.toarray() if sp.issparse(xb) else np.asarray(xb)
-        r=torch.tensor(pd.DataFrame(xb.T).rank(method='average').values.T,device=dev,dtype=torch.float32)
-        wts=r**w
-        out.append((((r*wts)@M)/(wts@M) - (N*(N+1)/2 - r@M)/(N-nS)).cpu().numpy())
-    return np.vstack(out), names
+sys.path.append(os.getcwd()); from ssgsea import ssgsea_gpu
 def score(a, sets, df, prefix, log, sid):
     """a: AnnData (raw counts) restricted to one species' genes, var_names = symbols"""
     X=a.X.tocsr() if sp.issparse(a.X) else sp.csr_matrix(a.X)
@@ -51,7 +37,7 @@ for sid in ids:
     df['total_counts_mouse']=np.asarray(am.X.sum(1)).ravel()
     names,present=score(am,PM,df,'',log,sid)
     for p in P: cov.append((sid,p,len(set(P[p])),len(PM[p]),present[p],p in names))
-    if is_hs.sum()>1000:   # PDX / mixed-reference slide: also score human genes with the original human programs
+    if is_hs.sum()>1000:  # PDX / mixed-reference slide: also score human genes with the human programs
         ah=a[:,is_hs].copy(); ah.var_names=pd.Index(a.var_names)[is_hs]; ah.var_names_make_unique()
         df['total_counts_human']=np.asarray(ah.X.sum(1)).ravel()
         score(ah,P,df,'hs_',log,sid)

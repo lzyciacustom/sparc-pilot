@@ -1,6 +1,6 @@
 """Regenerate the HEST-1k-stage figures from results/raw and results/tables (run hest1k_stats.py, mouse_stats.py, nuclei_stats.py first).
 Output: results/figures/regenerated/*.png. The figures shipped in results/figures/ are the versions produced during the pilot."""
-import os, glob, numpy as np, pandas as pd, matplotlib; matplotlib.use('Agg'); import matplotlib.pyplot as plt
+import os, numpy as np, pandas as pd, matplotlib; matplotlib.use('Agg'); import matplotlib.pyplot as plt
 from scipy.stats import wilcoxon, spearmanr
 plt.rcParams.update({'font.size': 8, 'axes.titlesize': 9, 'axes.labelsize': 9, 'xtick.labelsize': 7, 'ytick.labelsize': 7, 'axes.spines.top': False,
                      'axes.spines.right': False, 'savefig.dpi': 300, 'pdf.fonttype': 42})
@@ -23,13 +23,11 @@ def paired(ax, A, B, X, ca=REAL, cb=RAND):
         ax.text(xa - .14, A[m].mean(), f'{A[m].mean():.2f}', ha='right', va='center', color=ca, fontsize=7)
         ax.text(xb + .14, B[m].mean(), f'{B[m].mean():.2f}', ha='left', va='center', color='.3', fontsize=7)
     ax.set_xticks(X); ax.set_xticklabels([MLAB[m] for m in M]); ax.axhline(0, color='.6', lw=.6)
-# 1 real vs random
 fig, axs = plt.subplots(1, 2, figsize=(7.6, 3.2), sharey=True); X = [0, 1.45, 2.9]
 for ax, (real, rands, nm) in zip(axs, [('ssgsea', ['rand0ssgsea', 'rand1ssgsea', 'rand2ssgsea'], 'ssGSEA targets (3 random draws)'), ('ulm', ['rand0ulm'], 'ULM targets (1 random draw)')]):
     paired(ax, cond('hest1k', real), sum(cond('hest1k', r) for r in rands) / len(rands), X); ax.set_title(nm, loc='left'); ax.set_xlim(-.7, 3.6)
 axs[0].set_ylabel('Held-out Pearson r\n(mean per patient group)'); fig.suptitle('Curated programs vs size-matched random gene sets (HEST-1k training, 58 CRC test slides)', x=.08, ha='left', fontsize=9)
 fig.savefig(f'{OUT}/fig_hest1k_real_vs_random.png', bbox_inches='tight')
-# 2 targets
 fams = [('ssgsea', 'ssGSEA'), ('mlm', 'MLM'), ('ssgsea_depthres', 'ssGSEA,\ndepth-regressed'), ('ulm', 'ULM')]
 fig, ax = plt.subplots(figsize=(4.8, 3.1))
 for tr, col, off in [('crc_only', '#8fb3dc', -.17), ('hest1k', REAL, .17)]:
@@ -40,7 +38,6 @@ ax.set_xticks(range(4)); ax.set_xticklabels([l for _, l in fams]); ax.set_ylabel
 ax.set_title('Removing the shared component makes programs more predictable', loc='left')
 ax.text(.02, .97, '● HEST-1k training (~376 slides/fold)', color=REAL, transform=ax.transAxes, fontsize=7, va='top'); ax.text(.02, .9, '● CRC-only training (~48 slides/fold)', color='#6f9ccf', transform=ax.transAxes, fontsize=7, va='top')
 fig.savefig(f'{OUT}/fig_hest1k_targets.png', bbox_inches='tight')
-# 3 spatial + 4 upgrades (delta vs base with seed-noise band)
 def noise(t):
     x = D[(D.train == 'hest1k') & (D.target == t) & (D.model == 'base') & (D['head'] == 'det')]
     b = x.groupby(['seed', 'sample']).pearson_depthres.mean().reset_index(); b['group'] = b['sample'].map(grp); b = b.groupby(['seed', 'group']).pearson_depthres.mean().unstack(0)
@@ -63,7 +60,6 @@ ups = [('ulm__tn-slide', 'ulm__tn-robust', 'Slide\nz-score'), ('ulm__tn-robust+t
 fig, ax = plt.subplots(figsize=(7.8, 3.1)); deltas(ax, [(gt(a).pearson_depthres, gt(b).pearson_depthres, l) for a, b, l in ups], 2 * noise('ulm') / np.sqrt(3), (-.1, .12))
 ax.set_ylabel('Δ depth-residualised r vs\nULM SPARC-Map baseline'); ax.set_title('None of the engineering upgrades beats the ULM baseline', loc='left')
 fig.text(.125, -.08, '* 2 seeds. † CRC-only training vs CRC-only baseline. Orange: significantly worse (p < 0.05).', fontsize=7, color='.35'); fig.savefig(f'{OUT}/fig_upgrades.png', bbox_inches='tight')
-# 5 decoupling
 P = pd.read_csv('results/tables/decoupling_residual_per_program.csv', index_col=0)
 r2f = 'results/tables/composition_r2_by_program.csv'
 fig, axs = plt.subplots(1, 2, figsize=(9.6, 3.6), gridspec_kw=dict(width_ratios=[1.1, 1], wspace=.32))
@@ -75,7 +71,6 @@ if os.path.exists(r2f):
     axs[1].set_xlabel('Variance explained by composition (median R²)'); axs[1].set_ylabel('Residual signal above random\n(Δ depth-residualised r)')
     axs[1].set_title(f'Spearman ρ = {spearmanr(r2, y).correlation:.2f}, n = {len(r2)} programs', loc='left')
 fig.savefig(f'{OUT}/fig_decoup.png', bbox_inches='tight')
-# 6 mouse retraining
 S = pd.read_csv('results/tables/mouse_ft_per_section.csv'); U = S[S.target == 'ulm']; Nn = S[S.target == 'rand0ulm']
 conds = [('none', 'human_only', 'Human only'), ('slide', 'mouse_only', 'Mouse only'), ('slide', 'human_ft', 'Human → mouse\nfine-tune'), ('dataset', 'mouse_only', 'Mouse only'), ('dataset', 'human_ft', 'Human → mouse\nfine-tune')]
 xs = [0, 1.4, 2.4, 3.8, 4.8]; orgc = {'Bowel': REAL, 'Liver': ORANGE, 'Skin': '#5a9e6f'}
@@ -87,7 +82,6 @@ for x, (sch, c, l) in zip(xs, conds):
 ax.set_xticks(xs); ax.set_xticklabels([c[2] for c in conds]); ax.set_ylim(-.03, .6); ax.set_ylabel('Depth-residualised r (ULM, per mouse section)')
 ax.set_title('Retraining on same-study mouse sections more than doubles signal (grey: random-gene-set null)', loc='left')
 fig.savefig(f'{OUT}/fig_mouse_ft.png', bbox_inches='tight')
-# 7 nuclei adjustment
 E = pd.read_csv('results/raw/nuclei_adjusted_per_slide.csv')
 fig, ax = plt.subplots(figsize=(4.2, 3.2))
 for m, col, lab in [('ulm_s0', REAL, 'curated programs'), ('rand0ulm_s0', '.45', 'random gene sets')]:

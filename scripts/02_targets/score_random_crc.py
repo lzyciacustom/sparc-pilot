@@ -1,6 +1,6 @@
-import glob, os, json, numpy as np, pandas as pd, anndata as ad, scipy.sparse as sp, torch, decoupler as dc, scanpy as sc, warnings
-warnings.filterwarnings('ignore'); R='data/hest1k_crc'; dev='cuda'
-src=open('compute_targets_crc.py').read(); exec(src[src.index('def ssgsea_gpu'):src.index('log=[]')])
+import sys, glob, os, json, numpy as np, pandas as pd, anndata as ad, scipy.sparse as sp, decoupler as dc, scanpy as sc, warnings
+warnings.filterwarnings('ignore'); R='data/hest1k_crc'
+sys.path.append(os.getcwd()); from ssgsea import ssgsea_gpu
 RS=json.load(open('random_gene_sets.json'))['sets']
 for p in sorted(glob.glob('targets_crc/*.parquet')):
     sid=os.path.basename(p)[:-8]; df=pd.read_parquet(p)

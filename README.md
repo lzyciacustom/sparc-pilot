@@ -27,7 +27,7 @@ Read [`docs/AUDIT.md`](docs/AUDIT.md) before reusing these numbers. It covers:
 ## Layout
 
 ```
-src/sparcpilot/        sparcmap_lib.py (SPARC-Map reproduction, training, metrics), spatial_models.py (MLP, CONCERT-bias, GP-kernel, Gaussian head)
+src/sparcpilot/        sparcmap_lib.py (SPARC-Map reproduction, training, metrics), spatial_models.py (MLP, CONCERT-bias, GP-kernel, Gaussian head), ssgsea.py (GPU ssGSEA)
 scripts/
   setup_workspace.sh   builds the flat run directory the scripts expect and clones SPARC at the pinned commit
   00_data/             download_hest.py, download_models.py, build_programs.py, download_references.sh, build_splits.py, gene_panel.py
@@ -43,9 +43,8 @@ results/
   raw/                 per-slide × program metrics from every run (parquet/CSV, ~8 MB) — input to 07_analysis
   tables/              summary and paired-test tables (stage1_hestbench/, stage2_inputs/, top level = stage 2)
   figures/             stage1_hestbench/, stage2_hest1k/ (final versions), superseded/
-docs/                  METHODS.md, RESULTS.md, AUDIT.md, stage1_hestbench/ sub-reports, zh/ (Chinese working log)
+docs/                  METHODS.md, RESULTS.md, AUDIT.md, stage1_hestbench/ sub-reports
 environment/           pinned package versions (main analysis env, HoVer-Net env)
-attic/                 debugging scripts and a failed nuclei counter, kept for provenance
 ```
 
 ## Reproduce

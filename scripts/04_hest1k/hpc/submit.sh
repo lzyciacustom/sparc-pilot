@@ -1,6 +1,4 @@
 #!/bin/bash
-# Run from WSL (reuses your ControlMaster connection). Everything remote lives under $R on scratch; nothing in $HOME.
-#   bash submit.sh check | upload | setup | smoke | submit | status | fetch
 set -euo pipefail
 WS="${SPARC_WS:?set SPARC_WS to your local checkout/workspace}"
 H="${HPC_HOST:?set HPC_HOST (ssh alias of the cluster login node)}"
@@ -19,7 +17,7 @@ case "${1:-}" in
     rsync -a --info=progress2 --include='*.parquet' --exclude='*' targets_crc/ "$H:$R/ws/targets_crc/"
     remote "du -sh $R/ws; ls $R/ws/features/hoptimus0_crc | wc -l; ls $R/ws/targets_crc | wc -l" ;;
   sync)   cd "$WS"; rsync -a hprc/ "$H:$R/ws/hprc/"; rsync -a hest1k_run.py sparcmap_lib.py "$H:$R/ws/"; echo synced ;;
-  rerun)  # bash submit.sh rerun 9,10,11,12  -> clears those tasks' done markers and resubmits only them
+  rerun)
     IDX="${2:?give comma-separated jobs.txt line numbers}"
     for i in ${IDX//,/ }; do read T M Hd Sd X < <(sed -n "${i}p" "$WS/hprc/jobs.txt"); TAG="${T}__${M}__${Hd}__s${Sd}${X:+__crconly}"; remote "rm -f $R/logs/done_${TAG}"; echo "cleared $TAG"; done
     remote "cd $R && sbatch --array=$IDX ws/hprc/run.slurm" ;;
@@ -28,20 +26,20 @@ case "${1:-}" in
   submit) N=$(wc -l < "$WS/hprc/jobs.txt"); remote "cd $R && sbatch --array=1-$N%8 ws/hprc/run.slurm" ;;
   status) remote "squeue -u \$USER; echo results: \$(ls $R/ws/results 2>/dev/null | wc -l); for f in \$(ls -t $R/logs/*.out 2>/dev/null | head -3); do echo == \$f; tail -n 4 \$f; done" ;;
   fetch)  mkdir -p "$WS/hpc_results/logs"; rsync -a "$H:$R/ws/results/" "$WS/hpc_results/"; rsync -a "$H:$R/logs/" "$WS/hpc_results/logs/"; ls "$WS/hpc_results" | wc -l ;;
-  upload2)   # wave A: code + gene targets (~6.2 GB)
+  upload2)
     cd "$WS"; remote "mkdir -p $R/ws/genes_crc $R/ws/results2"
     rsync -a hest1k_run2.py sparcmap_lib.py gene_panel.json A2_splithalf_per_program.csv mouse_test_slides_meta.csv "$H:$R/ws/"
     rsync -a hprc/ "$H:$R/ws/hprc/"
     rsync -a --info=progress2 genes_crc/ "$H:$R/ws/genes_crc/"
     remote "ls $R/ws/genes_crc | wc -l; du -sh $R/ws/genes_crc" ;;
-  upload2b)  # wave B: context features, decoupling targets, mouse features/targets
+  upload2b)
     cd "$WS"; remote "mkdir -p $R/ws/features/hoptimus0_ctx $R/ws/features/hoptimus0_mouse $R/ws/decoup $R/ws/targets_mouse"
     rsync -a hest1k_run2.py sparcmap_lib.py mouse_test_slides_meta.csv "$H:$R/ws/"; rsync -a hprc/ "$H:$R/ws/hprc/"
     rsync -a --info=progress2 features/hoptimus0_ctx/ "$H:$R/ws/features/hoptimus0_ctx/"
     rsync -a --info=progress2 features/hoptimus0_mouse/ "$H:$R/ws/features/hoptimus0_mouse/"
     rsync -a decoup/ "$H:$R/ws/decoup/"; rsync -a targets_mouse/ "$H:$R/ws/targets_mouse/"
     remote "for d in features/hoptimus0_ctx features/hoptimus0_mouse decoup targets_mouse; do echo \$d \$(ls $R/ws/\$d | wc -l); done" ;;
-  submit2)   # bash submit.sh submit2 jobs2.txt   (or jobs2b.txt; optional 3rd arg = array spec e.g. 1-3)
+  submit2)
     JF="${2:-jobs2.txt}"; N=$(wc -l < "$WS/hprc/$JF"); ARR="${3:-1-$N}"
     rsync -a "$WS/hprc/" "$H:$R/ws/hprc/"; rsync -a "$WS/hest1k_run2.py" "$WS/sparcmap_lib.py" "$H:$R/ws/"
     remote "cd $R && sbatch --array=$ARR%12 ws/hprc/run2.slurm $JF" ;;

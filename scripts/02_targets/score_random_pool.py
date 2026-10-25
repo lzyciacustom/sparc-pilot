@@ -1,9 +1,7 @@
-import os,sys; sys.path.append(os.getcwd()); from ens2sym import to_symbols
-import glob, os, json, numpy as np, pandas as pd, anndata as ad, scipy.sparse as sp, torch, decoupler as dc, scanpy as sc, warnings
-warnings.filterwarnings('ignore'); R='data/hest1k_crc'; dev='cuda'
-src=open('compute_targets_crc.py').read(); exec(src[src.index('def ssgsea_gpu'):src.index('log=[]')])
+import glob, os, sys, json, numpy as np, pandas as pd, anndata as ad, scipy.sparse as sp, decoupler as dc, scanpy as sc, warnings
+warnings.filterwarnings('ignore'); R='data/hest1k_crc'
+sys.path.append(os.getcwd()); from ens2sym import to_symbols; from ssgsea import ssgsea_gpu
 RS=json.load(open('random_gene_sets.json'))['sets']
-import sys
 SH,NS=int(sys.argv[1]),int(sys.argv[2]); CRC=set(pd.read_csv('hest1k_crc_candidates.csv').id)
 for ii,p in enumerate(sorted(glob.glob('targets_crc/*.parquet'))):
     sid=os.path.basename(p)[:-8]
@@ -22,5 +20,5 @@ for ii,p in enumerate(sorted(glob.glob('targets_crc/*.parquet'))):
         rr=dc.mt.ulm(data=b,net=net,tmin=5,verbose=False); srco=rr if rr is not None else b
         est=srco.obsm['score_ulm'].reindex(b.obs_names)
         for n in est.columns: df[f'rand0ulm__{n}']=est[n].values
-    except AssertionError as e: print(sid,'ulm skipped',flush=True)
+    except AssertionError: print(sid,'ulm skipped',flush=True)
     df.to_parquet(p+'.tmp'); os.replace(p+'.tmp',p); print(sid, df.shape, flush=True)

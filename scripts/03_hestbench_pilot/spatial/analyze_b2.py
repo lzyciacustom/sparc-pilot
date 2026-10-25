@@ -4,7 +4,7 @@ from scipy.stats import wilcoxon
 from sklearn.cluster import KMeans
 sys.path.append(os.getcwd())
 import sparcmap_lib as L
-from run_b2 import hex_neighbours, nbr_mean, true_clusters
+from run_b2 import hex_neighbours, true_clusters
 from run_b1 import folds, split
 
 BB = open('b2_backbone.txt').read().strip()
@@ -12,7 +12,7 @@ BB = open('b2_backbone.txt').read().strip()
 
 def smooth_clusters(Y, nb, seed=0):
     Y = np.where(np.isnan(Y), np.nanmean(Y, 0), Y)
-    Ys = np.array([Y[js].mean(0) for js in nb])          # nb includes self
+    Ys = np.array([Y[js].mean(0) for js in nb])
     Z = (Ys - Ys.mean(0)) / (Ys.std(0) + 1e-9)
     return KMeans(6, n_init=10, random_state=seed).fit_predict(Z)
 

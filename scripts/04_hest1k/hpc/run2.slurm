@@ -8,7 +8,7 @@
 #SBATCH --cpus-per-task=8
 #SBATCH --mem=96G
 #SBATCH --output=logs/%x_%A_%a.out
-# usage: sbatch --array=1-N run2.slurm <jobsfile>   (jobsfile relative to ws/hprc, default jobs2.txt)
+# usage: sbatch --array=1-N run2.slurm [jobsfile]
 set -eo pipefail
 source ws/hprc/env.sh; source $P/venv/bin/activate
 JF=${1:-jobs2.txt}

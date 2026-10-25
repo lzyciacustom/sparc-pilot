@@ -1,4 +1,3 @@
-
 suppressMessages({library(spacexr); library(Matrix)})
 ref <- as(Matrix::readMM("rctd/ref.mtx"), "CsparseMatrix")
 rownames(ref) <- read.csv("rctd/ref_genes.csv", header=FALSE)[,1]

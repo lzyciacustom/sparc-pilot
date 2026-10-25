@@ -9,7 +9,7 @@ for f in glob.glob('results/folds/cv_*_f[0-3].csv'):
     tgt, seed, k = re.match(r'.*cv_(.+)_s(\d+)_f(\d)\.csv', f).groups()
     if tgt == 'ssgsea' and seed == '0': continue
     r = pd.read_csv(f); r['target'] = tgt; r['seed'] = int(seed); runs.append(r)
-for f in glob.glob('results/cv_*_s*.csv'):   # final CSVs from runs without per-fold files
+for f in glob.glob('results/cv_*_s*.csv'):
     tgt, seed = re.match(r'.*cv_(.+)_s(\d+)\.csv', f).groups()
     if any(os.path.exists(x) for x in glob.glob(f'results/folds/cv_{tgt}_s{seed}_f*.csv')): continue
     runs.append(pd.read_csv(f))
@@ -22,7 +22,6 @@ S = R.groupby(['target', 'seed', 'sample', 'task', 'group'])[MET].mean().reset_i
 S['kind'] = np.where(S.target.str.startswith('rand'), 'random', 'real')
 S['method'] = S.target.str.replace(r'^rand\d_', '', regex=True)
 S.to_csv('results/A34_cv_per_slide.csv', index=False)
-# summary table per target (mean over seeds first)
 Sm = S.groupby(['target', 'kind', 'method', 'sample', 'task', 'group'])[MET].mean().reset_index()
 summ = []
 for t, g in Sm.groupby('target'):
@@ -32,7 +31,6 @@ for t, g in Sm.groupby('target'):
     summ.append(row)
 summ = pd.DataFrame(summ); summ.to_csv('results/A34_cv_summary.csv', index=False)
 bytask = Sm.groupby(['target', 'task'])[MET].mean().reset_index(); bytask.to_csv('results/A34_cv_by_task.csv', index=False)
-# random null: average over draws per method, real-minus-random gap
 Rn = Sm[Sm.kind == 'random'].groupby(['method', 'sample', 'task', 'group'])[MET].mean().reset_index()
 ndraw = Sm[Sm.kind == 'random'].groupby('method').target.nunique()
 tests = []
@@ -60,7 +58,6 @@ for a_, b_ in [('ulm', 'mlm'), ('ssgsea_depthres', 'mlm'), ('ulm', 'ssgsea_depth
         tests.append(paired(A_[met], B_[met], f'{a_} - {b_}', met, 'slide'))
         tests.append(paired(A_.groupby('group')[met].mean(), B_.groupby('group')[met].mean(), f'{a_} - {b_}', met, 'group'))
 T = pd.DataFrame(tests); T.to_csv('results/A34_paired_tests.csv', index=False)
-# READ per-program table
 rp = R[R.task == 'READ'].groupby(['target', 'program'])[MET].mean().reset_index(); rp.to_csv('results/A4_READ_per_program.csv', index=False)
 pd.set_option('display.width', 250)
 print(summ.round(3).to_string()); print(T.round(4).to_string())

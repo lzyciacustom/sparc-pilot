@@ -90,7 +90,6 @@ def load(sid, tgt_dir=None, feat_dir=FD, ctx_dir=CTX, genes_dir=os.path.join(WS,
     return s
 
 
-# ----------------------------------------------------------------------------- slide sets
 if args.decoup:
     have = {f[:-8] for f in os.listdir(os.path.join(WS, 'decoup'))}
     crc = crc[crc.id.isin(have)]
@@ -114,7 +113,6 @@ print(f'loaded {len(S)} slides ({len(pool_ids)} pool) ext={len(EXT)} in {time.ti
 D_IN = next(iter(S.values()))['X'].shape[1]; P_OUT = next(iter(S.values()))['Y'].shape[1]
 
 
-# ----------------------------------------------------------------------------- models
 class BaseEmbed(nn.Module):
     def __init__(self, P, din):
         super().__init__(); self.m = L.build_model(P, input_dim=din)
@@ -153,7 +151,6 @@ class F16Batcher(L.SlideBatcher):
         return s['X'][idx].float(), s['X'][s['nn'][idx]].float(), s['rel'][idx], torch.nan_to_num(Y), M
 
 
-# ----------------------------------------------------------------------------- readout + metrics
 @torch.no_grad()
 def predict_raw(model, slide, norm, bs=2048):
     model.eval(); med, iqr = norm
@@ -198,13 +195,12 @@ def evaluate(model, slides, norm):
     return pd.concat(rows)
 
 
-# ----------------------------------------------------------------------------- training
 def run(train, val, test, k):
     trs = [S[s] for s in train]
     if args.genes or args.gene_aux:
         Yall = np.concatenate([x['Y'][::5].astype(np.float32) for x in trs])
         med = np.nanmean(Yall, 0); iqr = np.nanstd(Yall, 0); iqr = np.where(iqr > 1e-6, iqr, 1.0)
-        if args.gene_aux:   # programs keep robust norm
+        if args.gene_aux:
             pm, pi = L.robust_stats([x['Y'][:, :len(PROGS)] for x in trs]); med[:len(PROGS)] = pm; iqr[:len(PROGS)] = pi
         norm = (med.astype(np.float32), iqr.astype(np.float32)); bcls = F16Batcher
     else:
@@ -215,7 +211,7 @@ def run(train, val, test, k):
     if args.gene_aux:
         pw = np.concatenate([np.ones(len(PROGS), np.float32) if relw is None else relw,
                              np.full(P_OUT - len(PROGS), 0.5 * len(PROGS) / (P_OUT - len(PROGS)), np.float32)])
-    use_val = None if (args.genes or args.gene_aux or args.decoup == 'comp') else [S[s] for s in val]   # wide targets: fixed 30 epochs
+    use_val = None if (args.genes or args.gene_aux or args.decoup == 'comp') else [S[s] for s in val]
     m, norm, hist = L.train(trs, use_val, epochs=1 if args.smoke else args.epochs, bs=1024, lr=2e-4, seed=100 * args.seed + k,
                             model=model, forward=bf16, steps_per_epoch=20 if args.smoke else None, prog_w=pw, norm=norm, batcher_cls=bcls)
     return m, norm, hist

@@ -1,23 +1,8 @@
-import os,sys; sys.path.append(os.getcwd()); from ens2sym import to_symbols
-import glob, os, json, re, warnings, numpy as np, pandas as pd, anndata as ad, h5py, scipy.sparse as sp, torch, decoupler as dc, scanpy as sc
-warnings.filterwarnings('ignore'); dev='cuda'; R='data/hest1k_crc'
+import glob, os, sys, json, warnings, numpy as np, pandas as pd, anndata as ad, h5py, scipy.sparse as sp, decoupler as dc, scanpy as sc
+warnings.filterwarnings('ignore'); R='data/hest1k_crc'
 found=json.load(open('sparc_programs_msigdb.json'))['sets']; PN=list(found)
-def ssgsea_gpu(X, genes, sets, w=0.25, min_size=5, bs=1024):
-    gidx={g:i for i,g in enumerate(genes)}; names=[];cols=[]
-    for p,g in sets.items():
-        ii=[gidx[x] for x in set(g) if x in gidx]
-        if len(ii)>=min_size: names.append(p); cols.append(ii)
-    N=len(genes); M=torch.zeros(N,len(names),device=dev)
-    for j,ii in enumerate(cols): M[ii,j]=1
-    nS=M.sum(0); out=[]
-    for s in range(0,X.shape[0],bs):
-        xb=X[s:s+bs]; xb=xb.toarray() if sp.issparse(xb) else np.asarray(xb)
-        r=torch.tensor(pd.DataFrame(xb.T).rank(method='average').values.T,device=dev,dtype=torch.float32)
-        wts=r**w
-        out.append((((r*wts)@M)/(wts@M) - (N*(N+1)/2 - r@M)/(N-nS)).cpu().numpy())
-    return np.vstack(out), names
+sys.path.append(os.getcwd()); from ens2sym import to_symbols; from ssgsea import ssgsea_gpu
 log=[]
-import sys
 SH,NS=int(sys.argv[1]),int(sys.argv[2])
 for ii,p in enumerate(sorted(glob.glob(f'{R}/st/*.h5ad'))):
     if ii%NS!=SH: continue

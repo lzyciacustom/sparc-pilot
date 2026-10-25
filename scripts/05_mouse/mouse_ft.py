@@ -1,6 +1,6 @@
 """Human-pretrain -> mouse fine-tune pilot. Conditions: human_only, mouse_only, human_ft (pretrained on human, fine-tuned on mouse train slides).
 CV schemes: 'slide' (slides of each dataset spread over 5 folds; analogue of retraining on one's own atlas) and 'dataset' (leave-one-dataset-out)."""
-import os, sys, json, time, copy, argparse, numpy as np, pandas as pd, torch
+import os, sys, time, copy, argparse, numpy as np, pandas as pd, torch
 WS = os.path.dirname(os.path.abspath(__file__)); sys.path.insert(0, WS)
 import sparcmap_lib as L
 ap = argparse.ArgumentParser(); ap.add_argument('--target', default='ulm'); ap.add_argument('--seeds', default='0,1,2'); ap.add_argument('--smoke', action='store_true')

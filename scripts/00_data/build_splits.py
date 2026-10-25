@@ -7,11 +7,10 @@ import sys, numpy as np, pandas as pd
 STRICT = '--strict' in sys.argv
 m = pd.read_csv('hf_probe/MahmoodLab_hest/HEST_v1_2_0.csv')
 bench = set(pd.read_csv('hest_bench_inventory.csv')['sample'])
-# --- CRC test candidates (human bowel, cancer, whole-transcriptome Visium family) ---
 b = m[(m.organ == 'Bowel') & (m.species == 'Homo sapiens')].copy()
 crc = b[(b.disease_state.str.contains('Cancer', case=False, na=False)) & (b.oncotree_code.isin(['COAD', 'READ', 'COADREAD', 'CRC', 'MACR']) | b.oncotree_code.notna())]
 wt = crc[crc.st_technology.isin(['Visium', 'Visium HD', "Visium HD 3'", 'Spatial Transcriptomics'])]
-c = m.set_index('id').loc[wt.id].reset_index(); c = c[c.nb_genes > 10000]          # drops targeted panel TENX28
+c = m.set_index('id').loc[wt.id].reset_index(); c = c[c.nb_genes > 10000]
 def grp(r):
     if r.dataset_title.startswith('COLON MAP'): return 'COLONMAP_' + '_'.join(str(r.subseries).split('_')[:2])
     if r.id.startswith('ZEN'): return 'ZEN_' + str(r.patient).replace(' ', '')
@@ -20,13 +19,11 @@ def grp(r):
     return 'TENX_' + r.id
 c['group'] = c.apply(grp, axis=1); c['in_bench'] = c.id.isin(bench)
 c[['id', 'group', 'dataset_title', 'st_technology', 'oncotree_code', 'preservation_method', 'spots_under_tissue', 'nb_genes', 'disease_comment', 'in_bench']].to_csv('hest1k_crc_candidates.csv', index=False)
-# --- 6 folds: greedy balance of spots over patient groups (largest group first) ---
 cand = pd.read_csv('hest1k_crc_candidates.csv')
 g = cand.groupby('group').spots_under_tissue.sum().sort_values(ascending=False)
 K = 6; load = np.zeros(K); fold = {}
 for gr in g.index: k = int(np.argmin(load)); fold[gr] = k; load[k] += g[gr]
 cand['cv_fold'] = cand.group.map(fold); cand.to_csv('crc_folds.csv', index=False)
-# --- training pool: human whole-transcriptome Visium slides outside HEST-Bench (CRC test ids are dropped at run time) ---
 h = m[(m.species == 'Homo sapiens') & (m.st_technology.isin(['Visium', 'Visium HD', "Visium HD 3'"])) & (m.nb_genes > 10000)]
 h = h[~h.id.isin(bench)]
 if STRICT:

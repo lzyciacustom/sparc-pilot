@@ -10,7 +10,6 @@ Deviation: relative coordinates are scaled by the slide's median 1-NN distance
 """
 from __future__ import annotations
 import os, sys, json, h5py, numpy as np, pandas as pd, torch
-from torch import nn
 from scipy.spatial import cKDTree
 
 WS = os.path.dirname(os.path.abspath(__file__))
@@ -33,7 +32,7 @@ def load_slide(sid, method='ssgsea', k=16, feat_dir=FEAT_DIR):
     idx = pd.Index(t.index).get_indexer(bc); ok = idx >= 0
     X, xy, bc = X[ok], xy[ok], bc[ok]; t = t.iloc[idx[ok]]
     cols = [f'{method}__{p}' for p in PROGRAMS]
-    Y = t.reindex(columns=cols).values.astype(np.float32)          # missing programs -> NaN
+    Y = t.reindex(columns=cols).values.astype(np.float32)
     tree = cKDTree(xy); d, nn_ = tree.query(xy, k=k + 1)
     nn_ = nn_[:, 1:]; scale = np.median(d[:, 1])
     rel = (xy[nn_] - xy[:, None, :]) / max(scale, 1e-6)
@@ -51,7 +50,7 @@ def pearson_loss(pred, y, mask, w=None):
     pm = (pred * mask).sum(0) / mask.sum(0).clamp(min=1)
     ym = (y * mask).sum(0) / mask.sum(0).clamp(min=1)
     pc, yc = (pred - pm) * mask, (y - ym) * mask
-    # eps inside sqrt: sqrt'(0) is infinite, which turned fully-masked columns into NaN gradients
+    # eps inside sqrt avoids NaN gradients for fully masked columns
     r = (pc * yc).sum(0) / ((pc.pow(2).sum(0) + 1e-8).sqrt() * (yc.pow(2).sum(0) + 1e-8).sqrt())
     valid = mask.sum(0) > 1
     if not bool(valid.any()): return (pred * 0).sum()
@@ -167,7 +166,7 @@ def wt_folds(n_folds=4):
     wt = INV[INV.platform == 'visium_wt'].copy()
     g = wt.groupby('group')['n_spots'].sum().sort_values(ascending=False)
     load = np.zeros(n_folds); assign = {}
-    for grp in g.index:  # greedy balance by spot count
+    for grp in g.index:
         k = int(np.argmin(load))
         if grp.startswith('READ') and any(v == k for gg, v in assign.items() if gg.startswith('READ')):
             k = int(np.argsort(load)[1])

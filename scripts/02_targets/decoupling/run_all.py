@@ -4,7 +4,7 @@ from joblib import Parallel, delayed
 sys.path.insert(0, '.')
 from decon_resid import TYPES, DROP_TYPE, select_markers, nnls_deconv, residualise, SANITY
 
-P_all = pd.read_parquet('ref_profiles.parquet')          # types x genes, mean per-cell fractions
+P_all = pd.read_parquet('ref_profiles.parquet')
 P_all = P_all.loc[TYPES, P_all.sum(0) > 0]
 PROGS = list(json.load(open(sys.argv[1]))['sets'])
 ids = pd.read_csv(sys.argv[2])['id'].tolist()
@@ -16,12 +16,12 @@ def run(sid):
     X = a.X.tocsr() if sp.issparse(a.X) else sp.csr_matrix(a.X)
     total = np.asarray(X.sum(1)).ravel()
     vn = pd.Index(a.var_names)
-    first = ~vn.duplicated()                                  # duplicated symbols: keep first occurrence
+    first = ~vn.duplicated()
     X = X[:, np.where(first)[0]]; vn = vn[first]
     common = vn.intersection(P_all.columns)
     gi = vn.get_indexer(common)
     Xc = X[:, gi]
-    P = P_all[common]; P = P.div(P.sum(1), axis=0) * 1e6      # reference CPM over slide∩ref genes
+    P = P_all[common]; P = P.div(P.sum(1), axis=0) * 1e6
     mk = select_markers(P / 1e6, common, n=50)
     mgenes = pd.Index(sorted(set(g for v in mk.values() for g in v)))
     libc = np.asarray(Xc.sum(1)).ravel()
@@ -32,7 +32,6 @@ def run(sid):
     comp[libc == 0] = np.nan
     df = pd.DataFrame({'barcode': a.obs_names.astype(str), 'total_counts': total})
     for j, t in enumerate(TYPES): df['comp__' + t] = comp[:, j]
-    # sanity: spearman between proportion(s) and log1p CPM of canonical markers
     san = {'slide': sid}
     cpm_full = cpm.tocsc()
     for k, (tt, gg) in SANITY.items():
@@ -43,7 +42,6 @@ def run(sid):
         ok = libc > 0
         san[k] = spearmanr(p[ok], e[ok]).correlation
         san[k + '_markers_in_nnls'] = int(sum(g in mgenes for g in gg))
-    # residualisation on ULM targets
     tg = pd.read_parquet(f'targets_crc/{sid}.parquet', columns=['barcode'] + ['ulm__' + p for p in PROGS])
     tg = tg.set_index('barcode').reindex(df.barcode)
     T = tg.values.astype(float)

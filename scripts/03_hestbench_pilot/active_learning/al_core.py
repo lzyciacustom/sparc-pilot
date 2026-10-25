@@ -6,7 +6,7 @@ normalisation, AdamW lr 1e-4 wd 1e-2, bs 256, grad-clip 1.0 -- identical to L.tr
 (b) slide-level Bayesian-bootstrap sampling weights per ensemble member (Dirichlet(1)), and
 (c) bf16 autocast + fp16 feature storage on GPU to keep memory/time low.
 """
-import os, sys, json, time, numpy as np, pandas as pd, torch
+import os, sys, numpy as np, pandas as pd, torch
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 import sparcmap_lib as L
 
@@ -63,7 +63,6 @@ def train_member(gs, train_ids, val_ids, seed, weights=None, epochs=EPOCHS, bs=2
             pr = fwd(model, gs, si, idx); y = Yn[si][idx]; m = Mk[si][idx]
             loss = ((pr - y).pow(2) * m).sum() / m.sum().clamp(min=1) + lam * L.pearson_loss(pr, y, m)
             opt.zero_grad(); loss.backward(); torch.nn.utils.clip_grad_norm_(model.parameters(), 1.0); opt.step()
-        # early stopping on inner validation group: mean per-slide per-program Pearson
         sc = np.nanmean([np.nanmean(L._pearson_cols(predict_norm(model, gs, v), Yv[v])) for v in val_ids])
         if sc > best: best, best_state = sc, {k: v.detach().clone() for k, v in model.state_dict().items()}
     model.load_state_dict(best_state); model.eval()
@@ -74,7 +73,7 @@ def train_ensemble(gs, train_ids, val_ids, base_seed):
     ens = []
     for m in range(M):
         rng = np.random.default_rng(base_seed * 100 + m)
-        w = rng.dirichlet(np.ones(len(train_ids)))  # Bayesian bootstrap over labelled slides
+        w = rng.dirichlet(np.ones(len(train_ids)))
         ens.append(train_member(gs, train_ids, val_ids, seed=base_seed * 100 + m, weights=w))
     return ens
 
@@ -87,7 +86,7 @@ def ens_predict(ens, gs, sid, idx=None, unit='norm'):
         raw = pn * iqr + med
         out.append(raw)
     out = np.stack(out)
-    if unit == 'norm':  # express all members on one common robust scale so variances are comparable
+    if unit == 'norm':
         med0, iqr0 = ens[0][1]
         out = (out - med0) / iqr0
     return out
@@ -104,7 +103,6 @@ def evaluate_ensemble(ens, gs, test_ids):
     return pd.DataFrame(rows)
 
 
-# ------------------------------------------------------------------ acquisition
 RHO2_CLIP = 0.999
 
 
@@ -137,8 +135,8 @@ def score_candidates(ens, gs, cand_ids, target_ids, rng, n_cand=300, n_tgt_per_s
     Dt = member_dev(np.concatenate(tgt, 1))
     out = {}
     for c in cand_ids:
-        A = ens_predict(ens, gs, c)                       # all spots, common normalised units
-        mu = float(A.var(0, ddof=1).sum(1).mean())        # summed-over-programs variance, mean over spots
+        A = ens_predict(ens, gs, c)
+        mu = float(A.var(0, ddof=1).sum(1).mean())
         n = A.shape[1]; idx = np.sort(rng.choice(n, min(n, n_cand), replace=False))
         Dc = member_dev(A[:, idx])
         epig, r2 = pair_mi(Dc, Dt)
@@ -158,7 +156,7 @@ def select_batch(strategy, scores, cand_ids, b, rng):
         return list(rng.choice(cand, b, replace=False))
     if strategy == 'maxunc':
         return sorted(cand, key=lambda c: -scores[c]['maxunc'])[:b]
-    if strategy == 'featmatch':  # label-free, model-free control: top-b by H&E-embedding similarity to target slides
+    if strategy == 'featmatch':
         return sorted(cand, key=lambda c: -scores[c]['featsim'])[:b]
     chosen = []
     for _ in range(b):

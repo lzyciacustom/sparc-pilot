@@ -1,7 +1,7 @@
 """Mouse retraining pilot (scripts/05_mouse/mouse_ft.py): 22 non-PDX mouse Visium sections, ULM targets (3 seeds) and a
 mouse random-gene-set null (rand0ulm, 1 seed). Unit: section (mean over programs, then seeds); paired Wilcoxon over sections.
 Run from the repo root -> results/tables/mouse_ft_*.csv"""
-import glob, numpy as np, pandas as pd
+import glob, pandas as pd
 from scipy.stats import wilcoxon
 M = ['pearson', 'pearson_centered', 'pearson_depthres']
 mm = pd.read_csv('metadata/mouse_test_slides_meta.csv').set_index('id')

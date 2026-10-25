@@ -1,7 +1,7 @@
 """B2 prediction-head comparison. Usage: python run_b2.py <worker_id> <backbone_variant> [bench]
 Backbone variants follow run_b1.VARIANTS names restricted to transformer kinds; 'base_k16' is realised as
 ConcertTransformer with all biases off (architecture-equivalent to SPARC-Map's OriginalSpatialTransformer)."""
-import os, sys, time, pickle, json
+import os, sys, time
 os.environ.setdefault('OMP_NUM_THREADS', '2')
 sys.path.append(os.getcwd())
 import numpy as np, pandas as pd, torch
@@ -11,10 +11,10 @@ from sklearn.cluster import KMeans
 from scipy.spatial import cKDTree
 torch.set_num_threads(2)
 import sparcmap_lib as L, spatial_models as SM
-from run_b1 import VARIANTS, split, get_comp, folds
+from run_b1 import VARIANTS, split, get_comp
 
-HEADS = ['gauss', 'flow']          # 'det' = B1 run of the same backbone (predictions reused, see b2_det.py)
-EXTRA = ['gauss_pure', 'flow_pure']     # sensitivity: no auxiliary baseline loss (seed 0 only)
+HEADS = ['gauss', 'flow']
+EXTRA = ['gauss_pure', 'flow_pure']
 METHODS = ['ssgsea', 'mlm']; SEEDS = [0, 1]; EPOCHS = 30; NS, NSTEP = 16, 32
 OUT = 'b2_runs'; os.makedirs(OUT, exist_ok=True); os.makedirs('b2_locks', exist_ok=True)
 Z50, Z90 = N01.ppf(0.75), N01.ppf(0.95)
@@ -24,7 +24,7 @@ class HeadModel(nn.Module):
     def __init__(self, backbone, head, P, hidden=256):
         super().__init__()
         self.bb = backbone; self.kind = head; self.P = P
-        self.det = backbone.head                       # deterministic / auxiliary mean head
+        self.det = backbone.head
         if head.startswith('gauss'): self.g = SM.GaussianHead(hidden, P, rank=4)
         if head.startswith('flow'): self.f = SM.FlowHead(hidden, P)
 
@@ -102,7 +102,6 @@ def fit(model, tr, va, seed, epochs=EPOCHS, bs=1024, lr=2e-4, wd=1e-2):
     return model, (med, iqr), hist
 
 
-# ----------------------------------------------------------------------------- metrics
 def hex_neighbours(xy):
     tree = cKDTree(xy); d, _ = tree.query(xy, k=2); r = 1.5 * np.median(d[:, 1])
     return tree.query_ball_point(xy, r)
@@ -141,13 +140,13 @@ def crps_gauss(y, mu, sd):
     return sd * (z * (2 * N01.cdf(z) - 1) + 2 * N01.pdf(z) - 1 / np.sqrt(np.pi))
 
 
-def crps_samples(y, S):   # y (N,P), S (N,M,P)
+def crps_samples(y, S):
     t1 = np.abs(S - y[:, None]).mean(1)
     M = S.shape[1]; t2 = np.abs(S[:, :, None] - S[:, None]).sum((1, 2)) / (2 * M * (M - 1))
     return t1 - t2
 
 
-def energy_score(y, S):   # multivariate, rows with NaN target entries filled with sample mean (0 contribution)
+def energy_score(y, S):
     t1 = np.linalg.norm(S - y[:, None], axis=-1).mean(1)
     M = S.shape[1]; t2 = np.linalg.norm(S[:, :, None] - S[:, None], axis=-1).sum((1, 2)) / (2 * M * (M - 1))
     return t1 - t2
@@ -155,10 +154,8 @@ def energy_score(y, S):   # multivariate, rows with NaN target entries filled wi
 
 def slide_metrics(s, P, normst, nb, lab_true):
     med, iqr = normst; Y = s['Y']; Yn = (Y - med) / iqr; pt = P['point']; Pn = P['point_n']
-    rows = {}
     r_raw = L._pearson_cols(pt, Y)
     r_d = L._pearson_cols(L.residualize(pt, s['depth'][:, None]), L.residualize(Y, s['depth'][:, None]))
-    # boundary spots: a hex neighbour has a different true-expression cluster label
     bnd = np.array([any(lab_true[j] != lab_true[i] for j in js if j != i) for i, js in enumerate(nb)])
     r_b = L._pearson_cols(pt[bnd], Y[bnd]) if bnd.sum() > 20 else np.full(len(L.PROGRAMS), np.nan)
     r_i = L._pearson_cols(pt[~bnd], Y[~bnd]) if (~bnd).sum() > 20 else np.full(len(L.PROGRAMS), np.nan)
@@ -183,14 +180,13 @@ def slide_metrics(s, P, normst, nb, lab_true):
         out['crps_samp'] = np.nanmean(np.where(ok, crps_samples(Yf, Sm), np.nan)); out['energy'] = energy_score(Yf, Sm).mean()
         sd_s = Sm.std(1)
         out['spread_skill'] = np.nanmean([pd.Series(sd_s[:, j]).corr(pd.Series(np.abs(Yn[:, j] - Pn[:, j])), method='spearman') for j in range(Yn.shape[1])])
-        # per-program coverage for patient-level summaries
         out['_cov50_prog'] = np.nanmean(np.where(ok, c50, np.nan), 0); out['_cov90_prog'] = np.nanmean(np.where(ok, c90, np.nan), 0)
     if P['mu'] is not None:
         mu, sd = P['mu'], P['sd']; e = np.abs(Yn - mu)
         out['cov50_gauss'] = np.nanmean(np.where(ok, e <= Z50 * sd, np.nan)); out['cov90_gauss'] = np.nanmean(np.where(ok, e <= Z90 * sd, np.nan))
         out['crps_gauss'] = np.nanmean(crps_gauss(Yn, mu, sd))
         out['_cov50_prog'] = np.nanmean(np.where(ok, e <= Z50 * sd, np.nan), 0); out['_cov90_prog'] = np.nanmean(np.where(ok, e <= Z90 * sd, np.nan), 0)
-    if P['samples'] is None:   # deterministic reference: CRPS of a point mass = MAE; ES = Euclidean error
+    if P['samples'] is None:
         Yf = np.where(ok, Yn, Pn)
         out['crps_samp'] = np.nanmean(np.abs(Yn - Pn)); out['energy'] = np.linalg.norm(Yf - Pn, axis=1).mean()
     return out, r_raw, r_d, r_b

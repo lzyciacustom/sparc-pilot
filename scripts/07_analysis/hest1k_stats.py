@@ -1,14 +1,13 @@
 """All HEST-1k-scale statistics (58 CRC test slides, 18 patient groups) from the long result tables.
 Unit of analysis: per-slide mean over 36 programs -> mean over seeds -> mean per patient group; paired Wilcoxon over groups.
 Run from the repo root:  python scripts/07_analysis/hest1k_stats.py   -> results/tables/hest1k_*.csv"""
-import os, numpy as np, pandas as pd
+import os, pandas as pd
 from scipy.stats import wilcoxon
 M = ['pearson', 'pearson_centered', 'pearson_depthres']
 RAW, OUT = 'results/raw', 'results/tables'; os.makedirs(OUT, exist_ok=True)
 grp = pd.read_csv('metadata/crc_folds.csv').set_index('id')['group']
-LEAK = {'COLONMAP_8270_AS', 'TENX_immune_P1'}          # test groups with linked slides in the training pool (docs/AUDIT.md)
+LEAK = {'COLONMAP_8270_AS', 'TENX_immune_P1'}  # test groups with linked slides in the training pool (docs/AUDIT.md)
 
-# ---------------- wave 1 (hest1k_run.py: targets x spatial models x heads; plus random-gene-set nulls) ----------------
 D = pd.read_parquet(f'{RAW}/hest1k_wave1_long.parquet')
 KEY = ['train', 'target', 'model', 'head']
 SL = D.groupby(KEY + ['seed', 'sample'])[M].mean().reset_index().groupby(KEY + ['sample'])[M].mean().reset_index()
@@ -34,7 +33,6 @@ for tr in ['hest1k', 'crc_only']:
         B = sum(cond(tr, r) for r in rands) / len(rands)
         for m in M: rows.append(dict(family='random_null', comparison=f'{tr} {real} real vs random ({len(rands)} draws)', metric=m, **test(cond(tr, real)[m], B[m])))
 W1 = pd.DataFrame(rows); W1.to_csv(f'{OUT}/hest1k_wave1_paired_tests.csv', index=False)
-# per-program real - random (seed-averaged slide means; depth-res and centred)
 pp = []
 for tr in ['hest1k', 'crc_only']:
     for real, rands in [('ssgsea', ['rand0ssgsea', 'rand1ssgsea', 'rand2ssgsea']), ('ulm', ['rand0ulm'])]:
@@ -43,7 +41,6 @@ for tr in ['hest1k', 'crc_only']:
         pp.append((r - z).assign(train=tr, target=real))
 pd.concat(pp).reset_index().to_csv(f'{OUT}/hest1k_real_vs_random_per_program.csv', index=False)
 
-# ---------------- wave 2 (hest1k_run2.py: upgrades, context, decoupling, external mouse) ----------------
 R = pd.read_parquet(f'{RAW}/hest1k_wave2_long.parquet'); R['cond'] = R.tag.str.split('__').str[:2].str.join('__')
 def gt(c):
     x = R[R.cond == c]; s = x.groupby(['seed', 'sample'])[M].mean().reset_index().groupby('sample')[M].mean()
@@ -60,10 +57,8 @@ for a, b, nm, fam in W2C:
     for m in M: rows.append(dict(family=fam, comparison=nm, metric=m, **test(A[m], B[m])))
 W2 = pd.DataFrame(rows); W2.to_csv(f'{OUT}/hest1k_wave2_paired_tests.csv', index=False)
 chk = gt('ulm__tn-robust')['pearson_depthres'].mean(), cond('hest1k', 'ulm')['pearson_depthres'].mean()
-# decoupling per program
 res = R[R.cond == 'ulm__tn-robust+decoup-res'].groupby('program')[M].mean(); rr = R[R.cond == 'ulm__tn-robust+decoup-randres'].groupby('program')[M].mean()
 (res - rr).add_suffix('_real_minus_random').join(res.add_suffix('_real')).to_csv(f'{OUT}/decoupling_residual_per_program.csv')
-# external mouse (human-trained) per organ
 mm = pd.read_csv('metadata/mouse_test_slides_meta.csv').set_index('id')
 ext = []
 for c in ['ulm__tn-robust+ext-mouse', 'ssgsea__tn-robust+ext-mouse']:
@@ -71,7 +66,6 @@ for c in ['ulm__tn-robust+ext-mouse', 'ssgsea__tn-robust+ext-mouse']:
     ext.append(s.groupby('organ')[M].mean().assign(n=s.groupby('organ').size(), target=c.split('__')[0]))
 pd.concat(ext).to_csv(f'{OUT}/mouse_external_by_organ.csv')
 
-# ---------------- leakage sensitivity: drop the 2 affected test groups ----------------
 rows = []
 for fam, nm, a, b in comps[:7] + [c for c in comps if c[0] == 'spatial'][:4]:
     for lab, dr in [('all 18', ()), ('excluding 2 leaked groups', LEAK)]: rows.append(dict(comparison=nm, groups=lab, **test(cond(*a).pearson_depthres, cond(*b).pearson_depthres, dr)))

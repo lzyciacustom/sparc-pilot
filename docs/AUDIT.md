@@ -62,7 +62,7 @@ The audit was run after all experiments, before packaging. Checks were run again
 ## Finding 5: nuclear segmentation scope
 
 **Scope limits.**
-- FFPE slides only (45 of 58). Frozen sections were too blurred, and a threshold-based counter failed (`attic/nuclei_fast.py`).
+- FFPE slides only (45 of 58). Frozen sections were too blurred, and a simple threshold-based nucleus counter failed.
 - A random 10% of spots per slide (16,143 spots).
 - 11 of 18 groups.
 
@@ -92,4 +92,4 @@ The audit was run after all experiments, before packaging. Checks were run again
 - Wide-output variants (gene decoder, gene auxiliary loss, composition targets) train for a fixed 30 epochs without early stopping.
 
 **Provenance**
-- Three sub-analyses were run by separate agents in their own working directories: composition decoupling, mouse targets, and the HEST-Bench tracks. Their code is included as-run. Path differences are noted inline, e.g. `compute_targets_mouse.py`.
+- Three sub-analyses (composition decoupling, mouse targets and the HEST-Bench tracks) were run in their own working directories. Their code is included as run. Path differences are noted inline, e.g. `compute_targets_mouse.py`.

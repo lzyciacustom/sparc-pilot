@@ -9,7 +9,7 @@ ann = pd.read_csv(D + 'cell_annotation.txt.gz', sep='\t')
 blocks, genes = [], []
 for ch in pd.read_csv(D + 'raw_UMI_count_matrix.txt.gz', sep='\t', index_col=0, chunksize=3000):
     genes += ch.index.tolist(); blocks.append(sp.csr_matrix(ch.values.astype(np.float32))); cells = ch.columns
-G = sp.vstack(blocks).T.tocsr()                                   # cells x genes (63,689 x 33,694 in the pilot)
+G = sp.vstack(blocks).T.tocsr()
 assert (cells == ann.Index.values).all(), 'cell order mismatch between matrix and annotation'
 lab = np.array([dr.map_type(c, s, k) for c, s, k in zip(ann.Cell_type, ann.Cell_subtype, ann.Class)], dtype=object)
 P, nc = dr.type_profiles(G, lab, pd.Index(genes)); P.to_parquet('ref_profiles.parquet')

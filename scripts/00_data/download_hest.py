@@ -9,7 +9,7 @@ Run from the flat workspace created by scripts/setup_workspace.sh.
 """
 import os, sys, pandas as pd
 from huggingface_hub import snapshot_download, hf_hub_download
-HEST_REV = '7e8d5a0b0aace41d8c8ec0f6ecea80e4ad2a61ec'   # MahmoodLab/hest revision used in the pilot
+HEST_REV = '7e8d5a0b0aace41d8c8ec0f6ecea80e4ad2a61ec'
 TOK = os.environ.get('HF_TOKEN')
 def slides(ids, out):
     pats = [f'{k}/{i}.{e}' for i in ids for k, e in [('patches', 'h5'), ('st', 'h5ad'), ('metadata', 'json')]]

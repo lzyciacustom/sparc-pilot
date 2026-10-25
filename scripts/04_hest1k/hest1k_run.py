@@ -8,9 +8,8 @@ heads   : det | gauss (low-rank Gaussian, rank 4)
 All runs: bs 1024, lr 2e-4, bf16 autocast, 30 epochs (sqrt-scaled from SPARC's bs256/lr1e-4; identical for all variants).
 Outputs: results/<target>__<model>__<head>__s<seed>.csv (per CRC test slide x program metrics).
 """
-import os, sys, time, argparse, json, math, numpy as np, pandas as pd, torch
+import os, sys, time, argparse, math, numpy as np, pandas as pd, torch
 from torch import nn
-import torch.nn.functional as F
 WS = os.path.dirname(os.path.abspath(__file__)); sys.path.append(WS); sys.path.append(os.path.join(WS, 'trackB'))
 import sparcmap_lib as L
 from spatial_models import CentreMLP, ConcertTransformer, GaussianHead, fit_compartments
@@ -49,14 +48,13 @@ S = {}
 for s in pool_ids + sorted(crc_ids):
     try:
         x = load(s)
-        if np.isfinite(x['Y']).any(axis=0).sum() >= 30: S[s] = x       # need >=30/36 programs present
+        if np.isfinite(x['Y']).any(axis=0).sum() >= 30: S[s] = x
     except Exception as e:
         print('skip', s, repr(e)[:80], flush=True)
 pool_ids = [s for s in pool_ids if s in S]
 print(f'loaded {len(S)} slides ({len(pool_ids)} pool non-CRC) in {time.time()-t0:.0f}s', flush=True)
 
 
-# ----------------------------------------------------------------------------- GP-kernel aggregation model
 class GPKernelAgg(nn.Module):
     """Non-stationary Gaussian-kernel aggregation (CONCERT-style spatial kernel, posterior-mean form):
     z_i = [g(x_i), sum_j k_m(d_ij; l_im) g(x_j) / sum_j k_m(d_ij; l_im)  for m=1..M],
@@ -76,16 +74,16 @@ class GPKernelAgg(nn.Module):
         self.hidden_dim = hidden * (M + 1)
 
     def embed(self, c, n, r):
-        hc, hn = self.enc(c), self.enc(n)                                     # (B,H), (B,K,H)
+        hc, hn = self.enc(c), self.enc(n)
         logl = self.log_l + self.l_mod(hc)
         if self.use_comp:
             with torch.no_grad():
                 z = (c.float() - self.feat_mu) @ self.pca_W
                 cid = torch.cdist(z.unsqueeze(1), self.cent.unsqueeze(0).expand(z.shape[0], -1, -1)).squeeze(1).argmin(-1)
             logl = logl + self.l_comp(cid)
-        l2 = torch.exp(2 * logl.float())                                      # (B,M)
-        d2 = r.float().pow(2).sum(-1)                                         # (B,K)
-        w = torch.exp(-d2.unsqueeze(-1) / (2 * l2.unsqueeze(1)))             # (B,K,M)
+        l2 = torch.exp(2 * logl.float())
+        d2 = r.float().pow(2).sum(-1)
+        w = torch.exp(-d2.unsqueeze(-1) / (2 * l2.unsqueeze(1)))
         agg = torch.einsum('bkm,bkh->bmh', w.to(hn.dtype), hn) / (w.sum(1).unsqueeze(-1).to(hn.dtype) + 1e-6)
         return torch.cat([hc, agg.flatten(1)], -1)
 
@@ -107,7 +105,7 @@ class BaseEmbed(nn.Module):
     def __init__(self, P):
         super().__init__(); self.m = L.build_model(P)
     def embed(self, c, n, r):
-        m = self.m; B = n.shape[0]
+        m = self.m
         tok = torch.cat([m.input_proj(c).unsqueeze(1), m.input_proj(n) + m.coord_encoder(r)], 1)
         for blk in m.transformer_blocks: tok = blk(tok)
         return tok[:, 0]
@@ -175,7 +173,7 @@ for k in folds:
     r = L.evaluate(m, [S[s] for s in te], norm, forward=bf16)
     if args.head == 'gauss':
         cal = {s: gauss_calib(m, S[s], norm) for s in te}
-        r['cov90'] = r['sample'].map(lambda s: cal[s][0]); r['crps'] = r['sample'].map(lambda s: cal[s][1])
+        r['cov90'] = r['sample'].map(lambda s, cal=cal: cal[s][0]); r['crps'] = r['sample'].map(lambda s, cal=cal: cal[s][1])
     r['fold'] = k; r['target'] = args.target; r['model'] = args.model; r['head'] = args.head; r['seed'] = args.seed
     r['n_train_slides'] = len(tr); r['crc_only'] = args.crc_only; r['best_epoch'] = int(np.argmax(hist)) if hist else -1
     out.append(r)

@@ -15,8 +15,8 @@ def load_runs(d='b1_runs'):
 
 def per_slide(runs, seeds=None):
     r = runs if seeds is None else runs[runs.seed.isin(seeds)]
-    s = r.groupby(['method', 'variant', 'seed', 'sample'])[MET].mean().reset_index()      # mean over programs
-    s = s.groupby(['method', 'variant', 'sample'])[MET].mean().reset_index()                # mean over seeds
+    s = r.groupby(['method', 'variant', 'seed', 'sample'])[MET].mean().reset_index()
+    s = s.groupby(['method', 'variant', 'sample'])[MET].mean().reset_index()
     nseed = r.groupby(['method', 'variant']).seed.nunique().rename('n_seeds').reset_index()
     return s.merge(folds[['sample', 'task', 'group']], on='sample').merge(nseed, on=['method', 'variant'])
 
@@ -38,7 +38,6 @@ def paired(runs, a, b, method):
     """a vs b (b = reference), restricted to seeds both have; per-slide and per-group Wilcoxon."""
     ra, rb = runs[(runs.method == method) & (runs.variant == a)], runs[(runs.method == method) & (runs.variant == b)]
     seeds = sorted(set(ra.seed) & set(rb.seed))
-    # also restrict to (fold,seed) combos both have
     ka = set(zip(ra.fold, ra.seed)); kb = set(zip(rb.fold, rb.seed)); keys = ka & kb
     sel = lambda r: r[[(f, s) in keys for f, s in zip(r.fold, r.seed)]]
     pa, pb = per_slide(sel(ra)), per_slide(sel(rb))

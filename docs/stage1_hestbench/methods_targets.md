@@ -1,12 +1,11 @@
-# Track A — Program targets (proposal Aim 2, claim i)
+# Track A — Program targets
 
-## 中文摘要
-- **ssGSEA 目标的共享成分主要来自打分方式本身。** 36 个与真实程序等大小的随机基因集，用 ssGSEA 打分后 PC1 方差占比中位数为 0.520，程序间平均 r 为 0.471；真实程序分别为 0.598 和 0.537。用 ULM/MLM 打分时，随机集几乎没有共享结构（平均 r 0.081/0.059）。
-- **原始 Pearson 不能作为程序生物学的证据。** 在相同 SPARC-Map 训练流程下，随机基因集的 ssGSEA 目标留患者外 Pearson 为 0.316（3 次抽样均值），真实程序为 0.342。患者组层面差异 +0.025，Wilcoxon p = 0.21（16 组）。只有中心化后（0.246 vs 0.044）或深度残差化后（0.147 vs 0.083），真实程序才明显优于随机。
-- **联合估计（MLM）并未带来更可重复的程序特异信号。** 深度残差化后，MLM 的半集一致性最低（0.134），ssGSEA 为 0.277，ULM 为 0.249。程序特异性（同程序减跨程序）排序为：ULM 0.188 ≈ ssGSEA 中心化 0.191 > ssGSEA 0.162 > MLM 0.105。
-- **H&E 可预测性。** 程序特异指标上 ULM 最好：中心化 0.290，深度残差化 0.233；MLM 为 0.233/0.177，ssGSEA 为 0.246/0.147。MLM 只在深度残差化指标上优于 ssGSEA（+0.030，p = 0.002），中心化指标上无差异（p = 0.18）。直接对 ssGSEA 做深度残差化，效果与 ULM 相当（0.233 vs 0.233，p = 0.91）。
-- **Spectra（仅 8 张切片，暂定结论）。** 共享成分居中：PC1 0.440，ssGSEA 0.649，MLM 0.234；未优于 MLM。
-- **对提案的建议：** 把“联合估计更好”改写为“需要显式去除深度/共享成分，并以随机基因集零模型为对照”。主指标应改为中心化/深度残差化 Pearson 加随机零模型差值，ULM 与 ssGSEA 深度残差化作为强基线。
+## Summary
+- **The shared component of ssGSEA targets comes mainly from the scoring method.** For 36 random gene sets size-matched to the real programs, ssGSEA scores have a median PC1 variance fraction of 0.520 and a mean inter-program r of 0.471 (real programs: 0.598 and 0.537). Under ULM/MLM scoring, random sets show almost no shared component.
+- **Raw Pearson is not evidence of program biology.** With the same SPARC-Map training, ssGSEA targets of random gene sets reach a held-out Pearson of 0.316 (mean of 3 draws) vs 0.342 for real programs; patient-group difference +0.025, Wilcoxon p = 0.21 (16 groups).
+- **Joint estimation (MLM) does not give more reproducible program-specific signal.** After depth residualisation, MLM has the lowest split-half agreement (0.134; ssGSEA 0.277, ULM 0.249). Program specificity (same program minus cross-program): ULM 0.188 ≈ centred ssGSEA 0.191 > ssGSEA 0.162 > MLM 0.105.
+- **H&E predictability.** ULM is best on program-specific metrics: centred 0.290, depth-residualised 0.233 (MLM 0.233 / 0.177, ssGSEA 0.246 / 0.147). MLM beats ssGSEA only on the depth-residualised metric (+0.030, p = 0.002), not on the centred metric (p = 0.18).
+- **Spectra (8 slides only, provisional).** Intermediate shared component: PC1 0.440 (ssGSEA 0.649, MLM 0.234); not better than MLM.
 
 ## Data and splits
 - 57 HEST-Bench Visium whole-transcriptome slides (CCRCC 24, PRAD 23, LYMPH_IDC 4, READ 4, HCC 2) in 16 patient groups. 4-fold patient-group CV from `sparcmap_lib.wt_folds()`. The 15 Xenium slides were excluded, as instructed.
@@ -41,7 +40,7 @@
 - Universe: 13,586 genes detected in ≥90% of the 57 WT slides.
 - 36 random sets per draw, each the size of the corresponding program's overlap with the universe (9–400 genes). Draws were made without expression matching (rng seed 2026; `random_gene_sets.json`).
 - All 3 draws were scored with ssGSEA, ULM and MLM. The scorer code and settings were the same as for the real targets.
-- H&E models trained on the random targets: ssGSEA draws 0, 1, 2; MLM draw 0; ULM draw 0 (the ULM run goes beyond the task).
+- H&E models trained on the random targets: ssGSEA draws 0, 1, 2; MLM draw 0; ULM draw 0 (the ULM run is an addition).
 
 ## A4 — H&E predictability
 - Model: baseline SPARC-Map via `sparcmap_lib.train` (k = 16 neighbours, H = 256, 3 blocks, 8 heads, MSE + 0.5·(1 − Pearson), AdamW lr 1e-4, wd 1e-2, bs 256, robust label normalisation), 30 epochs.
@@ -99,8 +98,7 @@ A2 (mean over 57 slides), depth-residualised split-half r / specificity:
 
 - Specificity differences: ULM − ssGSEA +0.026 (p = 9.1e-05 slides / 0.001 groups); MLM − ssGSEA −0.056 (2.4e-09 / 5.8e-04); MLM − ULM −0.082.
 
-## Deviations from the task
-See the `deviations` list in the structured output. In short:
+## Deviations from the planned protocol
 1. One training seed for every target. The optional 3-seed ssGSEA-vs-MLM comparison was not run.
 2. The MLM random null has 1 trained draw, not 3. Score-level null statistics use all 3 draws.
 3. The real-ssGSEA CV result is reused from the baseline bundle.

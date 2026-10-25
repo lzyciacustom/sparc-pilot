@@ -6,14 +6,12 @@ D = f'al_out/{method}'; OUT = f'al_results/{method}'; os.makedirs(OUT, exist_ok=
 f = L.wt_folds(); grp = dict(zip(f['sample'], f['group'])); task = dict(zip(f['sample'], f['task']))
 runs = pd.concat([pd.read_csv(x) for x in sorted(glob.glob(f'{D}/fold*_seed*_*.csv'))], ignore_index=True)
 sel = pd.concat([pd.read_csv(x) for x in sorted(glob.glob(f'{D}/sel_fold*.csv'))], ignore_index=True)
-# keep only (fold,seed) units with all three strategies complete
 cnt = runs[runs.strategy.isin(['random', 'maxunc', 'epig'])].groupby(['fold', 'seed']).strategy.nunique(); full = cnt[cnt == 3].index
 runs = runs.set_index(['fold', 'seed']).loc[full].reset_index()
 sel = sel.set_index(['fold', 'seed']).loc[full].reset_index()
 S3 = [x for x in ['random', 'maxunc', 'epig', 'featmatch'] if x in set(runs.strategy)]; MET = ['pearson', 'pearson_depthres']
 print('complete (fold,seed) units:', len(full))
 
-# ---------------- long per-slide table
 slide_cols = [c for c in runs.columns if c.startswith('slide_')]
 long = runs.melt(id_vars=['fold', 'seed', 'strategy', 'round', 'n_slides', 'n_spots'], value_vars=slide_cols).dropna()
 long['metric'] = np.where(long.variable.str.startswith('slide_pearson__'), 'pearson', 'pearson_depthres')
@@ -21,7 +19,6 @@ long['sample'] = long.variable.str.split('__').str[1]; long['group'] = long['sam
 long = long.drop(columns='variable')
 long.to_csv(f'{OUT}/al_per_slide_long.csv', index=False)
 
-# ---------------- learning curves (mean over fold x seed of per-slide mean)
 lc = runs.groupby(['strategy', 'round'])[MET + ['n_spots', 'n_groups']].agg(['mean', 'sem'])
 lc.columns = ['_'.join(c) for c in lc.columns]; lc = lc.reset_index(); lc.to_csv(f'{OUT}/al_learning_curves.csv', index=False)
 lc_read = (long[long.task == 'READ'].groupby(['strategy', 'round', 'metric', 'fold', 'seed']).value.mean()
@@ -31,11 +28,10 @@ lc_task = long.groupby(['task', 'strategy', 'round', 'metric']).value.mean().res
 lc_task.to_csv(f'{OUT}/al_learning_curves_by_task.csv', index=False)
 
 
-def auc_rounds(y):  # normalised area under curve over rounds 0..6 (= trapezoid mean performance)
+def auc_rounds(y):
     return np.trapezoid(y, dx=1) / (len(y) - 1)
 
 
-# ---------------- AUC per (fold,seed,strategy): slide budget
 rows = []
 for (k, s, st), g in runs.groupby(['fold', 'seed', 'strategy']):
     g = g.sort_values('round')
@@ -44,7 +40,6 @@ for (k, s, st), g in runs.groupby(['fold', 'seed', 'strategy']):
                      final_n_groups=g.n_groups.values[-1]))
 auc = pd.DataFrame(rows)
 
-# spot budget: interpolate onto a common spot grid [init spots, min final spots over strategies] per unit
 sp = []
 for (k, s), g in runs.groupby(['fold', 'seed']):
     hi = g.groupby('strategy').n_spots.max().min(); lo = g.n_spots.min(); grid = np.linspace(lo, hi, 50)
@@ -56,7 +51,6 @@ for (k, s), g in runs.groupby(['fold', 'seed']):
 auc = auc.merge(pd.DataFrame(sp), on=['fold', 'seed', 'strategy'])
 auc.to_csv(f'{OUT}/al_auc_per_run.csv', index=False)
 
-# per-slide AUC (slide-level learning curves), averaged over seeds, for slide- and group-level paired tests
 ps = (long.groupby(['metric', 'sample', 'group', 'task', 'fold', 'seed', 'strategy'])
       .apply(lambda g: auc_rounds(g.sort_values('round').value.values), include_groups=False).rename('auc').reset_index())
 ps_m = ps.groupby(['metric', 'sample', 'group', 'task', 'strategy']).auc.mean().unstack('strategy').reset_index()
@@ -90,13 +84,11 @@ for a, b in PAIRS:
                         mean_diff=np.nanmean(d), median_diff=np.nanmedian(d), n_pos=int((d > 0).sum()), wilcoxon_p=np.nan))
 cmp = pd.DataFrame(cmp); cmp.to_csv(f'{OUT}/al_paired_comparisons.csv', index=False)
 
-# AUC summary table
 summ = auc.groupby('strategy')[[c for c in auc.columns if c.startswith(('auc', 'final', 'atbudget'))]].agg(['mean', 'sem'])
 summ.columns = ['_'.join(c) for c in summ.columns]; summ = summ.reset_index()
 rd = ps_m.groupby(['metric'])[S3].mean()
 summ.to_csv(f'{OUT}/al_auc_table.csv', index=False)
 
-# ---------------- selection composition
 sel['task'] = sel.slide.map(task)
 comp = sel.groupby('strategy').agg(n_selected=('slide', 'size'), frac_group_already_covered=('group_already_covered', 'mean'),
                                    frac_batch_same_group=('same_group_as_batchmate', lambda x: x.sum() / (len(x) / 2)),
@@ -106,10 +98,8 @@ fg = auc.groupby('strategy').final_n_groups.mean().rename('mean_distinct_groups_
 comp = comp.merge(fg, on='strategy')
 tc = sel.groupby(['strategy', 'task']).size().unstack(fill_value=0); tc = tc.div(tc.sum(1), axis=0).add_prefix('frac_task_')
 comp = comp.merge(tc.reset_index(), on='strategy')
-# expected fraction under random draws, empirical from random strategy is the reference
 comp.to_csv(f'{OUT}/al_selection_composition.csv', index=False)
 
-# ---------------- diagnostic: does the acquisition score predict the realised gain?  (random strategy only)
 diag = []
 for (k, s), g in runs[runs.strategy == 'random'].groupby(['fold', 'seed']):
     g = g.sort_values('round')
@@ -126,17 +116,15 @@ dsum = []
 for sc in ['epig_pctile', 'maxunc_pctile']:
     for gcol in ['gain_pearson', 'gain_pdres']:
         r, p = spearmanr(diag[sc], diag[gcol]); dsum.append(dict(score=sc, gain=gcol, n=len(diag), spearman=r, p=p))
-# candidate-level agreement of EPIG and max-uncertainty
 allsc = pd.concat([pd.read_csv(x) for x in glob.glob(f'{D}/scores_*.csv')])
 rr = allsc.groupby(['fold', 'seed', 'strategy', 'round']).apply(lambda g: spearmanr(g.epig, g.maxunc)[0], include_groups=False)
 dsum.append(dict(score='epig vs maxunc (candidate ranks)', gain='-', n=len(rr), spearman=rr.median(), p=np.nan))
 pd.DataFrame(dsum).to_csv(f'{OUT}/al_score_diagnostics.csv', index=False)
 print(summ.round(3).to_string()); print(cmp.round(4).to_string()); print(comp.round(3).to_string()); print(pd.DataFrame(dsum).round(3))
 
-# ---------------- mechanism diagnostics
 tgt_tasks = {k: set(f[f.cv_fold == k].task) for k in f.cv_fold.unique()}
 sel['task_in_target'] = [t in tgt_tasks[k] for t, k in zip(sel.task, sel.fold)]
-pool_frac = []  # expected fraction under uniform random selection from the pool
+pool_frac = []
 for k in sorted(tgt_tasks):
     tr = f[f.cv_fold != k]
     pool_frac.append(tr.task.isin(tgt_tasks[k]).mean())

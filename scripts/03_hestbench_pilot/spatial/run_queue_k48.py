@@ -2,9 +2,9 @@
 import os, sys, time, gc
 os.environ.setdefault('OMP_NUM_THREADS', '2')
 sys.path.append(os.getcwd())
-import numpy as np, pandas as pd, torch
+import numpy as np, torch
 torch.set_num_threads(2)
-import sparcmap_lib as L, spatial_models as SM
+import sparcmap_lib as L
 import run_b1 as B1, run_b2 as B2
 
 core = ['mlp', 'base_k16', 'concert_k16']; second = ['noDist_k16', 'noCos_k16', 'noComp_k16', 'base_k48', 'concert_k48']
@@ -52,7 +52,7 @@ def run_b1(wid, m, v, k, s):
 def main():
     wid = int(sys.argv[1])
     while True:
-        claimed, pending_b2 = 0, False
+        claimed = 0
         for job in Q:
             if run_job(wid, job): claimed = 1; break
         if claimed == 0:

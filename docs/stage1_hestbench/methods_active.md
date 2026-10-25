@@ -1,4 +1,4 @@
-# Track C: active selection of sections (proposal Aim 2, claim iii)
+# Track C: active selection of sections
 
 ## What was run
 * **Data:** the 57 HEST-Bench Visium whole-transcriptome slides, with ssGSEA targets for the 36 SPARC programs and H-optimus-0 patch features (1536-d). The folds are the 4 patient-group CV folds from `L.wt_folds()`. **MLM targets were not run** because of compute time (see Deviations).
@@ -38,7 +38,7 @@ All scores are computed with the current round's ensemble, in the common robust-
    * For each program, the members' predictions are centred across members to give 5-vectors. ρ(x,x*) is the cosine between those vectors at x and x*, which equals the correlation across members.
    * EPIG(slide) = mean over all (x, x*) pairs and the 36 programs of −0.5·log(1−ρ²), with ρ² clipped at 0.999. This is the noise-free joint-Gaussian form specified in the task.
    * **Batch rule:** the first pick is argmax EPIG. The second pick is argmax EPIG(s)·(1 − max_(c∈chosen) R(s,c)), where R(s,c) is the mean over programs and sampled spot pairs of ρ² between the member-deviation vectors of s and c. This discounts candidates whose ensemble disagreement duplicates a slide already chosen.
-4. **featmatch** (extra control, not in the task): a model-free and label-free rule. Each candidate's score is its mean cosine similarity between the slide-mean H-optimus-0 embedding and each target slide's mean embedding. The top-2 slides are taken, with no diversity term.
+4. **featmatch** (additional control): a model-free and label-free rule. Each candidate's score is its mean cosine similarity between the slide-mean H-optimus-0 embedding and each target slide's mean embedding. The top-2 slides are taken, with no diversity term.
 
 ## Results (ssGSEA targets, 12 paired runs per strategy, mean ± SEM over runs)
 | strategy | AUC raw r | AUC depth-res. r | final (14 slides) raw | final depth-res. | spot-AUC raw | spot-AUC depth-res. |
@@ -128,7 +128,7 @@ Does the acquisition score predict the realised gain? This uses the random-strat
   * With M=5 the member-correlation estimate has only 4 degrees of freedom: its chance level is E[ρ²]=0.25, and observed EPIG values were only modestly above that chance level.
   * The noise-free EPIG ignores observation noise.
 
-## Deviations from the task
+## Deviations from the planned protocol
 * MLM targets were not run, because of compute time (~13 h of shared-GPU time for the ssGSEA design). All results are ssGSEA only.
 * The spot-count budget is analysed post hoc on the slide-budget runs (re-indexed by spots). No cost-aware (score/spots) selection was simulated.
 * The inner validation group is labelled, fixed per fold and excluded from the pool, so it is not part of the acquisition budget.
@@ -138,4 +138,4 @@ Does the acquisition score predict the realised gain? This uses the random-strat
 * Number of seeds: 3 initial sets per fold × 5 ensemble members. The round-0 ensemble is shared within each (fold, seed).
 
 ## Files
-Code: `al_core.py`, `run_al.py`, `analyze_al.py`, `make_figs.py`; raw per-run outputs: `al_raw_outputs_ssgsea.tar.gz`.
+Code: `al_core.py`, `run_al.py`, `analyze_al.py`, `make_figs.py`; per-run tables: `results/tables/stage1_hestbench/al_*.csv`.

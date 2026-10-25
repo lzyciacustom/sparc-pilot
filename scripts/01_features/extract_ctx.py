@@ -14,8 +14,8 @@ for f in files:
     t=time.time(); mpp=json.load(open(f'{R}/metadata/{sid}.json'))['pixel_size_um_estimated']
     with h5py.File(f) as h:
         xy=h['coords'][:].astype(np.float64); bc=h['barcode'][:]; n=len(xy)
-        um=xy*mpp                                   # top-left in micrometres
-        o=um.min(0)-500; cx=((um-o)/2.0).astype(int)   # 2 um/px canvas coordinates of patch top-left
+        um=xy*mpp
+        o=um.min(0)-500; cx=((um-o)/2.0).astype(int)  # 2 um/px canvas coordinates of the patch top-left
         W,Hh=(cx.max(0)+56+300)
         canvas=torch.full((3,int(Hh),int(W)),240,dtype=torch.uint8)
         for s in range(0,n,2048):
@@ -26,7 +26,7 @@ for f in files:
     ctr=cx+28; feats=np.zeros((n,1536),np.float16)
     pad=F.pad(canvas.float().unsqueeze(0),(112,112,112,112),value=240.).squeeze(0).to(torch.uint8)
     for s in range(0,n,128):
-        crops=torch.stack([pad[:,y:y+224,x:x+224] for x,y in ctr[s:s+128]])   # centre shifted by pad=112
+        crops=torch.stack([pad[:,y:y+224,x:x+224] for x,y in ctr[s:s+128]])
         x=(crops.cuda().float()/255.-mean)/std
         with torch.inference_mode(), torch.autocast('cuda',dtype=torch.float16):
             feats[s:s+128]=model(x).float().cpu().numpy()

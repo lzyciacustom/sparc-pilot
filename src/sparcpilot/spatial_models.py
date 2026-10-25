@@ -8,11 +8,10 @@ from __future__ import annotations
 import math, numpy as np, torch
 from torch import nn
 import torch.nn.functional as F
-from preprocessing.map_models import CoordEncoder  # sparc_repo on sys.path via sparcmap_lib
+from preprocessing.map_models import CoordEncoder  # import sparcmap_lib first (puts sparc_repo on sys.path)
 from sklearn.cluster import KMeans
 
 
-# ----------------------------------------------------------------------------- non-spatial
 class CentreMLP(nn.Module):
     """Centre-patch-only MLP, ~2.2M params (baseline transformer ~2.8M)."""
     def __init__(self, input_dim, P, dims=(1024, 512, 256), dropout=0.1):
@@ -37,7 +36,6 @@ def bf16_forward(model, c, n, r):
         return model(c, n, r).float()
 
 
-# ----------------------------------------------------------------------------- compartments
 def fit_compartments(slides, k=6, n_pca=32, n_sub=60000, seed=0):
     """k-means(k) on PCA(n_pca) of H-optimus features pooled over the given (training) slides."""
     rng = np.random.default_rng(seed)
@@ -45,7 +43,7 @@ def fit_compartments(slides, k=6, n_pca=32, n_sub=60000, seed=0):
     sub = X[rng.choice(len(X), min(n_sub, len(X)), replace=False)]
     mu = sub.mean(0)
     U, S, Vt = np.linalg.svd(sub - mu, full_matrices=False)
-    W = Vt[:n_pca].T.astype(np.float32)                       # (D, n_pca)
+    W = Vt[:n_pca].T.astype(np.float32)
     Z = (sub - mu) @ W
     km = KMeans(k, n_init=10, random_state=seed).fit(Z)
     return dict(mu=mu.astype(np.float32), W=W, C=km.cluster_centers_.astype(np.float32), k=k)
@@ -56,7 +54,6 @@ def assign_np(X, comp):
     return ((Z[:, None, :] - comp['C'][None]) ** 2).sum(-1).argmin(1)
 
 
-# ----------------------------------------------------------------------------- bias transformer
 class BiasBlock(nn.Module):
     """Pre-LN transformer block identical to the SPARC TransformerBlock but with an additive float
     attention bias (B, heads, T, T) passed to scaled_dot_product_attention."""
@@ -115,19 +112,19 @@ class ConcertTransformer(nn.Module):
             self.comp_emb = nn.Embedding(K, hidden); nn.init.normal_(self.comp_emb.weight, std=0.02)
 
     @torch.no_grad()
-    def compartments(self, feats):           # (B,T,D) -> (B,T) long
+    def compartments(self, feats):
         z = (feats.float() - self.feat_mu) @ self.pca_W
         return torch.cdist(z, self.cent.unsqueeze(0).expand(z.shape[0], -1, -1)).argmin(-1)
 
     def embed(self, c, n, r):
         B, K, _ = n.shape
-        feats = torch.cat([c.unsqueeze(1), n], 1)                                 # (B,T,D)
+        feats = torch.cat([c.unsqueeze(1), n], 1)
         tok = torch.cat([self.input_proj(c).unsqueeze(1), self.input_proj(n) + self.coord_encoder(r)], 1)
         bias = 0.
         if self.use_dist:
             pos = torch.cat([torch.zeros(B, 1, 2, device=r.device, dtype=r.dtype), r], 1)
-            d = ((pos.unsqueeze(2) - pos.unsqueeze(1)).pow(2).sum(-1) + 1e-8).sqrt()  # (B,T,T)
-            bias = bias + self.dist_proj(rbf(d, self.d_cent, self.d_width))      # (B,T,T,L*H)
+            d = ((pos.unsqueeze(2) - pos.unsqueeze(1)).pow(2).sum(-1) + 1e-8).sqrt()
+            bias = bias + self.dist_proj(rbf(d, self.d_cent, self.d_width))
         if self.use_cos:
             fn = F.normalize(feats - self.feat_mu, dim=-1)
             cs = fn @ fn.transpose(1, 2)
@@ -135,11 +132,11 @@ class ConcertTransformer(nn.Module):
         if self.use_comp:
             cid = self.compartments(feats)
             tok = tok + self.comp_emb(cid)
-            oh = F.one_hot(cid, self.K).to(tok.dtype)                              # (B,T,K)
+            oh = F.one_hot(cid, self.K).to(tok.dtype)
             bias = bias + torch.einsum('btk,bsm,kml->btsl', oh, oh, self.pair.to(tok.dtype))
         if torch.is_tensor(bias):
             T = tok.shape[1]
-            bias = bias.view(B, T, T, self.L, self.H).permute(3, 0, 4, 1, 2).contiguous()   # (L,B,H,T,T)
+            bias = bias.view(B, T, T, self.L, self.H).permute(3, 0, 4, 1, 2).contiguous()
         for li, blk in enumerate(self.blocks):
             tok = blk(tok, bias[li] if torch.is_tensor(bias) else None)
         return tok[:, 0]
@@ -148,7 +145,6 @@ class ConcertTransformer(nn.Module):
         return self.head(self.embed(c, n, r))
 
 
-# ----------------------------------------------------------------------------- heads (B2)
 class GaussianHead(nn.Module):
     """mean + low-rank (rank R) + diagonal covariance over P programs: Sigma = F F^T + diag(d)."""
     def __init__(self, hidden, P, rank=4, dropout=0.1):
@@ -168,7 +164,7 @@ class GaussianHead(nn.Module):
     def nll(mu, Fm, d, y, m):
         """Exact Gaussian NLL with masked programs handled by inflating their diagonal (marginalisation is
         not exact for missing entries, but missing entries are <0.2% for mlm and 0% for ssgsea)."""
-        # zero factor rows / unit diag for missing entries => they contribute a constant only
+        # missing entries: zero factor rows and unit variance, so they add only a constant
         Fm = Fm * m.unsqueeze(-1); d = d * m + (1 - m); r = (y - mu) * m
         dist = torch.distributions.LowRankMultivariateNormal(torch.zeros_like(mu), Fm, d)
         return -dist.log_prob(r).mean() / mu.shape[1]

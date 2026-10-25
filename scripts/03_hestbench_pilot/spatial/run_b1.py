@@ -2,11 +2,11 @@
 import os, sys, time, pickle
 os.environ.setdefault('OMP_NUM_THREADS', '2')
 sys.path.append(os.getcwd())
-import numpy as np, pandas as pd, torch
+import numpy as np, torch
 torch.set_num_threads(2)
 import sparcmap_lib as L, spatial_models as SM
 
-VARIANTS = {  # name: (k, kind, kwargs)
+VARIANTS = {
     'mlp':          (16, 'mlp', {}),
     'base_k16':     (16, 'base', {}),
     'concert_k16':  (16, 'concert', dict(use_dist=True, use_cos=True, use_comp=True)),
@@ -16,7 +16,7 @@ VARIANTS = {  # name: (k, kind, kwargs)
     'base_k48':     (48, 'base', {}),
     'concert_k48':  (48, 'concert', dict(use_dist=True, use_cos=True, use_comp=True)),
 }
-METHODS = ['ssgsea', 'mlm']; SEEDS = [0, 1]; EPOCHS = 30; BS, LR = 1024, 2e-4   # deviation from bs256/lr1e-4 (GPU contention)
+METHODS = ['ssgsea', 'mlm']; SEEDS = [0, 1]; EPOCHS = 30; BS, LR = 1024, 2e-4  # bs1024/lr2e-4 instead of bs256/lr1e-4 (GPU contention)
 OUT = 'b1_runs'; os.makedirs(OUT, exist_ok=True); os.makedirs('comp_cache', exist_ok=True)
 folds = L.wt_folds()
 
@@ -44,11 +44,11 @@ def make(kind, kw, P, comp):
 
 
 def main():
-    wid, nw = int(sys.argv[1]), int(sys.argv[2]); bench = len(sys.argv) > 3
+    wid, _ = int(sys.argv[1]), int(sys.argv[2]); bench = len(sys.argv) > 3
     core = ['mlp', 'base_k16', 'concert_k16']; second = ['noDist_k16', 'noCos_k16', 'noComp_k16', 'base_k48', 'concert_k48']
-    jobs = [(m, v, k, s) for m in METHODS for s in SEEDS for k in range(4) for v in core]          # tier 1
-    jobs += [(m, v, k, 0) for m in METHODS for k in range(4) for v in second]                    # tier 2, seed 0
-    jobs += [(m, v, k, 1) for m in METHODS for k in range(4) for v in second]                    # tier 3, seed 1
+    jobs = [(m, v, k, s) for m in METHODS for s in SEEDS for k in range(4) for v in core]
+    jobs += [(m, v, k, 0) for m in METHODS for k in range(4) for v in second]
+    jobs += [(m, v, k, 1) for m in METHODS for k in range(4) for v in second]
     if bench: jobs = jobs[:1]
     os.makedirs('b1_locks', exist_ok=True)
     cache = {}
@@ -61,7 +61,7 @@ def main():
         kk, kind, kw = VARIANTS[v]
         key = (m, kk)
         if key not in cache:
-            cache.clear()  # keep one (method,k) slide set in RAM
+            cache.clear()
             cache[key] = {sid: L.load_slide(sid, m, k=kk) for sid in folds['sample']}
         S = cache[key]
         tr, va, te, vg = split(k)

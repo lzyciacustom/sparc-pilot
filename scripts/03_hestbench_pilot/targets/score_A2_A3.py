@@ -1,9 +1,8 @@
 import os, sys, json; sys.path.append(os.getcwd())
-import numpy as np, pandas as pd, anndata as ad, scipy.sparse as sp, torch
+import numpy as np, pandas as pd, anndata as ad, scipy.sparse as sp
 import sparcmap_lib as L, score_lib as SL
 sets = json.load(open('sparc_programs_msigdb.json'))['sets']; P = L.PROGRAMS
 folds = L.wt_folds(); wt = folds['sample'].tolist()
-# ---------- gene universe for random sets: detected in >=90% of the 57 WT slides
 if not os.path.exists('results/random_gene_sets.json'):
     cnt = {}
     for s in wt:
@@ -18,7 +17,6 @@ if not os.path.exists('results/random_gene_sets.json'):
             k = len(set(sets[p]) & Us); R[f'rand{d}'] = R.get(f'rand{d}', {}); R[f'rand{d}'][p] = list(rng.choice(U, k, replace=False))
     json.dump(dict(universe_size=len(U), sizes={p: len(set(sets[p]) & Us) for p in P}, sets=R), open('results/random_gene_sets.json', 'w'))
 RS = json.load(open('results/random_gene_sets.json'))['sets']
-# ---------- split halves: 10 repeats per program (nominal gene list, split before slide intersection)
 rng = np.random.default_rng(7); HALF = []
 for rep in range(10):
     A, B = {}, {}
@@ -61,7 +59,7 @@ for sid in wt:
             RA, RB = L.residualize(YA.astype(np.float64), dg[:, None]), L.residualize(YB.astype(np.float64), dg[:, None])
             Craw, Cres = corr_cols(YA, YB), corr_cols(RA, RB)
             for j, p in enumerate(ok):
-                off = lambda Cm: (np.delete(Cm[j], j).mean() + np.delete(Cm[:, j], j).mean()) / 2
+                off = lambda Cm, j=j: (np.delete(Cm[j], j).mean() + np.delete(Cm[:, j], j).mean()) / 2
                 rows.append(dict(sample=sid, method=m, rep=rep, program=p, nA=int(MA[:, ia[j]].sum()), nB=int(MB[:, ib[j]].sum()),
                                  r_raw=Craw[j, j], r_depthres=Cres[j, j], offdiag_raw=off(Craw), offdiag_depthres=off(Cres)))
     pd.DataFrame(rows).to_csv(of, index=False); print(sid, len(rows), flush=True)

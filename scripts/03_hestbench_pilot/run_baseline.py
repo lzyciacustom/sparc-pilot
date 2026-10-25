@@ -1,10 +1,9 @@
 import os, sys; sys.path.append(os.getcwd())
-import sparcmap_lib as L, pandas as pd, numpy as np, torch, time
+import sparcmap_lib as L, pandas as pd, torch, time
 folds=L.wt_folds(); out=[]
 S={s:L.load_slide(s,'ssgsea') for s in folds['sample']}
 for k in sorted(folds.cv_fold.unique()):
     te=folds[folds.cv_fold==k]['sample'].tolist(); tr_all=folds[folds.cv_fold!=k]
-    # inner validation: one patient group from training folds for early stopping
     vg=tr_all.groupby('group').n_spots.sum().sort_values().index[len(tr_all.group.unique())//2]
     va=tr_all[tr_all.group==vg]['sample'].tolist(); tr=tr_all[tr_all.group!=vg]['sample'].tolist()
     t=time.time()
