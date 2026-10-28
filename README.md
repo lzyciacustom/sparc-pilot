@@ -106,14 +106,26 @@ python build_bM_ref.py --ref ref17 --universe $SPARC_EXT/mdacc/universe.txt --ta
 python mdacc_decomp.py && python mdacc_null.py && python mdacc_patient.py
 cd ..
 
-# 6. statistics and figures (repo root; runs in seconds; no GPU or data needed)
+# 6. statistics and figures (repo root; runs in seconds; no GPU or data needed; pip install -r environment/requirements-analysis.txt is enough)
 python scripts/07_analysis/hest1k_stats.py && python scripts/07_analysis/mouse_stats.py && python scripts/07_analysis/nuclei_stats.py
 python scripts/07_analysis/figures.py         # stage 2 → results/figures/regenerated/
 python scripts/07_analysis/collect_h1_runs.py /path/to/workdir/results     # only after step 4
-python scripts/07_analysis/compare_h0_h1.py && python scripts/07_analysis/figures_stage3.py
+python scripts/07_analysis/compare_h0_h1.py && python scripts/07_analysis/figures_stage3.py   # figures → results/figures/regenerated/
 ```
 
-Step 6 alone reproduces the stage-2 numbers in `docs/RESULTS.md`, the encoder comparison and the stage-3 figures from the shipped `results/`. Each script in `scripts/09_composition/` lists its arguments in its docstring and in `scripts/09_composition/README.md`.
+Step 6 alone reproduces the stage-2 numbers in `docs/RESULTS.md`, the encoder comparison and the stage-3 figures from the shipped `results/`; CI (`.github/workflows/reproduce.yml`) reruns it on every push and fails if any table in `results/tables/` changes. Each script in `scripts/09_composition/` lists its arguments in its docstring and in `scripts/09_composition/README.md`.
+
+### Runtime layout (read before running steps 1–5)
+
+The directory tree above is for reading; it does not exist at run time. `setup_workspace.sh` symlinks every script, `src/sparcpilot/*.py` and `metadata/*` into one flat working directory, and scripts find each other and their inputs by bare file name (`import sparcmap_lib`, `open('crc_folds.csv')`), so script names are unique across the repository. Three conventions follow:
+
+| Scripts | Run from | Paths resolved relative to |
+|---|---|---|
+| `00_data` – `06_nuclei`, `08_headroom`, `src/` | `<workdir>` | `<workdir>` |
+| `09_composition` | `<workdir>/comp` | the parent of `comp/` |
+| `07_analysis` | repository root | repository root (`results/`, `metadata/`) |
+
+`sparcmap_lib.py` reads the slide inventory and program list at import, so it imports only inside a workspace. `scripts/04_hest1k/hpc/submit.sh` uploads a fixed subset of the workspace to the cluster; keep its file list in step with `setup_workspace.sh`. Settings are command-line arguments plus a few environment variables: `SPARC_ENCODER` (h1 | h0), `SPARC_EXT` (external cohorts), `SPARC_ST` (CRC Visium for `run_all.py`), `FEAT_TAG` (HPC feature directory). The encoder of a run is recorded in its feature directory and in the `encoder` column of `hest1k_h1_long.parquet`; `hest1k_wave*_long.parquet` are all H-optimus-0.
 
 ## Data and code sources
 

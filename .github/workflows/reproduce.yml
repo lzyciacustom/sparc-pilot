@@ -1,0 +1,21 @@
+name: reproduce-statistics
+on: [push, pull_request]
+jobs:
+  step6:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install -r environment/requirements-analysis.txt
+      - name: Recompute statistics and figures from shipped results (README step 6)
+        run: |
+          python scripts/07_analysis/hest1k_stats.py
+          python scripts/07_analysis/mouse_stats.py
+          python scripts/07_analysis/nuclei_stats.py
+          python scripts/07_analysis/figures.py
+          python scripts/07_analysis/compare_h0_h1.py
+          python scripts/07_analysis/figures_stage3.py
+      - name: Tables must be unchanged
+        run: git diff --exit-code --stat results/tables && test -z "$(git status --porcelain results/tables results/figures)"

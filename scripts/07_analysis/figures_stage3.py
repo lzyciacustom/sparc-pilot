@@ -1,9 +1,10 @@
 """Stage-3 figures (headroom, composition-aware decomposition, MDACC micro- vs macrometastasis) from results/tables/{headroom,composition,mdacc}.
-usage (repo root): python scripts/07_analysis/figures_stage3.py   -> results/figures/stage3_composition/*.png"""
+usage (repo root): python scripts/07_analysis/figures_stage3.py   -> results/figures/regenerated/*.png
+The versions shipped in results/figures/stage3_composition/ were produced by this script."""
 import os, numpy as np, pandas as pd, matplotlib; matplotlib.use('Agg'); import matplotlib.pyplot as plt
 plt.rcParams.update({'font.size': 7, 'axes.titlesize': 8, 'axes.labelsize': 7, 'xtick.labelsize': 6, 'ytick.labelsize': 6, 'axes.spines.top': False,
                      'axes.spines.right': False, 'savefig.dpi': 300, 'pdf.fonttype': 42, 'axes.titleweight': 'bold'})
-T = 'results/tables'; OUT = 'results/figures/stage3_composition'; os.makedirs(OUT, exist_ok=True)
+T = 'results/tables'; OUT = 'results/figures/regenerated'; os.makedirs(OUT, exist_ok=True)
 BLUE, GREY, RED, META = '#1f4e79', '#9a9a9a', '#c0504d', '#7f7f7f'
 LEAK = {'COLONMAP_8270_AS', 'TENX_immune_P1'}
 

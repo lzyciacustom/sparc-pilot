@@ -1,0 +1,8 @@
+# step 6 only (statistics and figures from the shipped results/); no GPU, torch or data needed
+numpy==2.4.6
+scipy==1.17.1
+pandas==2.3.3
+pyarrow==25.0.0
+statsmodels==0.15.0
+matplotlib==3.11.2
+seaborn==0.13.2
