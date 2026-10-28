@@ -4,6 +4,7 @@ from joblib import Parallel, delayed
 sys.path.insert(0, '.')
 from decon_resid import TYPES, DROP_TYPE, select_markers, nnls_deconv, residualise, SANITY
 
+ST = os.environ.get('SPARC_ST', 'data/hest1k_crc/st')  # usage: python run_all.py <programs.json> <ids.csv> <n_jobs>
 P_all = pd.read_parquet('ref_profiles.parquet')
 P_all = P_all.loc[TYPES, P_all.sum(0) > 0]
 PROGS = list(json.load(open(sys.argv[1]))['sets'])
@@ -12,7 +13,7 @@ os.makedirs('out_parquet', exist_ok=True)
 
 def run(sid):
     t0 = time.time()
-    a = ad.read_h5ad(f'hest/st/{sid}.h5ad')
+    a = ad.read_h5ad(f'{ST}/{sid}.h5ad')
     X = a.X.tocsr() if sp.issparse(a.X) else sp.csr_matrix(a.X)
     total = np.asarray(X.sum(1)).ravel()
     vn = pd.Index(a.var_names)

@@ -1,5 +1,7 @@
 # Results
 
+> **Historical record (stages 1–2, H-optimus-0, 18 patient groups).** The current summary, with H-optimus-1 and 16 groups (the 2 groups with linked training slides excluded), plus the stage-3 headroom, composition and MDACC analyses, is [`CORE_FINDINGS.md`](CORE_FINDINGS.md). Conclusions here were not changed by the encoder update (CORE_FINDINGS section 3).
+
 Every value here is read from `results/tables/`. The analysis scripts in `scripts/07_analysis/` regenerate those tables from `results/raw/`.
 
 **How to read the numbers:**

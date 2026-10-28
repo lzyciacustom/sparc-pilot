@@ -1,6 +1,7 @@
 import os, sys, time, numpy as np, pandas as pd, torch; sys.path.append(os.getcwd())
 import sparcmap_lib as L
-L.TGT_DIR='targets_crc'; FD='features/hoptimus0_crc'
+import encoders as ENC
+L.TGT_DIR='targets_crc'; FD=ENC.feat_dir('crc')
 cand=pd.read_csv('hest1k_crc_candidates.csv')
 cand=cand[cand.id.map(lambda s: os.path.exists(f'{FD}/{s}.h5') and os.path.exists(f'targets_crc/{s}.parquet'))]
 g=cand.groupby('group').spots_under_tissue.sum().sort_values(ascending=False)

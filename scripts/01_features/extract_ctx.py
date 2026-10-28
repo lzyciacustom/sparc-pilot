@@ -1,15 +1,14 @@
 """Multi-scale context features: paste each 224px@0.5um/px HEST patch (downsampled x4 -> 56px@2um/px) onto a slide
-canvas at its level-0 coordinate, crop a 224x224 window (448 um) centred on each spot, embed with H-optimus-0.
-Output features/hoptimus0_ctx/<sid>.h5 with features/coords/barcode in the SAME order as the patch file."""
+canvas at its level-0 coordinate, crop a 224x224 window (448 um) centred on each spot, embed with the selected encoder (encoders.py; default H-optimus-1).
+Output features/<encoder tag>_ctx/<sid>.h5 with features/coords/barcode in the SAME order as the patch file."""
 import glob, os, json, h5py, numpy as np, torch, timm, time, pandas as pd, torch.nn.functional as F
-cfg=json.load(open('models/H-optimus-0/config.json'))
-model=timm.create_model(cfg['architecture'],pretrained=True,num_classes=0,init_values=1e-5,dynamic_img_size=False,img_size=224,
-        pretrained_cfg_overlay=dict(file='models/H-optimus-0/pytorch_model.bin')).cuda().eval()
-mean=torch.tensor([0.707223,0.578729,0.703617],device='cuda').view(1,3,1,1); std=torch.tensor([0.211883,0.230117,0.177517],device='cuda').view(1,3,1,1)
+import sys; sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import encoders as E
+model, mean, std = E.load(); FD = E.feat_dir('ctx'); os.makedirs(FD, exist_ok=True)
 R='data/hest1k_crc'; crc=set(pd.read_csv('hest1k_crc_candidates.csv').id)
 files=sorted(glob.glob(f'{R}/patches/*.h5'), key=lambda f:(os.path.basename(f)[:-3] not in crc, os.path.getsize(f)))
 for f in files:
-    sid=os.path.basename(f)[:-3]; out=f'features/hoptimus0_ctx/{sid}.h5'
+    sid=os.path.basename(f)[:-3]; out=f'{FD}/{sid}.h5'
     if os.path.exists(out): continue
     t=time.time(); mpp=json.load(open(f'{R}/metadata/{sid}.json'))['pixel_size_um_estimated']
     with h5py.File(f) as h:

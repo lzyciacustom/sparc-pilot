@@ -17,3 +17,5 @@ matplotlib==3.11.2
 seaborn==0.13.2
 Pillow==13.0.0
 joblib==1.6.0
+requests==2.34.2
+safetensors==0.8.0

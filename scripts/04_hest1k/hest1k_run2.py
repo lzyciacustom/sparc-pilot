@@ -14,6 +14,7 @@ import os, sys, time, argparse, json, numpy as np, pandas as pd, torch, h5py
 from torch import nn
 WS = os.path.dirname(os.path.abspath(__file__)); sys.path.append(WS); sys.path.append(os.path.join(WS, 'trackB'))
 import sparcmap_lib as L
+import encoders as ENC
 
 ap = argparse.ArgumentParser()
 ap.add_argument('--target', default='ulm'); ap.add_argument('--seed', type=int, default=0); ap.add_argument('--folds', default='0,1,2,3,4,5')
@@ -22,7 +23,7 @@ ap.add_argument('--target_norm', default='robust'); ap.add_argument('--tech', ac
 ap.add_argument('--ctx', action='store_true'); ap.add_argument('--genes', action='store_true'); ap.add_argument('--gene_aux', action='store_true')
 ap.add_argument('--decoup', default=''); ap.add_argument('--crc_only', action='store_true'); ap.add_argument('--external', default='')
 args = ap.parse_args()
-FD = os.path.join(WS, 'features', 'hoptimus0_crc'); CTX = os.path.join(WS, 'features', 'hoptimus0_ctx')
+FD = ENC.feat_dir('crc', root=WS); CTX = ENC.feat_dir('ctx', root=WS)
 L.TGT_DIR = os.path.join(WS, 'targets_crc')
 OUT = os.path.join(WS, 'results2'); os.makedirs(OUT, exist_ok=True)
 flags = [f'tn-{args.target_norm}'] + [k for k in ['tech', 'progw', 'ctx', 'genes', 'gene_aux', 'crc_only'] if getattr(args, k)]
@@ -107,7 +108,7 @@ pool_ids = [s for s in pool_ids if s in S]
 EXT = {}
 if args.external == 'mouse':
     for s in pd.read_csv(os.path.join(WS, 'mouse_test_slides_meta.csv')).id:
-        try: EXT[s] = load(s, tgt_dir=os.path.join(WS, 'targets_mouse'), feat_dir=os.path.join(WS, 'features', 'hoptimus0_mouse'))
+        try: EXT[s] = load(s, tgt_dir=os.path.join(WS, 'targets_mouse'), feat_dir=ENC.feat_dir('mouse', root=WS))
         except Exception as e: print('skip ext', s, repr(e)[:100], flush=True)
 print(f'loaded {len(S)} slides ({len(pool_ids)} pool) ext={len(EXT)} in {time.time()-t0:.0f}s', flush=True)
 D_IN = next(iter(S.values()))['X'].shape[1]; P_OUT = next(iter(S.values()))['Y'].shape[1]

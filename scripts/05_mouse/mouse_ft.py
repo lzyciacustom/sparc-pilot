@@ -3,10 +3,11 @@ CV schemes: 'slide' (slides of each dataset spread over 5 folds; analogue of ret
 import os, sys, time, copy, argparse, numpy as np, pandas as pd, torch
 WS = os.path.dirname(os.path.abspath(__file__)); sys.path.insert(0, WS)
 import sparcmap_lib as L
+import encoders as ENC
 ap = argparse.ArgumentParser(); ap.add_argument('--target', default='ulm'); ap.add_argument('--seeds', default='0,1,2'); ap.add_argument('--smoke', action='store_true')
 args = ap.parse_args()
-L.TGT_DIR = os.path.join(WS, 'targets_crc'); FD = os.path.join(WS, 'features', 'hoptimus0_crc')
-MT, MF = os.path.join(WS, 'targets_mouse'), os.path.join(WS, 'features', 'hoptimus0_mouse')
+L.TGT_DIR = os.path.join(WS, 'targets_crc'); FD = ENC.feat_dir('crc', root=WS)
+MT, MF = os.path.join(WS, 'targets_mouse'), ENC.feat_dir('mouse', root=WS)
 OUT = os.path.join(WS, 'results_mouse_ft'); os.makedirs(OUT, exist_ok=True)
 crc = pd.read_csv(os.path.join(WS, 'crc_folds.csv')); pool = pd.read_csv(os.path.join(WS, 'hest1k_train_pool.csv'))
 mm = pd.read_csv(os.path.join(WS, 'mouse_test_slides_meta.csv'))

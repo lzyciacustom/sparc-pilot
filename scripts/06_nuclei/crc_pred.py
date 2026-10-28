@@ -2,8 +2,9 @@
 import os, sys, argparse, time, numpy as np, pandas as pd, torch
 WS = os.path.dirname(os.path.abspath(__file__)); sys.path.insert(0, WS)
 import sparcmap_lib as L
+import encoders as ENC
 ap = argparse.ArgumentParser(); ap.add_argument('--target', default='ulm'); ap.add_argument('--seed', type=int, default=0); args = ap.parse_args()
-L.TGT_DIR = os.path.join(WS, 'targets_crc'); FD = os.path.join(WS, 'features', 'hoptimus0_crc')
+L.TGT_DIR = os.path.join(WS, 'targets_crc'); FD = ENC.feat_dir('crc', root=WS)
 OUT = os.path.join(WS, 'preds_crc', f'{args.target}__s{args.seed}'); os.makedirs(OUT, exist_ok=True)
 crc = pd.read_csv(os.path.join(WS, 'crc_folds.csv'))
 def bf16(model, c, n, r):

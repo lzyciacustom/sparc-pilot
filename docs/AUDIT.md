@@ -79,7 +79,7 @@ The audit was run after all experiments, before packaging. Checks were run again
 
 **Model**
 - SPARC-Map is a reproduction, not the released checkpoint. Relative coordinates are scaled by each slide's median nearest-neighbour distance.
-- H-optimus-1 access was pending, so all features use H-optimus-0.
+- Stages 1–2 use H-optimus-0 features; stage 3 and the headline numbers in `CORE_FINDINGS.md` use H-optimus-1 (`SPARC_ENCODER`). Spatial-model variants, wave-2 upgrades, nuclear adjustment, the K = 4 niche ARI and mouse were not repeated with H-optimus-1.
 
 **Data scope**
 - Stage 1 (HEST-Bench) is pan-cancer: only 4 slides are READ. Its conclusions on targets and heads were re-tested in stage 2 on 58 CRC slides; its spatial and active-learning conclusions were not.
@@ -87,6 +87,14 @@ The audit was run after all experiments, before packaging. Checks were run again
 **Statistics**
 - Some secondary conditions have 1–2 seeds (`n_seeds` column).
 - There is no multiple-testing correction. Effects smaller than the seed-noise band (±2 SD: ssGSEA 0.07, ULM 0.05 at group level) are reported as null.
+
+**Stage 3 (composition, niches, MDACC)**
+- The residual δ is defined relative to a fixed scRNA reference (GSE132465, plus GSE115469 for liver) and an NNLS composition estimate. It removes the reference's expectation for that composition and depth; it is not a measurement of pure within-cell state, and reference cell types missing from the tissue (or vice versa) move signal between parts.
+- Random gene sets also show reproducible residual niche structure (71/144 niche × program cells at FDR < 0.1 vs 41 for curated programs). Within-tumour niche residuals are therefore not evidence of program-specific biology on their own; only condition contrasts calibrated against random sets are interpreted.
+- Composition-aware models were trained CRC-only (~46 slides per fold); the HEST-1k arm was not run.
+- MDACC: no full-resolution H&E, so H&E prediction could not be tested; 10 patients in the main contrast; sample → patient map transcribed by hand from Table S1 (3 sections absent from it are excluded). q-values are optimistic: the leave-one-out random null still gives 6 residual hits at q < 0.1 in the stroma contrast, so the full random-set range is the conservative comparison.
+- COLON MAP stage contrast is underpowered (6 vs 10 patients); d = 1.0 needs ~16 per arm.
+- ssGSEA scores depend on the number of detected genes (Noureen et al., eLife 2022), consistent with the depth dependence seen here; ULM targets are used for all stage-3 analyses.
 
 **Training budget**
 - Wide-output variants (gene decoder, gene auxiliary loss, composition targets) train for a fixed 30 epochs without early stopping.

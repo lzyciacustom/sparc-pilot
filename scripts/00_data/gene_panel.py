@@ -1,6 +1,7 @@
 import os, sys, glob, json, re, numpy as np, pandas as pd, anndata as ad, scipy.sparse as sp, warnings; warnings.filterwarnings('ignore')
 sys.path.append(os.getcwd()); from ens2sym import to_symbols, E2S
-R='data/hest1k_crc'; ids=sorted(os.path.basename(f)[:-3] for f in glob.glob('features/hoptimus0_crc/*.h5'))
+import encoders as ENC
+R='data/hest1k_crc'; ids=sorted(os.path.basename(f)[:-3] for f in glob.glob(f"{ENC.feat_dir('crc')}/*.h5"))
 def names(sid):
     v=ad.read_h5ad(f'{R}/st/{sid}.h5ad',backed='r').var_names
     v0=str(v[0])

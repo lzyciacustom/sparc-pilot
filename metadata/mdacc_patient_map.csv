@@ -1,0 +1,30 @@
+patient,sample,type
+1,M-ST-05,Liver macrometastasis + micrometastasis
+1,M-ST-13,Primary CRC
+2,M-ST-07,Liver macrometastasis + micrometastasis
+2,M-ST-08,Liver macrometastasis + micrometastasis
+3,M-ST-06,Liver macrometastasis + micrometastasis
+4,M-ST-09,Liver macrometastasis + micrometastasis
+4,M-ST-10,Liver macrometastasis + micrometastasis
+5,M-ST-17,Liver macrometastasis (Recurrence)
+5,M-ST-19,Liver macrometastasis (Recurrence)
+6,M-ST-11,Liver macrometastasis + micrometastasis
+6,M-ST-12,Liver macrometastasis + micrometastasis
+6,M-ST-15,Primary CRC
+7,M-ST-23,Liver macrometastasis + micrometastasis
+7,M-ST-24,Liver macrometastasis + micrometastasis
+8,M-ST-38,Liver macrometastasis + micrometastasis (Recurrence)
+8,M-ST-27,Liver macrometastasis
+9,M-ST-21,Liver macrometastasis + micrometastasis
+9,M-ST-22,Liver macrometastasis + micrometastasis
+9,M-ST-31,Primary CRC
+9,M-ST-32,Primary CRC
+9,M-ST-37,Liver macrometastasis (Recurrence)
+10,M-ST-36,Liver macrometastasis+ micrometastasis (Recurrence)
+10,M-ST-35,Liver macrometastasis
+10,M-ST-33,Primary CRC
+10,M-ST-34,Primary CRC
+11,M-ST-25,Liver macrometastasis + micrometastasis
+11,M-ST-26,Liver macrometastasis + micrometastasis
+11,M-ST-29,Primary CRC
+11,M-ST-30,Primary CRC

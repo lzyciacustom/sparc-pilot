@@ -16,7 +16,9 @@ WS = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.join(WS, 'sparc_repo'))
 from preprocessing.map_models import OriginalSpatialTransformer  # noqa: E402
 
-FEAT_DIR = os.path.join(WS, 'features', 'hoptimus0')
+sys.path.insert(0, WS)
+from encoders import feat_dir as _feat_dir  # noqa: E402
+FEAT_DIR = _feat_dir('', root=WS)  # HEST-Bench features of the selected encoder (SPARC_ENCODER, default h1)
 TGT_DIR = os.path.join(WS, 'targets')
 INV = pd.read_csv(os.path.join(WS, 'hest_bench_inventory.csv'))
 PROGRAMS = list(json.load(open(os.path.join(WS, 'sparc_programs_msigdb.json')))['sets'])

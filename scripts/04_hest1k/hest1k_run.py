@@ -12,6 +12,7 @@ import os, sys, time, argparse, math, numpy as np, pandas as pd, torch
 from torch import nn
 WS = os.path.dirname(os.path.abspath(__file__)); sys.path.append(WS); sys.path.append(os.path.join(WS, 'trackB'))
 import sparcmap_lib as L
+import encoders as ENC
 from spatial_models import CentreMLP, ConcertTransformer, GaussianHead, fit_compartments
 
 ap = argparse.ArgumentParser()
@@ -19,7 +20,7 @@ ap.add_argument('--target', required=True); ap.add_argument('--model', default='
 ap.add_argument('--seed', type=int, default=0); ap.add_argument('--folds', default='0,1,2,3,4,5')
 ap.add_argument('--epochs', type=int, default=30); ap.add_argument('--smoke', action='store_true')
 ap.add_argument('--crc_only', action='store_true', help='train on CRC training folds only (no HEST-1k pool)')
-ap.add_argument('--feat_dir', default=os.path.join(WS, 'features', 'hoptimus0_crc'))
+ap.add_argument('--feat_dir', default=ENC.feat_dir('crc', root=WS))
 ap.add_argument('--tgt_dir', default=os.path.join(WS, 'targets_crc'))
 args = ap.parse_args()
 L.TGT_DIR = args.tgt_dir

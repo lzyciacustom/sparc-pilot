@@ -1,14 +1,13 @@
 import glob, os, json, h5py, numpy as np, torch, timm, time
-cfg=json.load(open('models/H-optimus-0/config.json'))
-model=timm.create_model(cfg['architecture'], pretrained=True, num_classes=0, init_values=1e-5, dynamic_img_size=False, img_size=224,
-        pretrained_cfg_overlay=dict(file='models/H-optimus-0/pytorch_model.bin')).cuda().eval()
-mean=torch.tensor([0.707223,0.578729,0.703617],device='cuda').view(1,3,1,1); std=torch.tensor([0.211883,0.230117,0.177517],device='cuda').view(1,3,1,1)
+import sys; sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import encoders as E
+model, mean, std = E.load(); FD = E.feat_dir('mouse'); os.makedirs(FD, exist_ok=True)
 import pandas as pd
 crc=set(pd.read_csv('hest1k_crc_candidates.csv').id)
 files=sorted(glob.glob('data/hest1k_mouse/patches/*.h5'), key=lambda f:(os.path.basename(f)[:-3] not in crc, os.path.getsize(f)))
 files=list(files)
 for f in files:
-    sid=os.path.basename(f)[:-3]; out=f'features/hoptimus0_mouse/{sid}.h5'
+    sid=os.path.basename(f)[:-3]; out=f'{FD}/{sid}.h5'
     if os.path.exists(out): continue
     t=time.time()
     with h5py.File(f) as h:

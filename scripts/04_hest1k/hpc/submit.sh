@@ -3,20 +3,21 @@ set -euo pipefail
 WS="${SPARC_WS:?set SPARC_WS to your local checkout/workspace}"
 H="${HPC_HOST:?set HPC_HOST (ssh alias of the cluster login node)}"
 R=${HPC_SCRATCH:?set HPC_SCRATCH}/sparc_pilot
+FT=${FEAT_TAG:-hoptimus1}   # feature prefix: hoptimus1 (default, matches SPARC_ENCODER=h1) or hoptimus0 (SPARC_ENCODER=h0)
 remote() { ssh "$H" "bash -lc '$1'"; }
 case "${1:-}" in
   check)  ssh -O check "$H" ;;
   upload)
-    remote "mkdir -p $R/logs $R/ws/trackB $R/ws/sparc_repo/preprocessing $R/ws/hprc $R/ws/results $R/ws/features/hoptimus0_crc $R/ws/targets_crc"
+    remote "mkdir -p $R/logs $R/ws/trackB $R/ws/sparc_repo/preprocessing $R/ws/hprc $R/ws/results $R/ws/features/${FT}_crc $R/ws/targets_crc"
     cd "$WS"
-    rsync -a hest1k_run.py sparcmap_lib.py ens2sym.py crc_folds.csv hest1k_train_pool.csv hest1k_crc_candidates.csv hest_bench_inventory.csv sparc_programs_msigdb.json "$H:$R/ws/"
+    rsync -a hest1k_run.py sparcmap_lib.py encoders.py ens2sym.py crc_folds.csv hest1k_train_pool.csv hest1k_crc_candidates.csv hest_bench_inventory.csv sparc_programs_msigdb.json "$H:$R/ws/"
     rsync -a trackB/spatial_models.py "$H:$R/ws/trackB/"
     rsync -a sparc_repo/preprocessing/__init__.py sparc_repo/preprocessing/map_models.py "$H:$R/ws/sparc_repo/preprocessing/"
     rsync -a hprc/ "$H:$R/ws/hprc/"
-    rsync -a --info=progress2 features/hoptimus0_crc/ "$H:$R/ws/features/hoptimus0_crc/"
+    rsync -a --info=progress2 features/${FT}_crc/ "$H:$R/ws/features/${FT}_crc/"
     rsync -a --info=progress2 --include='*.parquet' --exclude='*' targets_crc/ "$H:$R/ws/targets_crc/"
-    remote "du -sh $R/ws; ls $R/ws/features/hoptimus0_crc | wc -l; ls $R/ws/targets_crc | wc -l" ;;
-  sync)   cd "$WS"; rsync -a hprc/ "$H:$R/ws/hprc/"; rsync -a hest1k_run.py sparcmap_lib.py "$H:$R/ws/"; echo synced ;;
+    remote "du -sh $R/ws; ls $R/ws/features/${FT}_crc | wc -l; ls $R/ws/targets_crc | wc -l" ;;
+  sync)   cd "$WS"; rsync -a hprc/ "$H:$R/ws/hprc/"; rsync -a hest1k_run.py sparcmap_lib.py encoders.py "$H:$R/ws/"; echo synced ;;
   rerun)
     IDX="${2:?give comma-separated jobs.txt line numbers}"
     for i in ${IDX//,/ }; do read T M Hd Sd X < <(sed -n "${i}p" "$WS/hprc/jobs.txt"); TAG="${T}__${M}__${Hd}__s${Sd}${X:+__crconly}"; remote "rm -f $R/logs/done_${TAG}"; echo "cleared $TAG"; done
@@ -33,12 +34,12 @@ case "${1:-}" in
     rsync -a --info=progress2 genes_crc/ "$H:$R/ws/genes_crc/"
     remote "ls $R/ws/genes_crc | wc -l; du -sh $R/ws/genes_crc" ;;
   upload2b)
-    cd "$WS"; remote "mkdir -p $R/ws/features/hoptimus0_ctx $R/ws/features/hoptimus0_mouse $R/ws/decoup $R/ws/targets_mouse"
+    cd "$WS"; remote "mkdir -p $R/ws/features/${FT}_ctx $R/ws/features/${FT}_mouse $R/ws/decoup $R/ws/targets_mouse"
     rsync -a hest1k_run2.py sparcmap_lib.py mouse_test_slides_meta.csv "$H:$R/ws/"; rsync -a hprc/ "$H:$R/ws/hprc/"
-    rsync -a --info=progress2 features/hoptimus0_ctx/ "$H:$R/ws/features/hoptimus0_ctx/"
-    rsync -a --info=progress2 features/hoptimus0_mouse/ "$H:$R/ws/features/hoptimus0_mouse/"
+    rsync -a --info=progress2 features/${FT}_ctx/ "$H:$R/ws/features/${FT}_ctx/"
+    rsync -a --info=progress2 features/${FT}_mouse/ "$H:$R/ws/features/${FT}_mouse/"
     rsync -a decoup/ "$H:$R/ws/decoup/"; rsync -a targets_mouse/ "$H:$R/ws/targets_mouse/"
-    remote "for d in features/hoptimus0_ctx features/hoptimus0_mouse decoup targets_mouse; do echo \$d \$(ls $R/ws/\$d | wc -l); done" ;;
+    remote "for d in features/${FT}_ctx features/${FT}_mouse decoup targets_mouse; do echo \$d \$(ls $R/ws/\$d | wc -l); done" ;;
   submit2)
     JF="${2:-jobs2.txt}"; N=$(wc -l < "$WS/hprc/$JF"); ARR="${3:-1-$N}"
     rsync -a "$WS/hprc/" "$H:$R/ws/hprc/"; rsync -a "$WS/hest1k_run2.py" "$WS/sparcmap_lib.py" "$H:$R/ws/"
