@@ -18,6 +18,7 @@ Key results (depth-adjusted Pearson r, mean over 16 CRC patient groups, H-optimu
 | Headroom: achieved accuracy vs split-half reliability ceiling of measured ULM targets | 0.353 of 0.747 (47%) |
 | Composition-aware two-stage model (composition + residual) vs direct prediction | 0.376 vs 0.348 (+0.028, 13/16) |
 | Residual (beyond composition and depth) is predictable from H&E | 0.273 vs 0.092 random (16/16) |
+| b_M on 8 held-out GSE132465 donors (simulation, 3 splits): false composition-driven program differences without vs with decomposition (NNLS or RNA-content-converted cell counts; exact nominal 0.039) | 55% vs 12% (oracle fractions 8%) |
 | Within-tumour niche residuals are not program-specific on their own | 41 curated vs 71 random-set niche hits |
 | MDACC liver metastasis stroma, micro vs macro: PD-1-high CD8 program shift is mostly residual (measured data) | residual +1.06 SD of +1.24; 10/10 patients; z 3.96 vs random max 1.32 |
 

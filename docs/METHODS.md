@@ -175,3 +175,11 @@ This stage ran on the 57 HEST-Bench Visium whole-transcriptome slides (CCRCC 24,
 - **Patient level** (`mdacc_patient.py`, primary analysis): sections averaged within patient using the Table S1 map; 29 sections from 11 patients (3 `IX_566xx` sections not in Table S1 are excluded).
 - No full-resolution H&E is deposited for this cohort, so only the measured decomposition is analysed (no H&E prediction).
 
+## 18. Held-out-donor controls for b_M (`bm_heldout_controls.py`, `bm_heldout_splits.py`)
+
+- **Split:** 8 of 23 GSE132465 donors held out (4 from donors with ≥ 5 cells in ≥ 10 types, 4 from donors with ≥ 5 cells in ≥ 8 types), drawn with `numpy.random.default_rng(seed)`, seeds 2026 (primary), 2027, 2028. Fixed before training.
+- **b_M:** as section 15 (pseudospots of 1 + Poisson(9) cells, transcript-fraction labels, MLP 12 + log depth → 256 → 256 → 36), but 80,000 pseudospots from training donors only (depth log-uniform in [10², 10⁵] as in section 15), universe = 13,000 genes most often detected in training-donor cells, no affine calibration to Visium. NNLS profiles and markers, and per-type mean UMI per cell (RNA content), from training donors only.
+- **Residual scale:** program SDs from held-out null pseudospots (scaling only; does not change signed-rank p-values).
+- **Test B:** per held-out donor, regions A and B of 50 spots with compositions Dirichlet(30 · c_A) and Dirichlet(30 · c_B) over the types present in that donor, c ~ Dirichlet(1); depth log-uniform in [10³, 2 × 10⁴]; cells drawn unmodified from that donor's per-type pools. Per donor effect = mean(B) − mean(A); exact two-sided Wilcoxon signed-rank over 8 donors; FPR = fraction of (pair × program) tests with p < 0.05 (exact null rate 0.039); 95% CI by bootstrap over the 40 pairs. Arms: total y; residual with known, NNLS, unconverted cell-count, and RNA-content-converted cell-count fractions.
+- **Test C:** composition centre c ~ Dirichlet(1) with +0.3 added to the target type (renormalised), shared by A and B; in region B, counts of the planted program's genes multiplied by f ∈ {1.25, 1.5, 2} in one cell type (PD-1-high CD8 in T_NK, IFN-γ in Mono_Mac, E2F in Epi_tumor, collagen formation in Fibroblast); 10 reps; recovery = p < 0.05 in the planted direction; off-target FPR over the other 35 programs, split by gene overlap with the planted set.
+

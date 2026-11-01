@@ -99,9 +99,30 @@ Split-half reliability of the measured program scores on the CRC test sections, 
 - **Section level — primary vs liver tumour (8 vs 22 sections, unpaired):** mostly residual (15 programs at q < 0.1 vs 10 for random sets) — a cross-organ contrast that cannot be read as metastatic competence.
 - Caveats (section level): section-level replication; a leave-one-out random null still yields 6 residual hits at q < 0.1 in the stroma contrast (vs 13 curated), so q-values are optimistic — the comparison with the full random-set range is the conservative test.
 
+## 11. Held-out-donor controls for the reference baseline b_M (simulation; GSE132465)
+Question: does b_M transfer to unseen donors, and does the residual δ = y − b_M(π, depth) stay near zero when only composition differs (and recover a true within-type state shift)? Scripts: `bm_heldout_controls.py`, `bm_heldout_splits.py`; tables: `results/tables/composition/bm_heldout/`.
+- **Design.** 8 of 23 GSE132465 donors held out at random (seeds 2026 / 2027 / 2028), chosen before any training; b_M retrained on pseudospots from the 15 training donors only (same architecture and settings as `build_bM.py`, not tuned). Gene universe (13,000 genes most often detected in training-donor cells), NNLS profiles and markers, and per-type RNA content are computed from training donors only. Null regions A and B (50 spots each) draw unmodified cells from the same held-out donor's per-type pools and differ only in composition (Dirichlet(30 · centre)); 40 random composition pairs × 36 programs per split.
+- **Test unit.** One test = (composition pair × program): per donor, mean(B) − mean(A) in program SD units; exact two-sided Wilcoxon signed-rank over the 8 donors. With n = 8 the attainable p-values are 0.0078, 0.0156, 0.0234, 0.0391, 0.0547, …, so the exact null rejection rate at p < 0.05 is **0.039**. Programs are correlated; the 40 composition pairs are the replication unit (bootstrap CIs resample pairs).
+- **Composition inputs.** `known` = realised transcript fractions (oracle, not observable); `nnls` = transcript fractions estimated from spot expression; `cellfrac` = true cell-count fractions without conversion; `converted` = cell-count fractions × training-donor mean UMI per cell per type, renormalised (what an imaging-based count would give; no held-out information).
+- **A — generalisation.** Median held-out R² (known π) 0.726 / 0.709 / 0.711 vs 0.726 / 0.727 / 0.731 within training donors; with NNLS π 0.644 / 0.638 / 0.642.
+- **B — composition-only contrasts (false-positive rate at p < 0.05; pooled over 3 splits, 4,320 tests per arm; per-split range in brackets):**
+
+| Arm | FPR | FPR with \|effect\| > 0.25 SD | median \|effect\| (SD) |
+|---|---|---|---|
+| total (no decomposition) | 0.548 [0.530–0.560] | 0.405 | 0.198 |
+| known (oracle) | 0.081 [0.076–0.092] | 0.006 | 0.049 |
+| nnls | 0.118 [0.097–0.144] | 0.012 | 0.061 |
+| cellfrac (unconverted) | 0.265 [0.251–0.289] | 0.088 | 0.088 |
+| converted (training-donor RNA content) | 0.122 [0.101–0.136] | 0.020 | 0.059 |
+
+- **RNA-content transfer** (seed 2026; held-out / training mean UMI per cell): 0.98–1.07 for 8 of 12 types; Epi_tumor 0.86, Mast 0.86, Glial 0.71, Epi_normal 1.29.
+- **C — planted shifts** (seed 2026; program genes × 1.25 / 1.5 / 2 in one cell type in region B at fixed composition; 4 programs × 10 reps): recovered / planted 0.92–1.02; recovery 0.8–1.0 at 1.25× and 1.0 at ≥ 1.5× (known ≈ NNLS); off-target FPR at 2× 0.035 for programs sharing no genes with the planted one vs 0.206 for programs that share genes.
+- **Reading.** Decomposition removes most composition-driven differences in every split (55% → 8–14%), and imaged counts converted with independently estimated RNA content perform like expression-based NNLS; skipping the conversion roughly doubles to triples the FPR. The residual is not perfectly calibrated: even with oracle fractions the FPR is about twice the exact nominal 0.039, reflecting b_M approximation error (R² ≈ 0.72); the excess calls are small (≤ 2% exceed 0.25 SD). Limitations: one scRNA reference, simulated pseudospots, scRNA UMI as the RNA-content proxy (in situ RNA content may differ), test C on one split. Simulation-based evidence, not external validation.
+
 ## Implications for the proposal
 - The decomposition is technically sound (exact, calibrated, robust to shared genes) and improves accuracy (+0.03) and residual prediction (+0.07).
 - Joint training is not yet justified over a two-stage pipeline; state this as a test, not a claim.
+- b_M transfers to unseen donors in simulation (section 11), but residual calls need an effect-size floor (e.g. 0.25 SD) or calibration against composition-only nulls; imaging-based composition must be converted to transcript fractions with an independently estimated, uncertainty-propagated RNA content per type.
 - Within-tumour niche patterns alone cannot isolate program-specific residual biology; Aim 2 should be framed around condition contrasts (metastatic vs non-metastatic, perturbed vs control) with random-gene-set nulls and adequate sample sizes — the design the Yilmaz/Bai models provide.
 - An external metastasis cohort (section 10) shows the decomposition separating abundance from state in a published niche contrast; PETACC8 (48 stage III primaries, 14 relapsed; embargoed to Oct 2027) is the planned human outcome cohort.
 
@@ -119,5 +140,6 @@ Training code and slide list not released (architecture imported from aziz-ayed/
 | Noise ceiling (section 7) | `results/tables/headroom/` (`scripts/08_headroom/`) |
 | b_M fit, composition-aware model, niches, COLON MAP stage (sections 8–9) | `results/tables/composition/` (`scripts/09_composition/`) |
 | MDACC decomposition (section 10) | `results/tables/mdacc/` (`scripts/09_composition/mdacc_*.py`) |
+| b_M held-out-donor controls (section 11) | `results/tables/composition/bm_heldout/` (`scripts/09_composition/bm_heldout_*.py`) |
 | Figures | `results/figures/stage3_composition/` (`scripts/07_analysis/figures_stage3.py`) |
 H-optimus-1 features (388 slides, 828,636 patches) and per-spot predictions are not in git (size); `scripts/04_hest1k/h1/` regenerates them.

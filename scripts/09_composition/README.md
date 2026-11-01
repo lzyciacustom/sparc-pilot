@@ -18,6 +18,8 @@ External cohorts are read from `$SPARC_EXT` (default `<workdir>/ext`; fill it wi
 | mdacc_decomp.py | Composition / depth / residual split of micro- vs macrometastasis, primary vs liver and front vs superficial contrasts (section level) | results/mdacc_contrasts_*.csv |
 | mdacc_null.py | Random-set-calibrated z-scores per section; leave-one-out calibration of the random null | results/mdacc_null_calibrated.csv |
 | mdacc_patient.py | Patient-level version (Table S1 map, `metadata/mdacc_patient_map.csv`) | results/mdacc_patient_level.csv |
+| bm_heldout_controls.py | b_M trained on 15 GSE132465 donors, tested on 8 held-out donors: generalisation (A), composition-only null contrasts (B), planted within-type shifts (C); needs a GPU (~10 min) | results/bm_heldout_test{A,B,C}*.csv |
+| bm_heldout_splits.py | Tests A/B for three donor splits (seeds 2026–2028) plus the imaging-count → transcript-fraction conversion arm (training-donor RNA content); ~35 min | results/bm_heldout_testA_generalisation_s<seed>.csv, bm_heldout_testB2_*.csv, bm_heldout_rna_content_seed2026.csv |
 
-Shipped copies of the outputs: `results/tables/composition/`, `results/tables/mdacc/`. Findings: `docs/CORE_FINDINGS.md`, sections 8–10.
+Shipped copies of the outputs: `results/tables/composition/`, `results/tables/mdacc/`. Findings: `docs/CORE_FINDINGS.md`, sections 8–11 (held-out-donor controls: `results/tables/composition/bm_heldout/`).
 `scripts/04_hest1k/hest1k_run_x.py` extends the HEST-1k driver with target smoothing and per-spot prediction dumps (not used for reported results).
