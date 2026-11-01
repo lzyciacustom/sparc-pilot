@@ -5,7 +5,7 @@ These are pilot experiments testing which upgrades to **SPARC** (H&E → spatial
 - **Data:** public data only (HEST-1k, GSE132465, GSE115469, COLON MAP, GSE294385).
 - **Model and features:** a reproduction of the SPARC-Map spatial transformer on **H-optimus-1** features (H-optimus-0 available via `SPARC_ENCODER=h0`; earlier stage-2 results used H-optimus-0).
 - **Test set:** 58 colorectal-cancer (CRC) slides; headline numbers use the 16 patient groups without linked training-pool slides (see `docs/AUDIT.md`).
-- **Stage 1:** HEST-Bench, 57 Visium whole-transcriptome slides. **Stage 2:** HEST-1k training (~376 slides/fold), CRC test, mouse transfer. **Stage 3:** target noise ceiling, composition-aware SPARC-Map, niche and stage contrasts, and an external metastasis cohort (MD Anderson, GSE294385).
+- **Stage 1:** HEST-Bench, 57 Visium whole-transcriptome slides. **Stage 2:** HEST-1k training (~376 slides/fold), CRC test, mouse transfer. **Stage 3:** target noise ceiling, composition-aware SPARC-Map, held-out-donor controls for the composition baseline, niche and stage contrasts, and an external metastasis cohort (MD Anderson, GSE294385).
 
 Key results (depth-adjusted Pearson r, mean over 16 CRC patient groups, H-optimus-1; full list in [`docs/CORE_FINDINGS.md`](docs/CORE_FINDINGS.md)):
 
@@ -48,7 +48,7 @@ scripts/
   06_nuclei/           HoVer-Net spot features, CRC prediction dump
   07_analysis/         statistics and figures from results/raw/ and results/tables/
   08_headroom/         split-half (UMI and gene) noise ceiling of measured targets
-  09_composition/      b_M reference baseline, composition-aware SPARC-Map, niche and COLON MAP stage contrasts, MDACC decomposition
+  09_composition/      b_M reference baseline and its held-out-donor controls, composition-aware SPARC-Map, niche and COLON MAP stage contrasts, MDACC decomposition
 metadata/              splits, slide lists, program and random gene sets, gene panel, ortholog table, MDACC sample → patient map
 results/
   raw/                 per-slide × program metrics from every run (H-optimus-0: hest1k_wave*_long.parquet; H-optimus-1: hest1k_h1_long.parquet)
@@ -105,6 +105,7 @@ python analyze_comp.py && python niche_decomp.py && python niche_null.py && pyth
 python build_ref17.py && python mdacc_prep.py
 python build_bM_ref.py --ref ref17 --universe $SPARC_EXT/mdacc/universe.txt --tag _ref17_mdacc
 python mdacc_decomp.py && python mdacc_null.py && python mdacc_patient.py
+python bm_heldout_controls.py && python bm_heldout_splits.py   # b_M held-out-donor controls (GPU, ~45 min)
 cd ..
 
 # 6. statistics and figures (repo root; runs in seconds; no GPU or data needed; pip install -r environment/requirements-analysis.txt is enough)
