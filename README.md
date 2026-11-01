@@ -7,7 +7,12 @@ These are pilot experiments testing which upgrades to **SPARC** (H&E → spatial
 - **Test set:** 58 colorectal-cancer (CRC) slides; headline numbers use the 16 patient groups without linked training-pool slides (see `docs/AUDIT.md`).
 - **Stage 1:** HEST-Bench, 57 Visium whole-transcriptome slides. **Stage 2:** HEST-1k training (~376 slides/fold), CRC test, mouse transfer. **Stage 3:** target noise ceiling, composition-aware SPARC-Map, held-out-donor controls for the composition baseline, niche and stage contrasts, and an external metastasis cohort (MD Anderson, GSE294385).
 
-Key results (depth-adjusted Pearson r, mean over 16 CRC patient groups, H-optimus-1; full list in [`docs/CORE_FINDINGS.md`](docs/CORE_FINDINGS.md)):
+> **Update (1 Nov 2026): held-out-donor controls for the composition baseline b_M** ([`docs/CORE_FINDINGS.md`](docs/CORE_FINDINGS.md) section 11; scripts `scripts/09_composition/bm_heldout_*.py`). b_M was retrained on 15 GSE132465 donors and tested on 8 unseen donors (3 random splits; simulation).
+> - b_M generalises to new donors: R² 0.71–0.73 vs 0.73 within training donors.
+> - When two regions differ only in cell composition, 55% of raw program comparisons are falsely significant; after decomposition 12% (composition estimated from expression, or imaged cell counts converted with RNA content estimated on training donors) and 8% with true fractions, against an exact nominal 3.9%. The residual is therefore not perfectly calibrated, but the excess calls are small (≤ 2% exceed 0.25 SD).
+> - Planted 1.25–2× within-type state shifts are recovered at 92–102% of their true size.
+
+Key results (depth-adjusted Pearson r unless stated, mean over 16 CRC patient groups, H-optimus-1; full list in [`docs/CORE_FINDINGS.md`](docs/CORE_FINDINGS.md)):
 
 | Finding | Number |
 |---|---|
@@ -18,7 +23,7 @@ Key results (depth-adjusted Pearson r, mean over 16 CRC patient groups, H-optimu
 | Headroom: achieved accuracy vs split-half reliability ceiling of measured ULM targets | 0.353 of 0.747 (47%) |
 | Composition-aware two-stage model (composition + residual) vs direct prediction | 0.376 vs 0.348 (+0.028, 13/16) |
 | Residual (beyond composition and depth) is predictable from H&E | 0.273 vs 0.092 random (16/16) |
-| b_M on 8 held-out GSE132465 donors (simulation, 3 splits): false composition-driven program differences without vs with decomposition (NNLS or RNA-content-converted cell counts; exact nominal 0.039) | 55% vs 12% (oracle fractions 8%) |
+| Composition baseline b_M on unseen donors (simulation): false-positive rate for composition-only differences, raw vs residual (nominal 3.9%) | 55% vs 12% (true fractions 8%) |
 | Within-tumour niche residuals are not program-specific on their own | 41 curated vs 71 random-set niche hits |
 | MDACC liver metastasis stroma, micro vs macro: PD-1-high CD8 program shift is mostly residual (measured data) | residual +1.06 SD of +1.24; 10/10 patients; z 3.96 vs random max 1.32 |
 
@@ -27,7 +32,7 @@ Earlier H-optimus-0 results (18 groups: spatial-model variants, upgrades, nuclea
 Read [`docs/AUDIT.md`](docs/AUDIT.md) before reusing these numbers. It covers:
 - a minor patient-level leakage in the training pool, which does not change the conclusions;
 - the null sets being size-matched but not expression-matched;
-- the residual being defined relative to a fixed scRNA reference;
+- the residual being defined relative to a fixed scRNA reference, and being only approximately calibrated in held-out-donor simulations;
 - MDACC having no full-resolution H&E (measured decomposition only) and a small number of patients;
 - mouse sections that cannot be split by animal.
 
