@@ -11,7 +11,19 @@ BLUE, GREY, RED, META = '#1f4e79', '#9a9a9a', '#c0504d', '#7f7f7f'
 LEAK = {'COLONMAP_8270_AS', 'TENX_immune_P1'}
 
 
-def letter(ax, s): ax.text(-0.18, 1.06, s, transform=ax.transAxes, fontsize=9, fontweight='bold', va='bottom')
+_LETTERS = []
+
+
+def letter(ax, s): _LETTERS.append((ax, s))
+
+
+def place_letters(fig):
+    """Panel letters on one row, each at the left edge of its panel (axis label included), top-aligned with the titles."""
+    fig.canvas.draw(); r = fig.canvas.get_renderer(); inv = fig.transFigure.inverted()
+    items = [(s, ax.get_tightbbox(r).transformed(inv)) for ax, s in _LETTERS if ax.figure is fig]
+    top = max(b.y1 for _, b in items)
+    for s, b in items: fig.text(b.x0, top, s, fontsize=9, fontweight='bold', va='bottom', ha='left')
+    _LETTERS[:] = [(a, s) for a, s in _LETTERS if a.figure is not fig]
 
 
 def strip(ax, data, labels, colors, seed=0):
@@ -44,7 +56,7 @@ cols2 = [(U, 'resid_direct_implicit', 'Direct\n(implicit)'), (U, 'resid_twostage
          (Dj, 'resid_twostage', 'Gene-\ndisjoint'), (Rn, 'resid_twostage', 'Random\nsets')]
 strip(axs[2], [d[c].values for d, c, _ in cols2], [lab for *_, lab in cols2], [GREY, BLUE, BLUE, BLUE, RED])
 axs[2].set_ylabel('Residual accuracy (depth-adj. r)'); axs[2].set_title('Residual beyond random sets', loc='left'); letter(axs[2], 'c')
-fig.savefig(f'{OUT}/fig_headroom_composition.png', bbox_inches='tight'); plt.close(fig)
+place_letters(fig); fig.savefig(f'{OUT}/fig_headroom_composition.png', bbox_inches='tight'); plt.close(fig)
 print('fig1 medians', {c: round(U[c].median(), 3) for c, _ in cols}, {lab.replace('\n', ' '): round(np.median(d[c]), 3) for d, c, lab in cols2})
 
 # Figure 2: MDACC liver metastasis stroma, micro- vs macrometastasis (patient level, 10 patients with both regions)
@@ -74,7 +86,7 @@ ax.scatter(L['y'].values, y, marker='|', s=60, color='black', zorder=3, label='T
 ax.axvline(0, color='black', lw=0.6); ax.set_yticks(y); ax.set_yticklabels([short[p] for p in progs])
 ax.set_xlabel('Micro − macro metastasis stroma (SD units)'); ax.set_title('Shifts are mostly residual', loc='left')
 ax.legend(frameon=False, fontsize=6, loc='lower right'); letter(ax, 'b')
-fig.savefig(f'{OUT}/fig_mdacc_micro_macro.png', bbox_inches='tight'); plt.close(fig)
+place_letters(fig); fig.savefig(f'{OUT}/fig_mdacc_micro_macro.png', bbox_inches='tight'); plt.close(fig)
 print('fig2 components\n', L.round(2).to_string())
 
 
@@ -110,10 +122,10 @@ gi = per_group('ssgsea', 'pearson').index
 raw = (per_group('ssgsea', 'pearson')[gi], rand_ss('pearson')[gi])
 dss = (per_group('ssgsea', 'pearson_depthres')[gi], rand_ss('pearson_depthres')[gi])
 dul = (per_group('ulm', 'pearson_depthres')[gi], per_group('rand0ulm', 'pearson_depthres')[gi])
-fig, axs = plt.subplots(1, 3, figsize=(8.2, 2.9), gridspec_kw=dict(width_ratios=[0.6, 1.1, 1.1], wspace=0.45))
+fig, axs = plt.subplots(1, 3, figsize=(8.6, 2.9), gridspec_kw=dict(width_ratios=[0.8, 1.1, 1.1], wspace=0.5))
 for ax, lim in zip(axs, [(-0.1, 0.85), (-0.1, 0.7), (-0.05, 0.6)]): ax.set_ylim(*lim)
 paired(axs[0], [raw], ['ssGSEA'])
-axs[0].set_ylabel('Held-out r (mean per patient group)'); axs[0].set_title('Raw r: random sets close', loc='left'); letter(axs[0], 'a')
+axs[0].set_ylabel('Held-out r (mean per patient group)'); axs[0].set_title('Raw: random sets close', loc='left'); letter(axs[0], 'a')
 paired(axs[1], [dss, dul], ['ssGSEA', 'ULM'])
 axs[1].set_ylabel('Depth-adjusted r'); axs[1].set_title('Depth-adjusted: programs separate', loc='left'); letter(axs[1], 'b')
 d_ = U['total_direct'], U['total_twostage']; r_ = U['resid_twostage'], Rn['resid_twostage'].reindex(U.index)
@@ -128,7 +140,7 @@ ax.set_xlim(-0.75, 3.55); ax.set_xticks([0, 0.8, 2.4]); ax.set_xticklabels(['Dir
 ax.set_ylabel('Depth-adjusted r (CRC-only training)'); ax.set_title('Composition-aware model', loc='left'); letter(ax, 'c')
 h = [plt.Line2D([], [], marker='o', ls='', color=BLUE, ms=4, label='curated programs'), plt.Line2D([], [], marker='o', ls='', color=GREY, ms=4, label='size-matched random sets')]
 fig.legend(handles=h, loc='upper center', ncol=2, frameon=False, fontsize=6.5, bbox_to_anchor=(0.5, 1.07))
-fig.savefig(f'{OUT}/fig_proposal_numbers.png', bbox_inches='tight'); plt.close(fig)
+place_letters(fig); fig.savefig(f'{OUT}/fig_proposal_numbers.png', bbox_inches='tight'); plt.close(fig)
 print('fig3 means', {k: (round(a.mean(), 3), round(b.mean(), 3)) for k, (a, b) in dict(raw=raw, depth_ssgsea=dss, depth_ulm=dul, direct_vs_twostage=d_, residual=r_).items()},
       'ULM - ssGSEA depth-adj', round((dul[0] - dss[0]).mean(), 3), f'{int((dul[0] > dss[0]).sum())}/16')
 
@@ -159,5 +171,5 @@ ax.scatter(C.total, C.resid_known, s=14, color=BLUE, label='true fractions', zor
 m = max(C.total.max(), C.resid_known.max()) * 1.08; ax.plot([0, m], [0, m], color=META, lw=0.8, ls='--')
 ax.set_xlabel('Planted shift (SD)'); ax.set_ylabel('Recovered residual (SD)'); ax.legend(frameon=False, fontsize=5.5, loc='upper left')
 ax.set_title('Planted state shifts recovered', loc='left'); letter(ax, 'c')
-fig.savefig(f'{OUT}/fig_bm_heldout_controls.png', bbox_inches='tight'); plt.close(fig)
+place_letters(fig); fig.savefig(f'{OUT}/fig_bm_heldout_controls.png', bbox_inches='tight'); plt.close(fig)
 print('fig4 pooled FPR', P_.FPR.round(3).to_dict(), 'recovered/planted', (C.resid_known / C.total).round(2).agg(['min', 'max']).tolist())
