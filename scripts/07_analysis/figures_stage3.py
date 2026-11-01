@@ -1,4 +1,6 @@
-"""Stage-3 figures (headroom, composition-aware decomposition, MDACC micro- vs macrometastasis) from results/tables/{headroom,composition,mdacc}.
+"""Stage-3 figures from results/tables/{headroom,composition,mdacc} and results/raw/hest1k_h1_long.parquet:
+fig_headroom_composition (noise ceiling, composition-aware model), fig_mdacc_micro_macro (MDACC), fig_proposal_numbers (the
+numbers quoted in the proposal; README Figure A), fig_bm_heldout_controls (held-out-donor controls for b_M; README Figure B).
 usage (repo root): python scripts/07_analysis/figures_stage3.py   -> results/figures/regenerated/*.png
 The versions shipped in results/figures/stage3_composition/ were produced by this script."""
 import os, numpy as np, pandas as pd, matplotlib; matplotlib.use('Agg'); import matplotlib.pyplot as plt
@@ -74,3 +76,88 @@ ax.set_xlabel('Micro − macro metastasis stroma (SD units)'); ax.set_title('Shi
 ax.legend(frameon=False, fontsize=6, loc='lower right'); letter(ax, 'b')
 fig.savefig(f'{OUT}/fig_mdacc_micro_macro.png', bbox_inches='tight'); plt.close(fig)
 print('fig2 components\n', L.round(2).to_string())
+
+
+# Figure 3: the numbers quoted in the proposal (means over 16 patient groups; lines join the same group)
+def paired(ax, pairs, labels, x0=0):
+    """pairs: list of (curated, random) arrays aligned by group; draws group lines and mean bars with values"""
+    for k, (a, b) in enumerate(pairs):
+        xa, xb = x0 + 2 * k, x0 + 2 * k + 0.8
+        for u, v in zip(a, b): ax.plot([xa, xb], [u, v], color='#d0d0d0', lw=0.6, zorder=1)
+        ax.scatter(np.full(len(a), xa), a, s=9, color=BLUE, lw=0, alpha=0.8, zorder=2)
+        ax.scatter(np.full(len(b), xb), b, s=9, color=GREY, lw=0, alpha=0.8, zorder=2)
+        for x, v, c, ha, dx in [(xa, np.mean(a), BLUE, 'right', -0.22), (xb, np.mean(b), '#555555', 'left', 0.22)]:
+            ax.hlines(v, x - 0.18, x + 0.18, color=c, lw=2, zorder=3); ax.text(x + dx, v, f'{v:.2f}', color=c, fontsize=6, ha=ha, va='center')
+        n = int((np.asarray(a) > np.asarray(b)).sum()); ax.text(xa + 0.4, ax.get_ylim()[1], f'{n}/{len(a)}', fontsize=6, ha='center', va='top', color=META)
+    ax.set_xticks([x0 + 2 * k + 0.4 for k in range(len(pairs))]); ax.set_xticklabels(labels); ax.axhline(0, color=META, lw=0.5)
+    ax.set_xlim(min(ax.get_xlim()[0], x0 - 0.75), x0 + 2 * len(pairs) - 0.45)
+
+
+LBLUE = '#8fb3d9'
+grp = pd.read_csv('metadata/crc_folds.csv').set_index('id')['group']; grp = grp[~grp.isin(LEAK)]
+H1 = pd.read_parquet('results/raw/hest1k_h1_long.parquet'); H1 = H1[(H1.train == 'hest1k') & (H1.model == 'base') & (H1['head'] == 'det')]
+
+
+def per_group(t, m):
+    s = H1[H1.target == t].groupby(['seed', 'sample'])[m].mean().groupby('sample').mean()
+    return s.groupby(s.index.map(grp)).mean()
+
+
+def rand_ss(m): return sum(per_group(f'rand{i}ssgsea', m) for i in range(3)) / 3
+
+
+gi = per_group('ssgsea', 'pearson').index
+raw = (per_group('ssgsea', 'pearson')[gi], rand_ss('pearson')[gi])
+dss = (per_group('ssgsea', 'pearson_depthres')[gi], rand_ss('pearson_depthres')[gi])
+dul = (per_group('ulm', 'pearson_depthres')[gi], per_group('rand0ulm', 'pearson_depthres')[gi])
+fig, axs = plt.subplots(1, 3, figsize=(8.2, 2.9), gridspec_kw=dict(width_ratios=[0.6, 1.1, 1.1], wspace=0.45))
+for ax, lim in zip(axs, [(-0.1, 0.85), (-0.1, 0.7), (-0.05, 0.6)]): ax.set_ylim(*lim)
+paired(axs[0], [raw], ['ssGSEA'])
+axs[0].set_ylabel('Held-out r (mean per patient group)'); axs[0].set_title('Raw r: random sets close', loc='left'); letter(axs[0], 'a')
+paired(axs[1], [dss, dul], ['ssGSEA', 'ULM'])
+axs[1].set_ylabel('Depth-adjusted r'); axs[1].set_title('Depth-adjusted: programs separate', loc='left'); letter(axs[1], 'b')
+d_ = U['total_direct'], U['total_twostage']; r_ = U['resid_twostage'], Rn['resid_twostage'].reindex(U.index)
+ax = axs[2]
+for u, v in zip(*d_): ax.plot([0, 0.8], [u, v], color='#d0d0d0', lw=0.6, zorder=1)
+ax.scatter(np.zeros(len(U)), d_[0], s=9, color=LBLUE, lw=0, zorder=2); ax.scatter(np.full(len(U), 0.8), d_[1], s=9, color=BLUE, lw=0, zorder=2)
+for x, v, c, ha, dx in [(0, d_[0].mean(), LBLUE, 'right', -0.22), (0.8, d_[1].mean(), BLUE, 'left', 0.22)]:
+    ax.hlines(v, x - 0.18, x + 0.18, color=c, lw=2, zorder=3); ax.text(x + dx, v, f'{v:.2f}', color=c, fontsize=6, ha=ha, va='center')
+ax.text(0.4, 0.6, f'{int((d_[1] > d_[0]).sum())}/{len(U)}', fontsize=6, ha='center', va='top', color=META)
+paired(ax, [r_], ['Residual\n(curated vs random)'], x0=2)
+ax.set_xlim(-0.75, 3.55); ax.set_xticks([0, 0.8, 2.4]); ax.set_xticklabels(['Direct', 'Two-\nstage', 'Residual\n(curated vs random)'])
+ax.set_ylabel('Depth-adjusted r (CRC-only training)'); ax.set_title('Composition-aware model', loc='left'); letter(ax, 'c')
+h = [plt.Line2D([], [], marker='o', ls='', color=BLUE, ms=4, label='curated programs'), plt.Line2D([], [], marker='o', ls='', color=GREY, ms=4, label='size-matched random sets')]
+fig.legend(handles=h, loc='upper center', ncol=2, frameon=False, fontsize=6.5, bbox_to_anchor=(0.5, 1.07))
+fig.savefig(f'{OUT}/fig_proposal_numbers.png', bbox_inches='tight'); plt.close(fig)
+print('fig3 means', {k: (round(a.mean(), 3), round(b.mean(), 3)) for k, (a, b) in dict(raw=raw, depth_ssgsea=dss, depth_ulm=dul, direct_vs_twostage=d_, residual=r_).items()},
+      'ULM - ssGSEA depth-adj', round((dul[0] - dss[0]).mean(), 3), f'{int((dul[0] > dss[0]).sum())}/16')
+
+# Figure 4: held-out-donor controls for the reference baseline b_M (simulation, GSE132465; results/tables/composition/bm_heldout/)
+B = f'{T}/composition/bm_heldout'
+A = pd.concat([pd.read_csv(f'{B}/bm_heldout_testA_generalisation_s{s}.csv').assign(seed=s) for s in (2026, 2027, 2028)])
+S = pd.read_csv(f'{B}/bm_heldout_testB2_summary.csv'); C = pd.read_csv(f'{B}/bm_heldout_testC_summary.csv')
+fig, axs = plt.subplots(1, 3, figsize=(9.0, 2.9), gridspec_kw=dict(width_ratios=[1, 1.6, 1], wspace=0.55))
+ax = axs[0]
+for s, mk in zip((2026, 2027, 2028), 'o^s'):
+    a = A[A.seed == s]; ax.scatter(a.r2_within_train_donors, a.r2_heldout_known_pi, s=10, marker=mk, color=BLUE, alpha=0.6, lw=0, label=f'split {s - 2025}')
+ax.plot([0, 1], [0, 1], color=META, lw=0.8, ls='--'); ax.set_xlim(0.2, 1); ax.set_ylim(0.2, 1)
+ax.set_xlabel('R² on training donors'); ax.set_ylabel('R² on 8 held-out donors'); ax.legend(frameon=False, fontsize=5.5, loc='upper left')
+ax.set_title('b_M transfers to new donors', loc='left'); letter(ax, 'a')
+ax = axs[1]; arms = [('total', 'none'), ('known', 'true\nfractions'), ('nnls', 'NNLS'), ('converted', 'counts,\nconverted'), ('cellfrac', 'counts,\nraw')]
+P_ = S[S.seed == 'pooled'].set_index('arm'); sp_ = S[S.seed != 'pooled']
+for i, (k, lab) in enumerate(arms):
+    ax.bar(i, P_.loc[k, 'FPR'], color=GREY if k in ('total', 'cellfrac') else BLUE, width=0.65, alpha=0.85)
+    ax.bar(i, P_.loc[k, 'FPR_eff025'], color='black', width=0.65, alpha=0.35)
+    ax.scatter(np.full(3, i) + np.array([-0.15, 0, 0.15]), sp_[sp_.arm == k].FPR, s=7, color='black', zorder=3)
+    ax.text(i, max(P_.loc[k, 'FPR'], sp_[sp_.arm == k].FPR.max()) + 0.025, f'{P_.loc[k, "FPR"]:.0%}', ha='center', fontsize=6.5, fontweight='bold')
+ax.axhline(0.039, color=RED, lw=0.8, ls='--')
+ax.set_xticks(range(len(arms))); ax.set_xticklabels([l for _, l in arms], fontsize=6); ax.set_ylim(0, 0.68); ax.set_xlabel('Composition used for the residual')
+ax.set_ylabel('False-positive rate\n(composition-only contrasts)'); ax.set_title('Few false calls after decomposition', loc='left'); letter(ax, 'b')
+ax.text(0.98, 0.80, 'bar: pooled; dots: 3 donor splits\ndark: |effect| > 0.25 SD\nred line: nominal 3.9%', transform=ax.transAxes, fontsize=5.5, ha='right', color=META)
+ax = axs[2]
+ax.scatter(C.total, C.resid_known, s=14, color=BLUE, label='true fractions', zorder=3); ax.scatter(C.total, C.resid_nnls, s=14, facecolor='none', edgecolor=BLUE, label='NNLS', zorder=3)
+m = max(C.total.max(), C.resid_known.max()) * 1.08; ax.plot([0, m], [0, m], color=META, lw=0.8, ls='--')
+ax.set_xlabel('Planted shift (SD)'); ax.set_ylabel('Recovered residual (SD)'); ax.legend(frameon=False, fontsize=5.5, loc='upper left')
+ax.set_title('Planted state shifts recovered', loc='left'); letter(ax, 'c')
+fig.savefig(f'{OUT}/fig_bm_heldout_controls.png', bbox_inches='tight'); plt.close(fig)
+print('fig4 pooled FPR', P_.FPR.round(3).to_dict(), 'recovered/planted', (C.resid_known / C.total).round(2).agg(['min', 'max']).tolist())
