@@ -172,4 +172,4 @@ m = max(C.total.max(), C.resid_known.max()) * 1.08; ax.plot([0, m], [0, m], colo
 ax.set_xlabel('Planted shift (SD)'); ax.set_ylabel('Recovered residual (SD)'); ax.legend(frameon=False, fontsize=5.5, loc='upper left')
 ax.set_title('Planted state shifts recovered', loc='left'); letter(ax, 'c')
 place_letters(fig); fig.savefig(f'{OUT}/fig_bm_heldout_controls.png', bbox_inches='tight'); plt.close(fig)
-print('fig4 pooled FPR', P_.FPR.round(3).to_dict(), 'recovered/planted', (C.resid_known / C.total).round(2).agg(['min', 'max']).tolist())
+print('fig4 pooled FPR', P_.FPR.round(3).to_dict(), 'recovered/planted true', (C.resid_known / C.total).round(2).agg(['min', 'max']).tolist(), 'NNLS', (C.resid_nnls / C.total).round(2).agg(['min', 'max']).tolist())

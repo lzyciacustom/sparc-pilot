@@ -19,7 +19,7 @@ Each number in the proposal's preliminary-evidence paragraph, with the figure pa
 | Two-stage composition + residual model vs direct prediction (CRC-only training) | 0.38 vs 0.35 (13/16) | A-c | `results/tables/composition/comp_contrasts.csv` |
 | Predicted vs measured residual, curated vs random | 0.27 vs 0.09 (16/16) | A-c | same |
 | Held-out-donor simulation: false composition-driven differences before vs after decomposition (exact nominal rate 3.9%) | 55% vs 12% (true fractions 8%) | B-b | `results/tables/composition/bm_heldout/` |
-| Planted within-type state shifts recovered | 92–102% of planted size | B-c | same |
+| Planted within-type state shifts recovered (true or NNLS-estimated proportions) | 88–102% of planted size (true 92–102%; NNLS 88–101%) | B-c | `bm_heldout_testC_summary.csv` |
 | MDACC liver metastases, micro vs macro stroma: PD-1-high CD8 program residual beyond composition (measured spatial transcriptomes) | +1.06 of +1.24 SD; 10/10 patients; exceeds all 36 random sets (z 3.96 vs max 1.32) | C | `results/tables/mdacc/mdacc_patient_level.csv` |
 
 **Figure A — target choice, depth adjustment and the composition-aware model** (proposal Fig. 1b)
